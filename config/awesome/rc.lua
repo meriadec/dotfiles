@@ -509,12 +509,9 @@ client.connect_signal("focus", function(c)
   -- no border for maximized clients
   if c.maximized_horizontal == true and c.maximized_vertical == true then
     c.border_width = 0
-  -- no borders if only 1 client visible
-  elseif #awful.client.visible(mouse.screen) > 1 then
+  else
     c.border_width = beautiful.border_width
     c.border_color = beautiful.border_focus
-  else
-    c.border_width = 0
   end
 end)
 
