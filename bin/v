@@ -1,0 +1,19 @@
+#!/bin/zsh
+
+set -e
+
+searchTerm=$1
+
+if [ "$searchTerm" != "" ]; then
+  results=$(rg --column --no-heading --fixed-strings --smart-case --hidden --follow $searchTerm | fzf --preview 'echo {} | cut -d : -f 1 | xargs cat')
+  if [ "$results" = "" ]; then
+    exit
+  fi
+  echo $results | awk '{split($0,a,":"); print a[1] " \"+call cursor(" a[2] ", " a[3] ")\""}' | xargs -n 2 nvim
+else
+  toOpen=$(fzf --height 10)
+  if [ "$toOpen" = "" ]; then
+    exit
+  fi
+  nvim $toOpen
+fi

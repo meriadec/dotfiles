@@ -23,7 +23,7 @@ source $HOME/.path
 export FZF_DEFAULT_COMMAND='rg --files --follow'
 export FZF_CTRL_T_COMMAND='rg --files --follow 2>/dev/null'
 
-fzfKeyBindings=/usr/share/fzf/key-bindings.zsh
+fzfKeyBindings=/etc/profile.d/fzf.zsh
 if [ -f $fzfKeyBindings ]; then
   source $fzfKeyBindings
 fi
