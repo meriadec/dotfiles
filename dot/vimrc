@@ -24,6 +24,7 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'sbdchd/neoformat'
 Plug 'w0rp/ale'
 Plug 'flowtype/vim-flow'
+Plug 'rust-lang/rust.vim'
 
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
@@ -313,3 +314,6 @@ let g:ale_sign_warning = 'ℹ'
 
 " vim-flow
 let g:flow#enable = 0
+
+" rust.vim
+let g:rustfmt_autosave = 1
