@@ -60,7 +60,7 @@ function getActiveNetwork () {
 function getChosenNetwork () {
   local networks
   networks=$(netctl list | sed 's/^..//g')
-  echo "$networks" | fzf --color=16
+  echo "$networks" | fzf
 }
 
 function cleanup () {

@@ -5,13 +5,13 @@ set -e
 searchTerm=$1
 
 if [ "$searchTerm" != "" ]; then
-  results=$(rg --column --no-heading --fixed-strings --smart-case --hidden --follow $searchTerm | fzf --color=16 --preview 'echo {} | cut -d : -f 1 | xargs cat')
+  results=$(rg --column --no-heading --fixed-strings --smart-case --hidden --follow $searchTerm | fzf --preview 'echo {} | cut -d : -f 1 | xargs cat')
   if [ "$results" = "" ]; then
     exit
   fi
   echo $results | awk '{split($0,a,":"); print a[1] " \"+call cursor(" a[2] ", " a[3] ")\""}' | xargs -n 2 nvim
 else
-  toOpen=$(fzf --reverse --color=16 --height 15)
+  toOpen=$(fzf --reverse --height 15)
   if [ "$toOpen" = "" ]; then
     exit
   fi

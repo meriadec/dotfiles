@@ -1,0 +1,33 @@
+snippet log
+console.log(${1:\`${2}\`});${0}
+endsnippet
+
+snippet if
+if (${1}) {
+	${0}
+}
+endsnippet
+
+snippet rc
+const ${1:Comp} = () => {
+	return (
+		<div>{"${0:$1}"}</div>
+	)
+}${2:
+
+export default $1}
+endsnippet
+
+snippet d
+const { ${1} } = ${2:props};
+endsnippet
+
+snippet af "arrow function" i
+() => {
+	${0}
+}
+endsnippet
+
+snippet imp
+import ${1:{ ${2} }} from '${3}';${0}
+endsnippet

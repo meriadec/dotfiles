@@ -103,104 +103,15 @@ commands.vsplit = function(args)
     vim.cmd("vsplit " .. args)
 end
 
--- vim.cmd("command! -complete=file -nargs=* Vsplit lua global.commands.vsplit(<f-args>)")
--- u.command("VsplitLast", "Vsplit #")
--- u.map("n", "<Leader>vv", ":VsplitLast<CR>")
-
 commands.save_on_cr = function()
-    return vim.bo.buftype ~= "" and u.t("<CR>") or u.t(":write<CR>")
+  return vim.bo.buftype ~= "" and u.t("<CR>") or u.t(":write<CR>")
 end
 
-u.map("n", "<CR>", "v:lua.global.commands.save_on_cr()", { expr = true })
-
 commands.yank_highlight = function()
-    vim.highlight.on_yank({ higroup = "IncSearch", timeout = 100 })
+  vim.highlight.on_yank({ higroup = "IncSearch", timeout = 100 })
 end
 
 u.augroup("YankHighlight", "TextYankPost", "lua global.commands.yank_highlight()")
-
-commands.edit_test_file = function(cmd, post)
-    cmd = cmd or "edit"
-
-    local done = function(file)
-        vim.cmd(cmd .. " " .. file)
-        if post then
-            post()
-        end
-    end
-
-    local root, ft = vim.fn.expand("%:t:r"), vim.bo.filetype
-    -- escape potentially conflicting characters in filename
-    root = root:gsub("%-", "%%-")
-    root = root:gsub("%.", "%%.")
-
-    local patterns = {}
-    if ft == "lua" then
-        table.insert(patterns, "_spec")
-    elseif ft == "typescript" or ft == "typescriptreact" then
-        table.insert(patterns, "%.test")
-        table.insert(patterns, "%.spec")
-    end
-
-    local final_patterns = {}
-    for _, pattern in ipairs(patterns) do
-        -- go from test file to non-test file
-        if root:match(pattern) then
-            pattern = u.replace(root, pattern, "")
-        else
-            pattern = root .. pattern
-        end
-        -- make sure extension matches
-        pattern = pattern .. "%." .. vim.fn.expand("%:e") .. "$"
-        table.insert(final_patterns, pattern)
-    end
-
-    -- check buffers first
-    for _, b in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
-        for _, pattern in ipairs(final_patterns) do
-            if b.name:match(pattern) then
-                vim.cmd(cmd .. " #" .. b.bufnr)
-                return
-            end
-        end
-    end
-
-    local scandir = function(path, depth, next)
-        require("plenary.scandir").scan_dir_async(path, {
-            depth = depth,
-            search_pattern = final_patterns,
-            on_exit = vim.schedule_wrap(function(found)
-                if found[1] then
-                    done(found[1])
-                    return
-                end
-
-                assert(next, "test file not found")
-                next()
-            end),
-        })
-    end
-
-    -- check same dir files first, then cwd
-    scandir(vim.fn.expand("%:p:h"), 1, function()
-        scandir(vim.fn.getcwd(), 5)
-    end)
-end
-
-vim.cmd("command! -complete=command -nargs=* TestFile lua global.commands.edit_test_file(<f-args>)")
-u.map("n", "<Leader>tv", ":TestFile Vsplit<CR>")
-
-u.command(
-    "WipeReg",
-    [[for r in split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')| silent! call setreg(r, []) | endfor]]
-)
-u.augroup("WipeRegisters", "VimEnter", "WipeReg")
-
--- reset LSP diagnostics and treesitter
-u.command("R", "w | :e")
-
--- delete current file and buffer
-u.command("Remove", "call delete(expand('%')) | Bdelete")
 
 _G.global.commands = commands
 

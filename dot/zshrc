@@ -52,22 +52,20 @@ source "$HOME/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 # => fzf                                                                       #
 #    --------------------------------------------------------------------------#
 
-export FZF_DEFAULT_COMMAND='rg -g !.git/ --hidden --files --follow'
-export FZF_CTRL_T_COMMAND='rg --files --follow 2>/dev/null'
-
 FZF_HOME=/usr/share/fzf
 
 source "$FZF_HOME/completion.zsh"
 source "$FZF_HOME/key-bindings.zsh"
 
-#    --------------------------------------------------------------------------#
-# => base16                                                                    #
-#    --------------------------------------------------------------------------#
+export FZF_DEFAULT_COMMAND='rg -g !.git/ --hidden --files --follow'
+export FZF_CTRL_T_COMMAND='rg --files --follow 2>/dev/null'
 
-# BASE16_SHELL="$HOME/.config/base16-shell/"
-# [ -n "$PS1" ] && \
-#   [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-#   eval "$("$BASE16_SHELL/profile_helper.sh")"
+# nord theme
+export FZF_DEFAULT_OPTS='
+  --color=dark
+  --color fg:#D8DEE9,bg:#2E3440,hl:#A3BE8C,fg+:#D8DEE9,bg+:#434C5E,hl+:#A3BE8C
+  --color pointer:#BF616A,info:#4C566A,spinner:#4C566A,header:#4C566A,prompt:#81A1C1,marker:#EBCB8B
+'
 
 #    --------------------------------------------------------------------------#
 # => ssh                                                                       #
