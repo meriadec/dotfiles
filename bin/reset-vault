@@ -27,7 +27,7 @@ export TEST_ENV=$(
 const gv = l => l ? \`Vault \${new RegExp("vault-([0-9]\\.[0-9])").exec(l)[1]}\` : null;
 console.log(\`$(rg '^vault-' stack.yaml | tr -d :)\`.split('\\n').reduce((acc, cur, i, arr) => (gv(cur) !== gv(arr[i + 1])) ? [...acc, \`\${gv(cur)} (\${cur})\`] : acc, []).join('\\n'));
 EOF
-) | fzf --height 10 --reverse | sed -E 's/.*\((.*)\)/\1/g'
+) | fzf --height 10 --reverse --tac | sed -E 's/.*\((.*)\)/\1/g'
 )
 
 if [[ "$TEST_ENV" == "" ]]; then
