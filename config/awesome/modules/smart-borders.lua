@@ -21,12 +21,21 @@ if HIDPI then
 end
 
 function smartBorders.set(c, firstRender)
-  if c.floating ~= true then
+  if c.floating == true then
+    hideBorders(c)
+  else
     createFragment(c, "top", firstRender)
     createFragment(c, "left", firstRender)
     createFragment(c, "right", firstRender)
     createFragment(c, "bottom", firstRender)
   end
+end
+
+function hideBorders(c)
+  awful.titlebar(c, { size = 0, position = "top", bg_normal = "transparent", bg_focus = "transparent" }) : setup { layout = wibox.layout.align.horizontal }
+  awful.titlebar(c, { size = 0, position = "left", bg_normal = "transparent", bg_focus = "transparent" }) : setup { layout = wibox.layout.align.horizontal }
+  awful.titlebar(c, { size = 0, position = "right", bg_normal = "transparent", bg_focus = "transparent" }) : setup { layout = wibox.layout.align.horizontal }
+  awful.titlebar(c, { size = 0, position = "bottom", bg_normal = "transparent", bg_focus = "transparent" }) : setup { layout = wibox.layout.align.horizontal }
 end
 
 function createFragment(c, position, firstRender)
