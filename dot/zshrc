@@ -39,8 +39,8 @@ if [[ `uname` == 'Linux' ]]; then
   export TERMINAL=$TERM
 
   if [[ $TERM == xterm-termite ]]; then
-    . /etc/profile.d/vte.sh
-    __vte_osc7
+    . /etc/profile.d/vte.sh 2>/dev/null
+    __vte_osc7 2>/dev/null
   fi
 
 fi
