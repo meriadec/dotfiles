@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source colors
+source theme.sh
 
 rm -rf .tmp
 mkdir .tmp
@@ -32,4 +32,4 @@ convert -size $SIZE canvas:$COLOR_COLOR15 .tmp/19_COLOR15.png
 convert -label %t .tmp/* -frame 1x1+0+0 miff:- |\
   montage - -tile x2 -geometry '150x150+0+0>' colors.png
 
-echo '> Created colors.png'
+echo '> created colors.png'

@@ -448,7 +448,7 @@ awful.rules.rules = {
     },
     properties = { titlebars_enabled = true }
   },
-  -- cava
+  -- glava
   {
     rule = { class = "GLava" },
     properties = {
@@ -459,6 +459,17 @@ awful.rules.rules = {
       geometry = { height = 300, width = 2560, y = 1440 - 300 + 16 },
       sticky = true,
       below = true,
+      titlebars_enabled = false,
+    },
+  },
+  -- feh
+  {
+    rule = { class = "feh" },
+    properties = {
+      floating = true,
+      buttons = nil,
+      keys = nil,
+      sticky = true,
       titlebars_enabled = false,
     },
   },

@@ -1,16 +1,12 @@
 COLORS_PREVIEW_IMAGE=colors.png
 
+all: colors install
+
 install:
-	@./scripts/install
+	@./scripts/install.sh
 
 colors:
-	@./scripts/build-colors
+	@./scripts/build-colors.sh
 
 watch-colors:
-	@./scripts/watch-colors
-
-preview-colors: colors
-	@killall feh 2>/dev/null && echo "> Reloaded preview" || echo "> Launching preview"
-	@feh $(COLORS_PREVIEW_IMAGE) &
-
-.PHONY: colors
+	@./scripts/watch-colors.sh
