@@ -4,8 +4,8 @@ rofi.width:               800
 rofi.padding:             0
 rofi.lines:               5
 rofi.bw:                  0
-rofi.line-padding:        15
-rofi.matching:            fuzzy
+rofi.line-padding:        25
+rofi.matching:            normal
 rofi.fixed-num-lines:     false
 rofi.terminal:            urxvt
 rofi.disable-history:     true
