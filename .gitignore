@@ -1,3 +1,5 @@
 /.tmp
 /mock
-/config/nvim/.netrwhist
+/custom.sh
+
+/dot/Xresources
