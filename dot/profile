@@ -53,7 +53,7 @@ if [[ `uname` == 'Linux' ]]; then
   }
 
   download () {
-    transmission-remote-cli -c $ZAVATTA $1 >/dev/null 2>/dev/null && echo 'Downloading!' || echo 'Fail.'
+    transmission-remote-cli -c $ZAVATTA $1
   }
 
 fi
