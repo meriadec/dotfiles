@@ -3,7 +3,6 @@ font = PragmataPro 15
 
 [colors]
 foreground = #c0c5ce
-#background = rgba(43, 48, 59, 0.9)
 background = #2b303b
 cursor     = rgb(170, 175, 183, 0.3)
 color0     = #2b303b

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+hotreload colors scripts/build-colors <<EOF
+  make preview-colors
+EOF

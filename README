@@ -1,7 +1,0 @@
-# dotfiles
-
-  Put that folder in ~ directory.
-  run `./install`
-
-  The script will install / update any symlink.
-  run `./install mock` to test installation in another folder.
