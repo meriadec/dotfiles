@@ -1,0 +1,18 @@
+# ============================================================================ #
+#                                                                              #
+# ---------                        .gitconfig                          ------- #
+#                                                                              #
+# ============================================================================ #
+
+[user]
+	name = meriadec
+	email = meriadec.pillet@gmail.com
+	signingkey = 5CC6EA7D
+[color]
+	ui = true
+[push]
+	default = simple
+[core]
+	editor = nvim
+	pager = less -S
+	excludesfile = ~/.gitignore_global
