@@ -86,17 +86,3 @@ URxvt.pointerBlank:         true
 *.color13:      base06
 *.color14:      base0F
 *.color15:      base07
-
-! ROFI
-
-rofi.lines:               10
-rofi.font:                Fira Code Retina 11
-rofi.bw:                  0
-rofi.padding:             10
-rofi.fixed-num-lines:     false
-rofi.terminal:            urxvt
-rofi.disable-history:     true
-rofi.line-padding:        15
-rofi.hide-scrollbar:      true
-rofi.yoffset:             -400
-rofi.kb-cancel:           Escape,Control+c
