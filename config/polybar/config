@@ -377,11 +377,13 @@ margin-bottom = 5
 type = internal/github
 token = ${env:GH_TOKEN}
 user = meriadec
-format =  <label>
+format =  <label>
 label = %notifications%
 ; Whether empty notifications should be displayed or not
-empty-notifications = true
+empty-notifications = false
 interval = 10
+format-padding = 2
+format-background = #bf616a
 
 [module/crypto]
 type = custom/script
