@@ -15,16 +15,18 @@ local COLOR = gears.color("#2b303b")
 
 if HIDPI then
   GUTTER = 25
-  WEIGHT = 6
+  WEIGHT = 3
   ARROW_WEIGHT = 12
   ARROW_WIDTH = 100
 end
 
 function smartBorders.set(c, firstRender)
-  createFragment(c, "top", firstRender)
-  createFragment(c, "left", firstRender)
-  createFragment(c, "right", firstRender)
-  createFragment(c, "bottom", firstRender)
+  if c.floating ~= true then
+    createFragment(c, "top", firstRender)
+    createFragment(c, "left", firstRender)
+    createFragment(c, "right", firstRender)
+    createFragment(c, "bottom", firstRender)
+  end
 end
 
 function createFragment(c, position, firstRender)

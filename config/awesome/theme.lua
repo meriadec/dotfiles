@@ -28,7 +28,7 @@ theme.titlebar_bg_normal                        = theme.bg_normal
 theme.titlebar_fg_focus                         = theme.fg_focus
 
 if HIDPI then
-  theme.useless_gap                             = 16
+  theme.useless_gap                             = 0
   theme.font                                    = "PragmataPro Bold 8"
 end
 

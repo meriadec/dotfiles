@@ -218,6 +218,7 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
   set_wallpaper(s)
+  awful.screen.padding(s, { top = 100, right = 100, bottom = 100, left = 100 })
   awful.tag(tagnames, s, initialLayouts)
 
   s.mylayoutbox = awful.widget.layoutbox(s)
