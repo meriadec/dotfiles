@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -euo pipefail
+
+cd ~/.vault/vault-integration
+
+while true ; do
+  if ! docker-compose ps | rg ': starting' &>/dev/null; then
+    break;
+  fi;
+  echo -n '.'
+  sleep 1;
+done

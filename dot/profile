@@ -35,6 +35,7 @@ alias files='cut -d : -f 1 | sort | uniq'
 alias flowfiles='rg "^Error" | cut -d " " -f 3 | cut -d : -f 1 | sort | uniq'
 
 alias rv=reset-vault
+alias wv=wait-vault
 
 # folders
 alias gg='cd ~/git'
