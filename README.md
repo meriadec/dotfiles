@@ -1,5 +1,7 @@
 # dotfiles
 
+![](colors.png)
+
 ## Install
 
 ```bash
