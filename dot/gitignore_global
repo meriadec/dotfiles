@@ -3,3 +3,5 @@ ctags
 local-ci.log
 .idea/
 yarn-error.log
+.yalc
+yalc.lock
