@@ -1,6 +1,0 @@
-#!/bin/bash
-
-set -e
-
-cd /etc/openvpn/client/preprod
-sudo openvpn config.ovpn

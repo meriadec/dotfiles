@@ -1,9 +1,0 @@
-#!/bin/bash
-
-currentLayout=`setxkbmap -query | grep layout | sed -E 's/[^ ]* *(.*)$/\1/g'`
-nextLayout=$currentLayout
-
-[ "$currentLayout" == "dvp" ] && nextLayout='us'
-[ "$currentLayout" == "us" ] && nextLayout='dvp'
-
-setxkbmap $nextLayout
