@@ -1,6 +1,7 @@
 #!/bin/bash
 
 DPI=96
+
 COLOR_FOREGROUND=#c0c5ce
 COLOR_FOREGROUND=#c0c5ce
 COLOR_BACKGROUND=#2b303b
@@ -22,4 +23,6 @@ COLOR_COLOR13=#dfe1e8
 COLOR_COLOR14=#ab7967
 COLOR_COLOR15=#eff1f5
 
-source custom.sh
+if [ -e custom.sh ]; then
+  source custom.sh
+fi
