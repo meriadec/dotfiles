@@ -10,7 +10,7 @@ local awful         = require("awful")
 local smartBorders  = require("modules/smart-borders")
 
 local topBarHeight = 60
-local ENABLE_SMART_BORDERS = true
+local ENABLE_SMART_BORDERS = false
 
 if awesome.startup_errors then
   naughty.notify({

@@ -47,6 +47,9 @@ nmap <silent> <Space>s :wincmd l<CR>
 " c-p to open files
 nnoremap <C-p> :Files<CR>
 
+" c-s to save
+nmap <c-s> :w<CR>
+
 " navigate between lint errors
 nmap <silent> <Leader>e <Plug>(ale_previous_wrap)
 nmap <silent> <Leader>E <Plug>(ale_next_wrap)

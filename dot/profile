@@ -45,7 +45,7 @@ alias unscaffold='git config --local user.name meriadec && git config --local us
 
 # misc
 alias vimup="vim +'PlugUpgrade|PlugInstall|PlugUpdate|qa!'"
-alias plop="notify-send -u normal -i ~/dotfiles/assets/chirac.jpg Hey\!"
+alias plop="notify-send -u critical -i ~/dotfiles/assets/chirac.jpg Hey\!"
 
 # dev
 vgrep () {
