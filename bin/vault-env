@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -euo pipefail
+
+VAULT_INTEGRATION_PATH=$HOME/.vault/vault-integration
+
+cd "$VAULT_INTEGRATION_PATH"
+
+TEST_ENV=$(
+(node <<EOF
+const gv = l => l ? \`Vault \${new RegExp("vault-([0-9]\\.[0-9])").exec(l)[1]}\` : null;
+console.log(\`$(rg '^vault-' stack.yaml | tr -d :)\`.split('\\n').reduce((acc, cur, i, arr) => (gv(cur) !== gv(arr[i + 1])) ? [...acc, \`\${gv(cur)} (\${cur})\`] : acc, []).join('\\n'));
+EOF
+) | fzf --height 10 --reverse --tac | sed -E 's/.*\((.*)\)/\1/g'
+)
+
+export TEST_ENV
+
+if [[ "$TEST_ENV" == "" ]]; then
+  echo "No chosen version, exiting"
+  exit 1
+fi
+
+STACK=$(pipenv run ./stack2env)
+
+echo "$STACK"
