@@ -3,13 +3,12 @@
 export ZAVATTA='192.99.2.67'
 export CAVERN='91.121.143.211'
 
-alias vim=nvim
-
 # let .profile manage .profile
 alias prof='vim ~/.profile && sprof'
 alias sprof='source ~/.profile'
 
 # hehe
+alias vim=nvim
 alias vmi=vim
 alias ivm=vim
 alias pd=pwd
@@ -21,11 +20,12 @@ alias lt='ls -lt'
 # folders
 alias gg='cd ~/git'
 alias le='cd ~/ledger'
-alias dl='cd ~/Downloads'
 alias dot='cd ~/dotfiles'
 alias ma="cd ~/git/mjml-app"
 alias min="cd ~/git/minus"
+alias dl='cd ~/Downloads'
 
+# ledger env
 alias api="cd ~/ledger/ledger-node-js-api"
 alias hid="cd ~/ledger/ledger-node-js-hid"
 alias app="cd ~/ledger/ledger-live-desktop"
@@ -35,13 +35,14 @@ alias js="cd ~/ledger/ledgerjs"
 # git
 alias gd='git diff'
 alias gb='git branch -vv'
+alias gr='git remote -v'
 alias gits='git status'
 alias gtis='gits'
 alias igts='gits'
 alias gitp='git push'
 alias gitc='git commit'
 alias gfop='git fetch origin --prune'
-alias gc='git checkout'
+
 alias scaffold='git config --local user.name TheScaffolder && git config --local user.email spam@forpurpose.io && git commit --amend --author "TheScaffolder <spam@forpurpose.io>" && git config --local --unset user.email && git config --local --unset user.name'
 alias unscaffold='git config --local user.name meriadec && git config --local user.email meriadec.pillet@gmail.com && git commit --amend --author "meriadec <meriadec.pillet@gmail.com>" && git config --local --unset user.email && git config --local --unset user.name'
 
@@ -49,20 +50,18 @@ alias unscaffold='git config --local user.name meriadec && git config --local us
 alias vimup="vim +'PlugUpgrade|PlugInstall|PlugUpdate|qa!'"
 alias plop="notify-send -u critical -i ~/dotfiles/assets/chirac.jpg Hey\!"
 
-# dev
-vgrep () {
-  vim $(grep -rn $1 src | cut -d : -f 1 | sort | uniq)
-}
-
 # random
-alias sushi='$BROWSER https://www.planetsushi.fr/'
 alias public-ip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias dump='xsel -o | less'
 alias g=$BROWSER
 alias hdcast='ffcast -s ffmpeg -f x11grab -framerate 60 -show_region 1 -s %s -i %D+%c -c:v libx264rgb -crf 0 -preset ultrafast'
 alias bye='shutdown now'
-alias showfiles='cut -d : -f 1 | sort | uniq'
 alias upd='pacaur -Syu --noconfirm'
+
+# dev
+vgrep () {
+  vim $(grep -rn $1 src | cut -d : -f 1 | sort | uniq)
+}
 
 # Linux specifics
 if [[ `uname` == 'Linux' ]]; then
