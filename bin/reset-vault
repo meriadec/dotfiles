@@ -10,6 +10,7 @@ function plop () {
 }
 
 if ! systemctl is-active docker --quiet ; then
+  echo "Docker is not started. Starting..."
   sudo systemctl start docker
 fi
 
