@@ -1,0 +1,20 @@
+#!/bin/env bash
+
+# exit on error
+set -e
+
+echo '[HOTRELOAD] reload script: (<C-d> to save)'
+scriptToReload=$(</dev/stdin)
+
+function hotreload {
+  clear
+  DATE=`date "+%H:%M:%S"`
+  echo "[HOTRELOAD] reloaded ($DATE)"
+  echo $scriptToReload | bash
+}
+
+hotreload
+
+while inotifywait -r --quiet --quiet -e close_write $@; do
+  hotreload
+done
