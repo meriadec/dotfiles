@@ -45,7 +45,7 @@ function dotMain {
     echo "pinentry-program /usr/bin/pinentry-curses" > "$target/.gnupg/gpg-agent.conf"
   fi
 
-  echo "> done"
+  echo "> install success"
 
 }
 
