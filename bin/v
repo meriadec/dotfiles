@@ -11,7 +11,7 @@ if [ "$searchTerm" != "" ]; then
   fi
   echo $results | awk '{split($0,a,":"); print a[1] " \"+call cursor(" a[2] ", " a[3] ")\""}' | xargs -n 2 nvim
 else
-  toOpen=$(fzf --height 10)
+  toOpen=$(fzf --height 15)
   if [ "$toOpen" = "" ]; then
     exit
   fi
