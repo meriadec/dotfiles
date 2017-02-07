@@ -128,7 +128,7 @@
   rofi.font:                FiraCode-Bold bold 11
   rofi.color-normal:        #00000000,#aaffffff,#00000000,#22d08770,base09
   rofi.color-window:        #dd2b303b,base01
-  rofi.bw:                  1
+  rofi.bw:                  0
   rofi.padding:             10
   rofi.fixed-num-lines:     false
   rofi.terminal:            urxvt
