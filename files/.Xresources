@@ -95,6 +95,7 @@
   #define base0D #8fa1b3
   #define base0E #b48ead
   #define base0F #ab7967
+  #define red    #BF616A
 
   *.foreground:   base05
   *.background:   rgba:2b00/3000/3b00/eeee
@@ -126,7 +127,7 @@
 
   rofi.lines:               10
   rofi.font:                FiraCode-Bold bold 11
-  rofi.color-normal:        #00000000,#aaffffff,#00000000,#22d08770,base09
+  rofi.color-normal:        #00000000,#aaffffff,#00000000,#22BF616A,red
   rofi.color-window:        #dd2b303b,base01
   rofi.bw:                  0
   rofi.padding:             10
