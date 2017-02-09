@@ -61,6 +61,8 @@
   Plug 'mxw/vim-jsx'
   Plug 'mattn/emmet-vim'
   Plug 'scrooloose/nerdcommenter'
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-repeat'
   Plug 'neomake/neomake'
 
   call plug#end()
