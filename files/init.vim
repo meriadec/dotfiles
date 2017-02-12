@@ -20,12 +20,11 @@
   nmap <silent> <Space>n :wincmd k<CR>
   nmap <silent> <Space>s :wincmd l<CR>
 
-  " auto indent paste
-  nnoremap t p=`]
-  nnoremap <S-t> <S-p>=`]
-
   " select pasted text
   nnoremap gp `[v`]
+
+  " select line from first char to last char
+  nnoremap <Leader>m ^vg_
 
   " select pasted text, without first line (useful for re-indenting callbacks)
   nnoremap <Leader>l `[v`]Oj
