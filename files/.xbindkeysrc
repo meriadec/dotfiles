@@ -16,3 +16,7 @@ XF86AudioPrev
 # Stop
 "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
 XF86AudioStop
+
+# Switch keyboard
+"switch-key-layouts"
+XF86Sleep
