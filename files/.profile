@@ -36,6 +36,7 @@
   alias gg='cd ~/git'
   alias dl='cd ~/Downloads'
   alias dot='cd ~/git/dotfiles'
+  alias gogo="cd $GOPATH/src"
 
   # Git
   alias gits='git status'
