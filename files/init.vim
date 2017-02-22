@@ -62,6 +62,7 @@
   Plug 'scrooloose/nerdcommenter'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
+  Plug 'fatih/vim-go', { 'for': 'go' }
   Plug 'neomake/neomake'
 
   call plug#end()
@@ -269,5 +270,12 @@ let g:neomake_c_enabled_makers = []
   \}
 
   autocmd FileType javascript.jsx EmmetInstall
+
+" }
+
+" -- vim-go {
+" =========
+
+  let g:go_fmt_command = "goimports"
 
 " }
