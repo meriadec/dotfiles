@@ -9,6 +9,8 @@ source $HOME/.profile
 source $HOME/.gitprompt
 source $HOME/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+export PS1=$'%{\e[0;32m%}%n%{\e[0;0m%}|%{\e[0;31m%}%m%{\e[0;33m%} %{\e[0m%}%{\e[0;37m%}%?%{\e[0m%}%{\e[0;33m%} %1~ %{\e[0m%}%{\e[0;34m%}$%{\e[0;0m%} '
+
 export EDITOR="$(which vim)"
 export LANG=en_US.UTF-8
 
