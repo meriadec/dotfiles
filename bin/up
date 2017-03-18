@@ -1,6 +1,12 @@
 #!/bin/bash
 
 filePath=$1
+
+if [ "$filePath" == "" ]; then
+  echo "usage: up <file>"
+  exit 1
+fi
+
 baseName=`basename $filePath`
 destination="/www/media/up"
 finalURL="http://media.sigsev.io/up/$baseName"
