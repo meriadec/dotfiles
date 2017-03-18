@@ -1,87 +1,68 @@
-# ============================================================================ #
-#                                                                              #
-# ---------                           .profile                         ------- #
-#                                                                              #
-# ============================================================================ #
+#!/bin/bash
 
-# -- Prompt {
-# =========
+source $HOME/.private
 
-  export PS1=$'%{\e[0;32m%}%n%{\e[0;0m%}|%{\e[0;31m%}%m%{\e[0;33m%} %{\e[0m%}%{\e[0;37m%}%?%{\e[0m%}%{\e[0;33m%} %1~ %{\e[0m%}%{\e[0;34m%}$%{\e[0;0m%} '
+# prompt
+export PS1=$'%{\e[0;32m%}%n%{\e[0;0m%}|%{\e[0;31m%}%m%{\e[0;33m%} %{\e[0m%}%{\e[0;37m%}%?%{\e[0m%}%{\e[0;33m%} %1~ %{\e[0m%}%{\e[0;34m%}$%{\e[0;0m%} '
+export ZAVATTA='192.99.2.67'
 
-# }
+# let .profile manage .profile
+alias prof='vim ~/.profile && sprof'
+alias sprof='source ~/.profile'
 
+# hehe
+alias vim=nvim
 
-# -- User centred values {
-# ======================
+# `ls` thoughts
+alias lt='ls -lt'
 
-  export ZAVATTA='192.99.2.67'
+# folders
+alias gg='cd ~/git'
+alias dl='cd ~/downloads'
+alias dot='cd ~/dotfiles'
+alias gogo="cd $GOPATH/src"
 
-# }
+# git
+alias gits='git status'
+alias gitp='git push'
+alias gitc='git commit'
+alias scaffold='git config --local user.name TheScaffolder && git config --local user.email spam@forpurpose.io && git commit --amend --author "TheScaffolder <spam@forpurpose.io>" && git config --local --unset user.email && git config --local --unset user.name'
+alias unscaffold='git config --local user.name meriadec && git config --local user.email meriadec.pillet@gmail.com && git commit --amend --author "meriadec <meriadec.pillet@gmail.com>" && git config --local --unset user.email && git config --local --unset user.name'
 
+# dev
+vgrep () {
+  vim $(grep -rn $1 src | cut -d : -f 1 | sort | uniq)
+}
 
-# -- Aliases {
-# ==========
+# random
+alias sushi='$BROWSER https://www.planetsushi.fr/'
 
-  # Let .profile manage .profile
-  alias prof='vim ~/.profile && sprof'
-  alias sprof='source ~/.profile'
+# Linux specifics
+if [[ `uname` == 'Linux' ]]; then
 
-  alias vim=nvim
+  # clipboard copy
+  alias pbcopy='xsel --clipboard --input'
 
-  # `ls` thoughts
-  alias lt='ls -lt'
+  # purge memory
+  alias purge='sync; echo 3 | sudo tee /proc/sys/vm/drop_caches'
 
-  # Folders
-  alias gg='cd ~/git'
-  alias dl='cd ~/Downloads'
-  alias dot='cd ~/git/dotfiles'
-  alias gogo="cd $GOPATH/src"
+  # open
+  alias open=xdg-open
 
-  # Git
-  alias gits='git status'
-  alias gitp='git push'
-  alias gitc='git commit'
-  alias scaffold='git config --local user.name TheScaffolder && git config --local user.email spam@forpurpose.io && git commit --amend --author "TheScaffolder <spam@forpurpose.io>" && git config --local --unset user.email && git config --local --unset user.name'
-  alias unscaffold='git config --local user.name meriadec && git config --local user.email meriadec.pillet@gmail.com && git commit --amend --author "meriadec <meriadec.pillet@gmail.com>" && git config --local --unset user.email && git config --local --unset user.name'
-
-  alias sushi='google-chrome https://www.planetsushi.fr/'
-
-  vgrep () {
-    vim $(grep -rn $1 src | cut -d : -f 1 | sort | uniq)
+  say () {
+     espeak -a 200 $1 2>/dev/null
   }
 
-  # Linux specifics
-  if [[ `uname` == 'Linux' ]]; then
+  download () {
+    transmission-remote-cli -c $ZAVATTA $1 >/dev/null 2>/dev/null && echo 'Downloading!' || echo 'Fail.'
+  }
 
-    # non-retarded folder case
-    alias dl='cd ~/downloads'
+fi
 
-    # Clipboard copy
-    alias pbcopy='xsel --clipboard --input'
+# OSX specifics
+if [[ `uname` == 'Darwin' ]]; then
 
-    # Purge memory
-    alias purge='sync; echo 3 | sudo tee /proc/sys/vm/drop_caches'
+  # use retarded folder case
+  alias dl='cd ~/Downloads'
 
-    # Open
-    alias open=xdg-open
-
-    say () {
-       espeak -a 200 $1 2>/dev/null
-    }
-
-    download () {
-      transmission-remote-cli -c $ZAVATTA $1 >/dev/null 2>/dev/null && echo 'Downloading!' || echo 'Fail.'
-    }
-
-  fi
-
-# }
-
-
-# -- Aliases {
-# ==========
-
-  source $HOME/.private
-
-# }
+fi

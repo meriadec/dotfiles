@@ -1,281 +1,225 @@
-" ============================================================================ "
-"                                                                              "
-" ---------                           .vimrc                           ------- "
-"                                                                              "
-" ============================================================================ "
+" PLUGINS
 
+filetype off
+call plug#begin('~/.vim/plugged')
 
-" -- Mapping {
-" ==========
+Plug 'itchyny/lightline.vim'
+Plug 'chriskempson/base16-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'Raimondi/delimitMate'
+Plug 'SirVer/ultisnips'
+Plug '42Zavattas/vim-snippets', { 'branch': 'develop' }
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'easymotion/vim-easymotion'
+Plug 'mxw/vim-jsx'
+Plug 'mattn/emmet-vim', { 'for': 'javascript' }
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'neomake/neomake'
 
-  let mapleader=","
+call plug#end()
+filetype plugin indent on
 
-  " easymotion trigger with only 1 leader
-  map <Leader> <Plug>(easymotion-prefix)
+" MAPPING
 
-  " dvorak window focus move
-  nnoremap <Space> <NOP>
-  nmap <silent> <Space>h :wincmd h<CR>
-  nmap <silent> <Space>t :wincmd j<CR>
-  nmap <silent> <Space>n :wincmd k<CR>
-  nmap <silent> <Space>s :wincmd l<CR>
+let mapleader=","
 
-  " select pasted text
-  nnoremap gp `[v`]
+" easymotion trigger with only 1 leader
+map <Leader> <Plug>(easymotion-prefix)
 
-  " select line from first char to last char
-  nnoremap <Leader>m ^vg_
+" dvorak window focus move
+nnoremap <Space> <NOP>
+nmap <silent> <Space>h :wincmd h<CR>
+nmap <silent> <Space>t :wincmd j<CR>
+nmap <silent> <Space>n :wincmd k<CR>
+nmap <silent> <Space>s :wincmd l<CR>
 
-  " select pasted text, without first line (useful for re-indenting callbacks)
-  nnoremap <Leader>l `[v`]Oj
+" select pasted text
+nnoremap gp `[v`]
 
-  if has("unix")
-    let s:uname = system("uname -s")
-    if s:uname == "Darwin\n"
-      " macOS specifics
-    else
-      " linux specifics
-    endif
+" select line from first char to last char
+nnoremap <Leader>m ^vg_
+
+" select pasted text, without first line (useful for re-indenting callbacks)
+nnoremap <Leader>l `[v`]Oj
+
+if has("unix")
+  let s:uname = system("uname -s")
+  if s:uname == "Darwin\n"
+    " macOS specifics
+  else
+    " linux specifics
   endif
+endif
 
-" }
+" ALIASES
 
+command Sp set paste
+command Np set nopaste
 
-" -- Plugins {
-" ==========
+" DISPLAY
 
-  filetype off
+" Need explanation ?
+syntax on
 
-  call plug#begin('~/.vim/plugged')
+" The chosen one
+colorscheme base16-ocean
+set background=dark
 
-  Plug 'itchyny/lightline.vim'
-  Plug 'chriskempson/base16-vim'
-  Plug 'pangloss/vim-javascript'
-  Plug 'Raimondi/delimitMate'
-  Plug 'SirVer/ultisnips'
-  Plug '42Zavattas/vim-snippets', { 'branch': 'develop' }
-  Plug 'ctrlpvim/ctrlp.vim'
-  Plug 'airblade/vim-gitgutter'
-  Plug 'easymotion/vim-easymotion'
-  Plug 'mxw/vim-jsx'
-  Plug 'mattn/emmet-vim'
-  Plug 'scrooloose/nerdcommenter'
-  Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-repeat'
-  Plug 'fatih/vim-go', { 'for': 'go' }
-  Plug 'neomake/neomake'
+set mouse=c
 
-  call plug#end()
-  filetype plugin indent on
+" Encoding, etc.
+set encoding=utf-8
+set termencoding=utf-8
 
-" }
+" Correct strange bug
+set backspace=indent,eol,start
 
+" Insert space characters whenever <tab> is pressed
+set expandtab
 
-" -- Aliases {
-" ==========
+" Number of spaces inserted when hitting <tab>
+set tabstop=2
 
-  command Sp set paste
-  command Np set nopaste
+" Number of spaces inserted when using :retab
+set shiftwidth=2
 
-" }
+" Don't wrap long lines
+set nowrap
 
+" Always show status bar
+set laststatus=2
 
-" -- Display {
-" ==========
+" Number of lines to keep above & below cursor when scrolling
+set sidescrolloff=15
+set sidescroll=1
 
-  " Need explanation ?
-  syntax on
+" Auto reload files when changed
+set autoread
 
-  " The chosen one
-  colorscheme base16-ocean
-  set background=dark
+" Show the 80 chars column
+set colorcolumn=80
 
-  set mouse=c
+" Don't create useless files
+set noswapfile
+set nobackup
+set nowb
 
-  " Encoding, etc.
-  set encoding=utf-8
-  set termencoding=utf-8
+" Hide unsaved buffers
+set hidden
 
-  " Correct strange bug
-  set backspace=indent,eol,start
+" Show cursor line
+" set cursorline
 
-  " Insert space characters whenever <tab> is pressed
-  set expandtab
+" Move on search
+set incsearch
 
-  " Number of spaces inserted when hitting <tab>
-  set tabstop=2
+" Show line numbers
+set number
 
-  " Number of spaces inserted when using :retab
-  set shiftwidth=2
+" Show infos in status bar
+set ruler
 
-  " Don't wrap long lines
-  set nowrap
+" Prevent annoying highlight on search
+set nohlsearch
 
-  " Always show status bar
-  set laststatus=2
+" More intelligent searches
+set ignorecase
+set smartcase
 
-  " Number of lines to keep above & below cursor when scrolling
-  set sidescrolloff=15
-  set sidescroll=1
-  " set scrolloff=8
+" Never use Ex useless mode
+nnoremap Q <ESC>
 
-  " Auto reload files when changed
-  set autoread
+" Show blank characters
+set listchars=tab:>-,trail:·,nbsp:%
+set list
 
-  " Show the 80 chars column
-  set colorcolumn=80
+" Transparent bg <3
+hi Normal ctermbg=NONE
 
-  " Don't create useless files
-  set noswapfile
-  set nobackup
-  set nowb
+" OPENING TAB COMPLETION
 
-  " Hide unsaved buffers
-  set hidden
+set wildmode=longest,full
+set wildignore=*.o,*.obj,*~
+set wildignore+=*sass-cache*
+set wildignore+=*DS_Store*
+set wildignore+=*node_modules*
+set wildignore+=*ios/*
+set wildignore+=*android/*
+set wildignore+=*bower_components*
+set wildignore+=*plugins*
+set wildignore+=*platforms*
+set wildignore+=*release*
+set wildignore+=*dist*,*dist-server*,*lib*
+set wildmenu
 
-  " Show cursor line
-  " set cursorline
+" INDENTATION BY LANGUAGE
 
-  " Move on search
-  set incsearch
+autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
 
-  " Show line numbers
-  set number
+" VISUAL HELPERS
 
-  " Show infos in status bar
-  set ruler
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
 
-  " Prevent annoying highlight on search
-  set nohlsearch
+autocmd! BufWinEnter * Neomake
+autocmd! BufWritePost * Neomake
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+autocmd VimResized * :wincmd =
 
-  " More intelligent searches
-  set ignorecase
-  set smartcase
-
-  " Never use Ex useless mode
-  nnoremap Q <ESC>
-
-  " Show blank characters
-  set listchars=tab:>-,trail:·,nbsp:%
-  set list
-
-  " Transparent bg <3
-  hi Normal ctermbg=NONE
-
-" }
-
-" -- Opening tab completion {
-" =========================
-
-  set wildmode=longest,full
-  set wildignore=*.o,*.obj,*~
-  set wildignore+=*sass-cache*
-  set wildignore+=*DS_Store*
-  set wildignore+=*node_modules*
-  set wildignore+=*ios/*
-  set wildignore+=*android/*
-  set wildignore+=*bower_components*
-  set wildignore+=*plugins*
-  set wildignore+=*platforms*
-  set wildignore+=*release*
-  set wildignore+=*dist*,*dist-server*,*lib*
-  set wildmenu
-
-" }
-
-
-" -- Indentation by language {
-" ==========================
-
-  autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
-
-" }
-
-
-" -- Visual helpers {
-" =================
-
-  highlight ExtraWhitespace ctermbg=red guibg=red
-  match ExtraWhitespace /\s\+$/
-
-  autocmd! BufWinEnter * Neomake
-  autocmd! BufWritePost * Neomake
-  autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-  autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-  autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-  autocmd BufWinLeave * call clearmatches()
-  autocmd VimResized * :wincmd =
-
-  " disable xml different color for closing tag
-  highlight link xmlEndTag xmlTag
-
-" }
+" disable xml different color for closing tag
+highlight link xmlEndTag xmlTag
 
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_c_enabled_makers = []
 
+" LIGHTLINE
 
-" -- Lightline {
-" ============
+let g:lightline = {
+\   'colorscheme': 'jellybeans',
+\   'active': {
+\     'left': [ [ 'mode', 'paste' ], [ 'readonly', 'relativepath', 'modified' ] ],
+\     'right': [ [ 'lineinfo' ] ]
+\    },
+\   'inactive': {
+\     'left': [ ['relativepath' ] ],
+\     'right': []
+\    },
+\ }
 
-  let g:lightline = {
-  \   'colorscheme': 'jellybeans',
-  \   'active': {
-  \     'left': [ [ 'mode', 'paste' ], [ 'readonly', 'relativepath', 'modified' ] ],
-  \     'right': [ [ 'lineinfo' ] ]
-  \    },
-  \   'inactive': {
-  \     'left': [ ['relativepath' ] ],
-  \     'right': []
-  \    },
-  \ }
+" ULTISNIPS
 
-" }
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
+" VIM JSX
 
-" -- Ultisnips {
-" ============
+let g:jsx_ext_required = 0
 
-  let g:UltiSnipsExpandTrigger="<tab>"
-  let g:UltiSnipsJumpForwardTrigger="<tab>"
-  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" NERDCOMMENTER
 
-" }
+let g:NERDSpaceDelims = 1
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDDefaultAlign = 'left'
 
+" EMMET
 
-" -- Vim JSX {
-" ==========
+let g:user_emmet_install_global = 0
+let g:user_emmet_settings = {
+\  'javascript.jsx' : {
+\      'extends' : 'jsx',
+\  },
+\}
 
-  let g:jsx_ext_required = 0
+autocmd FileType javascript.jsx EmmetInstall
 
-" }
+" VIM-GO
 
-" -- NerdCommenter {
-" ================
-
-  let g:NERDSpaceDelims = 1
-  let g:NERDTrimTrailingWhitespace = 1
-  let g:NERDDefaultAlign = 'left'
-
-" }
-
-" -- EMMET {
-" ========
-
-  let g:user_emmet_install_global = 0
-  let g:user_emmet_settings = {
-  \  'javascript.jsx' : {
-  \      'extends' : 'jsx',
-  \  },
-  \}
-
-  autocmd FileType javascript.jsx EmmetInstall
-
-" }
-
-" -- vim-go {
-" =========
-
-  let g:go_fmt_command = "goimports"
-
-" }
+let g:go_fmt_command = "goimports"
