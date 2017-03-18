@@ -1,0 +1,13 @@
+#!/bin/bash
+
+filePath=$1
+baseName=`basename $filePath`
+destination="/www/media/up"
+finalURL="http://media.sigsev.io/up/$baseName"
+
+printf "> Uploading %s\n" $filePath
+
+scp $filePath $ZAVATTA:$destination >/dev/null
+[ $? -ne 0 ] && exit 1
+
+printf "> %s\n" $finalURL

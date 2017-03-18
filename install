@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# mock install by using `install <mock-folder>`
+
+targetFolder=$1
+[ "$targetFolder" == "" ] && targetFolder=$HOME
+
+if [[ "$targetFolder" = /* ]]; then
+  target=$targetFolder
+else
+  target="$(pwd)/$targetFolder"
+fi
+
+function dotMain {
+
+  if [ ! -d $target ]; then
+    mkdir $target || exit 1
+  fi
+
+  # bin
+  safeLn "dotfiles/bin" "bin"
+
+  # config
+  if [ ! -d "$target/.config" ]; then
+    mkdir "$target/.config" || exit 1
+  fi
+
+  for f in config/*; do
+    safeLn "../dotfiles/$f" ".config/$(basename $f)"
+  done
+
+  # dotfiles
+  for f in dot/*; do
+    safeLn "dotfiles/$f" ".$(basename $f)"
+  done
+
+  echo "> Done"
+
+}
+
+function safeLn {
+
+  lnTarget=$1
+  lnName=$2
+
+  pushd $target >/dev/null
+
+  if [ -L "$lnName" ]; then
+    lnDest=$(readlink $lnName)
+    if [ "$lnDest" != "$lnTarget" ]; then
+      echo "[warning] DEST/$lnName is pointing the wrong destination ($lnDest)"
+      read -p "> Overwrite? (y/n) " -n 1 -r
+      echo
+      if [[ $REPLY == "y" ]]
+      then
+        ln -sf "$lnTarget" "$lnName"
+      fi
+    fi
+  elif [ -e "$lnName" ]; then
+    echo "[warning] DEST/$lnName exists and is not a symlink"
+    read -p "> Remove? (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY == "y" ]]
+    then
+      rm -rf $lnName
+      ln -s "$lnTarget" "$lnName"
+    fi
+  else
+    ln -s "$lnTarget" "$lnName"
+  fi
+
+  popd >/dev/null
+
+}
+
+dotMain

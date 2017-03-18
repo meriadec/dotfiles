@@ -31,10 +31,10 @@
 
   URxvt.allow_bold:           true
 
-  URxvt.font:                 xft:Fira Code Light:size=9
-  URxvt*boldFont:             xft:Fira Code:bold:size=9
-  URxvt*italicFont:           xft:Fira Code Light:size=9
-  URxvt*boldItalicFont:       xft:Fira Code:bold:size=9
+  URxvt.font:                 xft:Fira Code Light:size=13
+  URxvt*boldFont:             xft:Fira Code:bold:size=13
+  URxvt*italicFont:           xft:Fira Code Light:size=13
+  URxvt*boldItalicFont:       xft:Fira Code:bold:size=13
 
 ! }
 
