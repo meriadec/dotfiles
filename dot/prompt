@@ -1,0 +1,20 @@
+#!/bin/bash
+
+cGreen=$'%{\e[0;32m%}'
+cRed=$'%{\e[0;31m%}'
+cYellow=$'%{\e[0;33m%}'
+cBlue=$'%{\e[1;34m%}'
+cNice=$'%{\e[0;36m%}'
+cNice2=$'%{\e[0;32m%}'
+cNop=$'%{\e[0;0m%}'
+
+function lastExitCode() {
+  local LAST_EXIT_CODE=$?
+  if [[ $LAST_EXIT_CODE -ne 0 ]]; then
+    echo "$cRed$LAST_EXIT_CODE$cNop"
+  else
+    echo $LAST_EXIT_CODE
+  fi
+}
+
+export PS1='${cNice}%n${cNop}|${cNice2}%m${cNop} $(lastExitCode) ${cYellow}%1~${cNop} ${cBlue}\$${cNop} '

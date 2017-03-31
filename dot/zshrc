@@ -5,11 +5,11 @@ CASE_SENSITIVE="true"
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/.profile
-source $HOME/.gitprompt
 source $HOME/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-export PS1=$'%{\e[0;32m%}%n%{\e[0;0m%}|%{\e[0;31m%}%m%{\e[0;33m%} %{\e[0m%}%{\e[0;37m%}%?%{\e[0m%}%{\e[0;33m%} %1~ %{\e[0m%}%{\e[0;34m%}$%{\e[0;0m%} '
+source $HOME/.profile
+source $HOME/.gitprompt
+source $HOME/.prompt
 
 export EDITOR="$(which nvim)"
 export LANG=en_US.UTF-8
@@ -29,7 +29,7 @@ fi
 if [[ `uname` == 'Linux' ]]; then
 
   export ANDROID_HOME=/opt/android-sdk
-  export BROWSER=$CHROME_BIN
+  export BROWSER=/usr/sbin/chromium
 
 fi
 

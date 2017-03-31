@@ -34,7 +34,7 @@ function dotMain {
     safeLn "dotfiles/$f" ".$(basename $f)"
   done
 
-  echo "> Done"
+  echo "> done"
 
 }
 
@@ -54,6 +54,7 @@ function safeLn {
       if [[ $REPLY == "y" ]]
       then
         ln -sf "$lnTarget" "$lnName"
+        [ $? -eq 0 ] && echo "> installed $lnName"
       fi
     fi
   elif [ -e "$lnName" ]; then
@@ -64,9 +65,11 @@ function safeLn {
     then
       rm -rf $lnName
       ln -s "$lnTarget" "$lnName"
+      [ $? -eq 0 ] && echo "> installed $lnName"
     fi
   else
     ln -s "$lnTarget" "$lnName"
+    [ $? -eq 0 ] && echo "> installed $lnName"
   fi
 
   popd >/dev/null
