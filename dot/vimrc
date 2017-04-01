@@ -23,12 +23,16 @@ Plug 'neomake/neomake'
 call plug#end()
 filetype plugin indent on
 
+" Faster grep & CtrlP
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
+
 " MAPPING
 
 let mapleader=","
-
-" easymotion trigger with only 1 leader
-map <Leader> <Plug>(easymotion-prefix)
 
 " dvorak window focus move
 nnoremap <Space> <NOP>
@@ -46,16 +50,18 @@ nnoremap <Leader>m ^vg_
 " select pasted text, without first line (useful for re-indenting callbacks)
 nnoremap <Leader>l `[v`]Oj
 
-if has("unix")
-  let s:uname = system("uname -s")
-  if s:uname == "Darwin\n"
-    " macOS specifics
-  else
-    " linux specifics
-  endif
-endif
+" bind K to grep word under cursor
+nnoremap \ :Grep<SPACE>
+vnoremap \ y:Grep<SPACE><C-R><C-0><CR>
+nnoremap <Leader>n :cnext<CR>
+nnoremap <Leader>t :cprevious<CR>
 
-" ALIASES
+nnoremap <Leader>q :ccl<CR>
+
+" COMMANDS
+
+" nice grep
+command -nargs=+ -complete=file -bar Grep silent! grep! "<args>"|cwindow|redraw!
 
 command Sp set paste
 command Np set nopaste
