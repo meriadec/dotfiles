@@ -1,4 +1,4 @@
-xset r rate 200 80
+xset r rate 150 100
 xrdb merge ~/.Xresources
 xrandr --dpi 96
 setxkbmap dvp
