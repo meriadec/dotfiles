@@ -50,6 +50,7 @@ export PATH=$PATH:/usr/bin
 export PATH=$PATH:/sbin
 export PATH=$PATH:/bin
 export PATH=$PATH:$HOME/bin
+export PATH=$PATH:$HOME/.cargo/bin
 
 # Linux specifics
 if [[ `uname` == 'Linux' ]]; then
