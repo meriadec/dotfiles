@@ -14,16 +14,16 @@ URxvt.internalBorder:       2
 URxvt.lineSpace:            0
 
 URxvt.depth:                32
-URxvt.cutchars:             "()*,<>[]{}|''/:"
+URxvt.cutchars:             "()*,<>[]{}|'':"
 
 ! FONTS
 
 URxvt.allow_bold:           true
 
-URxvt.font:                 xft:Fira Code Light:size=11
-URxvt*boldFont:             xft:Fira Code:bold:size=11
-URxvt*italicFont:           xft:Fira Code Light:size=11
-URxvt*boldItalicFont:       xft:Fira Code:bold:size=11
+URxvt.font:                 xft:Fira Code Light:size=13
+URxvt*boldFont:             xft:Fira Code:bold:size=13
+URxvt*italicFont:           xft:Fira Code Light:size=13
+URxvt*boldItalicFont:       xft:Fira Code:bold:size=13
 
 ! SCROLLBAR
 

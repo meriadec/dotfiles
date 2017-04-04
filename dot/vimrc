@@ -118,7 +118,7 @@ set nowb
 set hidden
 
 " Show cursor line
-" set cursorline
+set cursorline
 
 " Move on search
 set incsearch
