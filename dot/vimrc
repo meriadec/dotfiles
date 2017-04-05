@@ -61,7 +61,7 @@ nnoremap <Leader>q :ccl<CR>
 " COMMANDS
 
 " nice grep
-command -nargs=+ -complete=file -bar Grep silent! grep! "<args>"|cwindow|redraw!
+command -nargs=+ -complete=file -bar Grep silent! grep! "<args>" | cwindow | redraw!
 
 command Sp set paste
 command Np set nopaste
