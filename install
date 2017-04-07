@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# mock install by using `install <mock-folder>`
+# mock install by using `./install <mock-folder>`
 
 targetFolder=$1
 [ "$targetFolder" == "" ] && targetFolder=$HOME
@@ -17,13 +17,15 @@ function dotMain {
     mkdir $target || exit 1
   fi
 
+  # create useful folders
+  createFolderIfNeeded git
+  createFolderIfNeeded .config
+
+  # clone useful repos
+  cloneRepo https://github.com/zsh-users/zsh-syntax-highlighting.git
+
   # bin
   safeLn "dotfiles/bin" "bin"
-
-  # config
-  if [ ! -d "$target/.config" ]; then
-    mkdir "$target/.config" || exit 1
-  fi
 
   for f in config/*; do
     safeLn "../dotfiles/$f" ".config/$(basename $f)"
@@ -70,6 +72,37 @@ function safeLn {
   else
     ln -s "$lnTarget" "$lnName"
     [ $? -eq 0 ] && echo "> installed $lnName"
+  fi
+
+  popd >/dev/null
+
+}
+
+function createFolderIfNeeded {
+
+  pushd $target >/dev/null
+
+  folderName=$1
+
+  if [ ! -d "$folderName" ]; then
+    echo "> creating $folderName folder"
+    mkdir $folderName || exit 1
+  fi
+
+  popd >/dev/null
+
+}
+
+function cloneRepo {
+
+  pushd $target/git >/dev/null
+
+  repoName=$1
+  folderName="$(echo $repoName | sed -E 's/.*\/([^/]*).git$/\1/g')"
+
+  if [ ! -d "$folderName" ]; then
+    echo "> installing ${folderName}..."
+    git clone $repoName
   fi
 
   popd >/dev/null
