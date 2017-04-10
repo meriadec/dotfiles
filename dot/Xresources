@@ -20,10 +20,10 @@ URxvt.cutchars:             "()*,<>[]{}|'':"
 
 URxvt.allow_bold:           true
 
-URxvt.font:                 xft:Fira Code Light:size=13
-URxvt*boldFont:             xft:Fira Code:bold:size=13
-URxvt*italicFont:           xft:Fira Code Light:size=13
-URxvt*boldItalicFont:       xft:Fira Code:bold:size=13
+URxvt.font:                 xft:Fira Code Light:size=12
+URxvt*boldFont:             xft:Fira Code:bold:size=12
+URxvt*italicFont:           xft:Fira Code Light:size=12
+URxvt*boldItalicFont:       xft:Fira Code:bold:size=12
 
 ! SCROLLBAR
 

@@ -13,7 +13,7 @@ finalURL="http://media.sigsev.io/up/$baseName"
 
 printf "> Uploading %s\n" $filePath
 
-scp $filePath $ZAVATTA:$destination >/dev/null
+scp $filePath meri@$ZAVATTA:$destination
 [ $? -ne 0 ] && exit 1
 
 printf "> %s\n" $finalURL
