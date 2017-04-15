@@ -1,8 +1,5 @@
 #!/bin/bash
 
-source $HOME/.private
-
-# prompt
 export ZAVATTA='192.99.2.67'
 
 # let .profile manage .profile
@@ -22,6 +19,7 @@ alias dot='cd ~/dotfiles'
 alias gogo="cd $GOPATH/src"
 
 # git
+alias gd='git diff'
 alias gits='git status'
 alias gitp='git push'
 alias gitc='git commit'
