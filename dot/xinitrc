@@ -6,4 +6,4 @@ xset -b
 xbindkeys
 setxkbmap -option compose:ralt
 eval "$(ssh-agent)"
-exec i3
+exec awesome
