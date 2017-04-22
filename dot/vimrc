@@ -32,7 +32,7 @@ endif
 
 " MAPPING
 
-let mapleader=","
+let mapleader="-"
 
 " dvorak window focus move
 nnoremap <Space> <NOP>
