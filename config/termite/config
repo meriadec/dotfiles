@@ -1,10 +1,10 @@
 [options]
-font = Misc Tamsyn 15
+font = Meslo LG L 13
 
 [colors]
 foreground = #c0c5ce
 background = #2b303b
-cursor     = #c0c5ce
+cursor     = #6B4C56
 color0     = #2b303b
 color1     = #bf616a
 color2     = #a3be8c
