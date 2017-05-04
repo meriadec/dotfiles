@@ -18,6 +18,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'flowtype/vim-flow'
 Plug 'neomake/neomake'
 
 call plug#end()
@@ -229,3 +230,7 @@ autocmd FileType javascript.jsx EmmetInstall
 " VIM-GO
 
 let g:go_fmt_command = "goimports"
+
+" VIM-FLOw
+
+let g:flow#autoclose = 1
