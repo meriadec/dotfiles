@@ -20,6 +20,7 @@ alias gogo="cd $GOPATH/src"
 alias pp="cd ~/git/passport"
 alias ac="cd ~/git/app-components"
 alias rc="cd ~/git/react-components"
+alias ma="cd ~/git/mjml-app"
 
 # git
 alias gd='git diff'
