@@ -17,6 +17,7 @@ alias gg='cd ~/git'
 alias dl='cd ~/downloads'
 alias dot='cd ~/dotfiles'
 alias gogo="cd $GOPATH/src"
+alias pp="cd ~/git/passport"
 
 # git
 alias gd='git diff'
@@ -33,6 +34,7 @@ vgrep () {
 
 # random
 alias sushi='$BROWSER https://www.planetsushi.fr/'
+alias public-ip='dig +short myip.opendns.com @resolver1.opendns.com'
 
 # Linux specifics
 if [[ `uname` == 'Linux' ]]; then
