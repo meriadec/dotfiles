@@ -125,6 +125,7 @@ set cursorline
 set incsearch
 
 " Show line numbers
+set relativenumber
 set number
 
 " Show infos in status bar
