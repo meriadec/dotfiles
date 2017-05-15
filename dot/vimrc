@@ -35,6 +35,12 @@ endif
 
 let mapleader="-"
 
+" different cursors based on modes
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
+let &t_SI .= "\<Esc>[5 q"
+let &t_SR .= "\<Esc>[4 q"
+let &t_EI .= "\<Esc>[3 q"
+
 " dvorak window focus move
 nnoremap <Space> <NOP>
 nmap <silent> <Space>h :wincmd h<CR>
