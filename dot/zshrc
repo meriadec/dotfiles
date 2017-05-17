@@ -78,6 +78,7 @@ fi
 
 export PATH
 
-if [[ ! $TERM =~ screen ]]; then
-  exec tmux
-fi
+# if [[ ! $TERM =~ screen ]]; then
+#   alias tmux="tmux -2"
+#   exec tmux
+# fi
