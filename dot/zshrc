@@ -77,8 +77,3 @@ elif [[ `uname` == 'Linux' ]]; then
 fi
 
 export PATH
-
-# if [[ ! $TERM =~ screen ]]; then
-#   alias tmux="tmux -2"
-#   exec tmux
-# fi
