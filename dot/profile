@@ -35,6 +35,11 @@ vgrep () {
   vim $(grep -rn $1 src | cut -d : -f 1 | sort | uniq)
 }
 
+# wine
+
+alias win-steam='wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Steam/Steam.exe'
+alias win-fl-studio='wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Image-Line/FL\ Studio\ 12/FL.exe'
+
 # random
 alias sushi='$BROWSER https://www.planetsushi.fr/'
 alias public-ip='dig +short myip.opendns.com @resolver1.opendns.com'
