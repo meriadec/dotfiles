@@ -48,7 +48,8 @@ nmap <silent> <Space>n :wincmd k<CR>
 nmap <silent> <Space>s :wincmd l<CR>
 
 " select pasted text
-nnoremap gp `[v`]
+noremap <Leader>p p`[v`]
+noremap <Leader>P P`[v`]
 
 " select line from first char to last char
 nnoremap <Leader>m ^vg_
