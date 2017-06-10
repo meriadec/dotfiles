@@ -1,9 +1,11 @@
-xset r rate 150 100
-xrdb merge ~/.Xresources
-xrandr --dpi 96
 setxkbmap dvp
+setxkbmap -option compose:ralt
+
+xset r rate 150 100
 xset -b
 xbindkeys
-setxkbmap -option compose:ralt
+
+xrdb merge ~/.Xresources
 eval "$(ssh-agent)"
+exec compton &
 exec awesome
