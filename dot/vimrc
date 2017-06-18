@@ -65,6 +65,10 @@ nnoremap <Leader>t :cprevious<CR>
 
 nnoremap <Leader>q :ccl<CR>
 
+inoremap {<cr> {<cr>}<c-o>O
+inoremap [<cr> [<cr>]<c-o>O
+inoremap (<cr> (<cr>)<c-o>O
+
 " COMMANDS
 
 " nice grep
