@@ -8,6 +8,7 @@ alias sprof='source ~/.profile'
 
 # hehe
 alias vim=nvim
+alias vmi=vim
 
 # `ls` thoughts
 alias lt='ls -lt'
@@ -49,6 +50,7 @@ alias g=$BROWSER
 alias hdcast='ffcast -s ffmpeg -f x11grab -framerate 60 -show_region 1 -s %s -i %D+%c -c:v libx264rgb -crf 0 -preset ultrafast'
 alias bye='shutdown now'
 alias showfiles='cut -d : -f 1 | sort | uniq'
+alias upd='pacaur -Syu --noconfirm'
 
 # Linux specifics
 if [[ `uname` == 'Linux' ]]; then
