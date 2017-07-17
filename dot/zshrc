@@ -28,7 +28,7 @@ if [[ `uname` == 'Darwin' ]]; then
 elif [[ `uname` == 'Linux' ]]; then
 
   export ANDROID_HOME=/opt/android-sdk
-  export BROWSER=/usr/sbin/google-chrome
+  export BROWSER=/usr/sbin/google-chrome-unstable
   export TERMINAL=$TERM
 
   if [[ $TERM == xterm-termite ]]; then
