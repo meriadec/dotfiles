@@ -19,7 +19,7 @@ Plug 'tpope/vim-repeat'
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'flowtype/vim-flow'
 Plug 'sbdchd/neoformat'
-Plug 'neomake/neomake'
+Plug 'w0rp/ale'
 
 call plug#end()
 filetype plugin indent on
@@ -195,8 +195,6 @@ let g:neoformat_enabled_javascript = ['prettier']
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
-autocmd! BufWinEnter * Neomake
-autocmd! BufWritePost * Neomake
 autocmd! BufWritePre * Neoformat
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
@@ -206,9 +204,6 @@ autocmd VimResized * :wincmd =
 
 " disable xml different color for closing tag
 highlight link xmlEndTag xmlTag
-
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_c_enabled_makers = []
 
 " LIGHTLINE
 
@@ -258,3 +253,12 @@ let g:go_fmt_command = "goimports"
 " VIM-FLOw
 
 let g:flow#autoclose = 1
+
+" ALE
+
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
+
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = 'ℹ'

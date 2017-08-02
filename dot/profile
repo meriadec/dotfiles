@@ -10,6 +10,7 @@ alias sprof='source ~/.profile'
 alias vim=nvim
 alias vmi=vim
 alias ivm=vim
+alias pd=pwd
 
 # `ls` thoughts
 alias lt='ls -lt'
@@ -24,6 +25,7 @@ alias ac="cd ~/git/app-components"
 alias rc="cd ~/git/react-components"
 alias mi="cd ~/git/mailjet-icons"
 alias ma="cd ~/git/mjml-app"
+alias prev="cd ~/git/mailjet-passport-previews"
 
 # git
 alias gd='git diff'
