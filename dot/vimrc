@@ -1,4 +1,9 @@
-" PLUGINS
+" -----------------------------------------------------------------------------
+"                                   .vimrc
+" -----------------------------------------------------------------------------
+
+"                                  PLUGINS
+"                                  =======
 
 filetype off
 call plug#begin('~/.vim/plugged')
@@ -24,16 +29,52 @@ Plug 'w0rp/ale'
 call plug#end()
 filetype plugin indent on
 
-" Faster grep & CtrlP
+"                                  MAPPING
+"                                  =======
+
+let mapleader="-"
+
+" dvorak buffer navigation
+nnoremap <Space> <NOP>
+nmap <silent> <Space>h :wincmd h<CR>
+nmap <silent> <Space>t :wincmd j<CR>
+nmap <silent> <Space>n :wincmd k<CR>
+nmap <silent> <Space>s :wincmd l<CR>
+
+" paste & select pasted text
+noremap <Leader>p p`[v`]
+noremap <Leader>P P`[v`]
+
+" select pasted text, without first line (useful for re-indenting callbacks)
+nnoremap <Leader>l `[v`]Oj
+
+" select line from first non-blank char to last char
+nnoremap <Leader>m ^vg_
+
+" grep in current project & navigate in results
+" use silver searcher if possible
+command -nargs=+ -complete=file -bar Grep silent! grep! "<args>" | cwindow | redraw!
+nnoremap \ :Grep<SPACE>
+vnoremap \ y:Grep<SPACE><C-R><C-0><CR>
+nnoremap <Leader>n :cnext<CR>
+nnoremap <Leader>t :cprevious<CR>
+nnoremap <Leader>q :ccl<CR>
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   let g:ctrlp_use_caching = 0
 endif
 
-" MAPPING
+" indent { / [ / ( & put cursor on blank line when <Enter> inside
+inoremap {<cr> {<cr>}<c-o>O
+inoremap [<cr> [<cr>]<c-o>O
+inoremap (<cr> (<cr>)<c-o>O
 
-let mapleader="-"
+command Sp set paste
+command Np set nopaste
+
+"                                  SETTINGS
+"                                  ========
 
 " different cursors based on modes
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
@@ -41,126 +82,86 @@ let &t_SI .= "\<Esc>[5 q"
 let &t_SR .= "\<Esc>[4 q"
 let &t_EI .= "\<Esc>[3 q"
 
-" dvorak window focus move
-nnoremap <Space> <NOP>
-nmap <silent> <Space>h :wincmd h<CR>
-nmap <silent> <Space>t :wincmd j<CR>
-nmap <silent> <Space>n :wincmd k<CR>
-nmap <silent> <Space>s :wincmd l<CR>
-
-" select pasted text
-noremap <Leader>p p`[v`]
-noremap <Leader>P P`[v`]
-
-" select line from first char to last char
-nnoremap <Leader>m ^vg_
-
-" select pasted text, without first line (useful for re-indenting callbacks)
-nnoremap <Leader>l `[v`]Oj
-
-" bind K to grep word under cursor
-nnoremap \ :Grep<SPACE>
-vnoremap \ y:Grep<SPACE><C-R><C-0><CR>
-nnoremap <Leader>n :cnext<CR>
-nnoremap <Leader>t :cprevious<CR>
-
-nnoremap <Leader>q :ccl<CR>
-
-inoremap {<cr> {<cr>}<c-o>O
-inoremap [<cr> [<cr>]<c-o>O
-inoremap (<cr> (<cr>)<c-o>O
-
-" COMMANDS
-
-" nice grep
-command -nargs=+ -complete=file -bar Grep silent! grep! "<args>" | cwindow | redraw!
-
-command Sp set paste
-command Np set nopaste
-
-" DISPLAY
-
-" Need explanation ?
+" need explanation ?
 syntax on
 
-" The chosen one
+" the chosen one
 colorscheme base16-ocean
 set background=dark
 
 set mouse=c
 
-" Encoding, etc.
+" encoding, etc.
 set encoding=utf-8
 set termencoding=utf-8
 
-" Correct strange bug
+" correct strange bug
 set backspace=indent,eol,start
 
-" Insert space characters whenever <tab> is pressed
+" insert space characters whenever <tab> is pressed
 set expandtab
 
-" Number of spaces inserted when hitting <tab>
+" number of spaces inserted when hitting <tab>
 set tabstop=2
 
-" Number of spaces inserted when using :retab
+" number of spaces inserted when using :retab
 set shiftwidth=2
 
-" Don't wrap long lines
+" don't wrap long lines
 set nowrap
 
-" Always show status bar
+" always show status bar
 set laststatus=2
 
-" Number of lines to keep above & below cursor when scrolling
+" number of lines to keep above & below cursor when scrolling
 set sidescrolloff=15
 set sidescroll=1
 
-" Auto reload files when changed
+" auto reload files when changed
 set autoread
 
-" Show the 80 chars column
+" show the 80 chars column
 set colorcolumn=80
 
-" Don't create useless files
+" don't create useless files
 set noswapfile
 set nobackup
 set nowb
 
-" Hide unsaved buffers
+" hide unsaved buffers
 set hidden
 
-" Show cursor line
+" show cursor line
 set cursorline
 
-" Move on search
+" move on search
 set incsearch
 
-" Show line numbers
+" show line numbers
 set relativenumber
 set number
 
-" Show infos in status bar
+" show infos in status bar
 set ruler
 
-" Prevent annoying highlight on search
+" prevent annoying highlight on search
 set nohlsearch
 
-" More intelligent searches
+" more intelligent searches
 set ignorecase
 set smartcase
 
-" Never use Ex useless mode
+" never use Ex useless mode
 nnoremap Q <ESC>
 
-" Show blank characters
+" show blank characters
 set listchars=tab:>-,trail:·,nbsp:%
 set list
 
-" Transparent bg <3
+" transparent bg
 hi Normal ctermbg=NONE
 
-" OPENING TAB COMPLETION
-
+" wild menu completion
 set wildmode=longest,full
 set wildignore=*.o,*.obj,*~
 set wildignore+=*sass-cache*
@@ -176,37 +177,40 @@ set wildignore+=*release*
 set wildignore+=*dist*,*dist-server*,*lib*
 set wildmenu
 
+" indentation by language
 autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
 
-" VISUAL HELPERS
-
+" neoformat
 let g:neoformat_javascript_prettier = {
 \   'exe': 'prettier',
-\   'args': ['--print-width 100', '--single-quote', '--trailing-comma all', '--no-semi'],
+\   'args': [
+\     '--print-width 100',
+\     '--single-quote',
+\     '--trailing-comma all',
+\     '--no-semi'
+\   ],
 \ }
-
-" let g:neoformat_javascript_prettier = {
-" \   'exe': 'prettier',
-" \   'args': ['--print-width 80', '--single-quote', '--trailing-comma all', '--no-semi'],
-" \ }
-
 let g:neoformat_enabled_javascript = ['prettier']
+autocmd! BufWritePre * Neoformat
 
+" display extra spaces in red
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
-
-autocmd! BufWritePre * Neoformat
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+
+" resize panels when client is resized
 autocmd VimResized * :wincmd =
 
 " disable xml different color for closing tag
 highlight link xmlEndTag xmlTag
 
-" LIGHTLINE
+"                               PLUGINS CONFIG
+"                               ==============
 
+" lightline
 let g:lightline = {
 \   'colorscheme': 'jellybeans',
 \   'active': {
@@ -219,46 +223,32 @@ let g:lightline = {
 \    },
 \ }
 
-" ULTISNIPS
-
+" ultisnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-" VIM JSX
-
+" vim jsx
 let g:jsx_ext_required = 0
 
-" NERDCOMMENTER
-
+" nerdcommenter
 let g:NERDSpaceDelims = 1
 let g:NERDTrimTrailingWhitespace = 1
 let g:NERDDefaultAlign = 'left'
 
-" EMMET
-
+" emmet
 let g:user_emmet_install_global = 0
 let g:user_emmet_settings = {
 \  'javascript.jsx' : {
-\      'extends' : 'jsx',
+\    'extends' : 'jsx',
 \  },
 \}
-
 autocmd FileType javascript.jsx EmmetInstall
 
-" VIM-GO
-
+" vim-go
 let g:go_fmt_command = "goimports"
 
-" VIM-FLOw
-
-let g:flow#autoclose = 1
-
-" ALE
-
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\}
-
+" ale
+let g:ale_linters = { 'javascript': ['eslint'] }
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = 'ℹ'
