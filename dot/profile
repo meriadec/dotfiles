@@ -26,6 +26,7 @@ alias rc="cd ~/git/react-components"
 alias mi="cd ~/git/mailjet-icons"
 alias ma="cd ~/git/mjml-app"
 alias prev="cd ~/git/mailjet-passport-previews"
+alias min="cd ~/git/minus"
 
 # git
 alias gd='git diff'
