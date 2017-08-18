@@ -22,7 +22,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'flowtype/vim-flow'
 Plug 'sbdchd/neoformat'
 Plug 'w0rp/ale'
 
@@ -179,6 +178,9 @@ set wildmenu
 
 " indentation by language
 autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
+
+" quickfix split
+autocmd! FileType qf nnoremap <buffer> <leader><Enter> <C-w><Enter><C-w>L
 
 " neoformat
 let g:neoformat_javascript_prettier = {

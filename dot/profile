@@ -30,6 +30,7 @@ alias min="cd ~/git/minus"
 
 # git
 alias gd='git diff'
+alias gb='git branch -vv'
 alias gds='git diff --staged'
 alias gits='git status'
 alias gtis='gits'
