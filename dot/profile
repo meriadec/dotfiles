@@ -42,6 +42,7 @@ alias unscaffold='git config --local user.name meriadec && git config --local us
 
 # misc
 alias vimup="vim +'PlugUpgrade|PlugInstall|PlugUpdate|qa!'"
+alias tada="aplay -q ~/dotfiles/assets/tada.wav"
 
 # dev
 vgrep () {
