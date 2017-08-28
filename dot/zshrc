@@ -61,6 +61,7 @@ PATH=$PATH:/bin
 PATH=$PATH:$HOME/bin
 PATH=$PATH:$HOME/.cargo/bin
 PATH=$PATH:$HOME/.config/yarn/global/node_modules/.bin
+PATH=$PATH:$HOME/.gem/ruby/2.4.0/bin
 
 # OSX specifics
 if [[ `uname` == 'Darwin' ]]; then
