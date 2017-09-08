@@ -76,10 +76,7 @@ command Np set nopaste
 "                                  ========
 
 " different cursors based on modes
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE = 1
-let &t_SI .= "\<Esc>[5 q"
-let &t_SR .= "\<Esc>[4 q"
-let &t_EI .= "\<Esc>[3 q"
+set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 
 " need explanation ?
 syntax on
