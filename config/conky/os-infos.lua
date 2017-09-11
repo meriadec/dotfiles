@@ -14,12 +14,12 @@ function drawText(cr, x, y, text, size, opacity)
   cairo_stroke (cr)
 end
 
-function drawCircle(cr, x, y, value, label)
+function drawCircle(cr, x, y, width, value, label)
   --SETTINGS
   --rings size
   ring_center_x=x
   ring_center_y=y
-  ring_radius=50
+  ring_radius=width / 2
   ring_width=3
   --colors
   --set background colors, 1,0,0,1 = fully opaque red
@@ -82,16 +82,16 @@ function conky_main()
   cr = cairo_create(cs)
 
   cpu=conky_parse("${cpu}")
-  drawCircle(cr, 150, 60, cpu, "CPU")
+  drawCircle(cr, 120, 120, 200, cpu, "CPU")
 
   mem=conky_parse("${memperc}")
-  drawCircle(cr, 270, 60, mem, "MEM")
+  drawCircle(cr, 300, 100, 140, mem, "MEM")
 
   -- cairo_set_line_width(cr, 4)
   -- cairo_set_line_cap(cr, CAIRO_LINE_CAP_BUTT)
   -- cairo_set_source_rgba(cr,1,1,1,1)
   -- cairo_move_to(cr, 0, 0)
-  -- cairo_line_to(cr, 0, 100)
+  -- cairo_line_to(cr, conky_window.width, 100)
   -- cairo_stroke(cr)
 
   -- ==============================
