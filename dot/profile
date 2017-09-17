@@ -27,6 +27,7 @@ alias mi="cd ~/git/mailjet-icons"
 alias ma="cd ~/git/mjml-app"
 alias prev="cd ~/git/mailjet-passport-previews"
 alias min="cd ~/git/minus"
+alias pl="cd ~/git/places"
 
 # git
 alias gd='git diff'

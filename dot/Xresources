@@ -65,27 +65,27 @@ URxvt.pointerBlank:         true
 #define base0F #ab7967
 #define red    #BF616A
 
-*.foreground:   rgba:ffff/ffff/ffff/3333
-*.background:   rgba:2b00/3000/3b00/0000
-*.cursorColor:  rgba:ffff/ffff/ffff/3333
+*.foreground:   base05
+*.background:   rgba:2b00/3000/3b00/eeee
+*.cursorColor:  base05
 
-*.color0:       rgba:ffff/ffff/ffff/3333
-*.color1:       rgba:ffff/ffff/ffff/3333
-*.color2:       rgba:ffff/ffff/ffff/3333
-*.color3:       rgba:ffff/ffff/ffff/3333
-*.color4:       rgba:ffff/ffff/ffff/3333
-*.color5:       rgba:ffff/ffff/ffff/3333
-*.color6:       rgba:ffff/ffff/ffff/3333
-*.color7:       rgba:ffff/ffff/ffff/3333
+*.color0:       base00
+*.color1:       base08
+*.color2:       base0B
+*.color3:       base0A
+*.color4:       base0D
+*.color5:       base0E
+*.color6:       base0C
+*.color7:       base05
 
-*.color8:       rgba:ffff/ffff/ffff/3333
-*.color9:       rgba:ffff/ffff/ffff/3333
-*.color10:      rgba:ffff/ffff/ffff/3333
-*.color11:      rgba:ffff/ffff/ffff/3333
-*.color12:      rgba:ffff/ffff/ffff/3333
-*.color13:      rgba:ffff/ffff/ffff/3333
-*.color14:      rgba:ffff/ffff/ffff/3333
-*.color15:      rgba:ffff/ffff/ffff/3333
+*.color8:       base03
+*.color9:       base09
+*.color10:      base01
+*.color11:      base02
+*.color12:      base04
+*.color13:      base06
+*.color14:      base0F
+*.color15:      base07
 
 ! ROFI
 
