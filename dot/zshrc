@@ -35,6 +35,7 @@ export LS_COLORS="ln=32:di=35;35:ex=40;31;01"
 
 PATH=''
 
+# JS dev
 PATH=$PATH:./node_modules/.bin
 
 # Android dev
@@ -68,6 +69,11 @@ elif [[ `uname` == 'Linux' ]]; then
   PATH=$HOME/.gem/ruby/2.3.0/bin:$PATH
   PATH=$PATH:$HOME/git/mjml-app/release/linux-unpacked
 
+fi
+
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+  eval `ssh-agent -s`
+  ssh-add
 fi
 
 export PATH
