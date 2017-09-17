@@ -18,14 +18,7 @@ source $HOME/.prompt
 
 export GOPATH=$HOME/dev/go
 
-# OSX specifics
-if [[ `uname` == 'Darwin' ]]; then
-
-  export ANDROID_HOME=/usr/local/opt/android-sdk
-  export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_74.jdk/Contents/Home
-
-# Linux specifics
-elif [[ `uname` == 'Linux' ]]; then
+if [[ `uname` == 'Linux' ]]; then
 
   export ANDROID_HOME=/opt/android-sdk
   export BROWSER=/usr/sbin/google-chrome-unstable
