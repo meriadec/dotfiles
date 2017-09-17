@@ -11,12 +11,12 @@ sudo pacman -S expac yajl git --noconfirm --needed
 
 if [ ! -n "$(pacman -Qs cower)" ]; then
   curl -o PKGBUILD https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=cower
-  makepkg PKGBUILD --skippgpcheck --install --needed
+  makepkg PKGBUILD --skippgpcheck --install --needed --noconfirm
 fi
 
 if [ ! -n "$(pacman -Qs pacaur)" ]; then
   curl -o PKGBUILD https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pacaur
-  makepkg PKGBUILD --install --needed
+  makepkg PKGBUILD --install --needed --noconfirm
 fi
 
 cd ~
