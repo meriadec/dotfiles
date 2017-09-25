@@ -26,12 +26,12 @@ function drawCircle(cr, x, y, width, value, label)
   ring_bg_red=1
   ring_bg_green=1
   ring_bg_blue=1
-  ring_bg_alpha=0.1
+  ring_bg_alpha=0.3
   --set indicator colors, 1,1,1,1 = fully opaque white
   ring_in_red=1
   ring_in_green=1
   ring_in_blue=1
-  ring_in_alpha=0.3
+  ring_in_alpha=0.5
   --indicator value settings
   max_value=100
 
