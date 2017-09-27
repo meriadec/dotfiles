@@ -6,4 +6,4 @@ if [ "$imgName" == "" ]; then
   imgName='%Y-%m-%d_$wx$h.png'
 fi
 
-escrotum -s $imgName | xargs add-shadow
+escrotum -s $imgName
