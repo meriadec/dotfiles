@@ -1,3 +1,9 @@
 #!/bin/bash
 
-scrot -s $1.png
+imgName=$1
+
+if [ "$imgName" == "" ]; then
+  imgName='%Y-%m-%d_$wx$h.png'
+fi
+
+escrotum -s $imgName | xargs add-shadow

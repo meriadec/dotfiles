@@ -1,3 +1,5 @@
 #!/bin/bash
 
-convert "$1" -trim \( +clone -background grey25 -shadow 80x40+5+30 \) +swap -background transparent -layers merge +repage "$1-shadow.png"
+tmpName="/tmp/shadow.png"
+convert "$1" -trim \( +clone -background grey25 -shadow 80x40+5+30 \) +swap -background transparent -layers merge +repage $tmpName
+mv $tmpName $1
