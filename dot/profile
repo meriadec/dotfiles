@@ -11,6 +11,7 @@ alias vim=nvim
 alias vmi=vim
 alias ivm=vim
 alias pd=pwd
+alias tgi=tig
 
 # `ls` thoughts
 alias lt='ls -lt'
