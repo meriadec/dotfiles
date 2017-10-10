@@ -1,0 +1,16 @@
+[Added Associations]
+
+[Removed Associations]
+
+[Default Applications]
+text/html=google-chrome-unstable.desktop;google-chrome.desktop
+x-scheme-handler/http=google-chrome-unstable.desktop;google-chrome.desktop
+x-scheme-handler/https=google-chrome-unstable.desktop;google-chrome.desktop
+x-scheme-handler/ftp=google-chrome-unstable.desktop;google-chrome.desktop
+x-scheme-handler/chrome=google-chrome-unstable.desktop;google-chrome.desktop
+application/x-extension-htm=google-chrome-unstable.desktop;google-chrome.desktop
+application/x-extension-html=google-chrome-unstable.desktop;google-chrome.desktop
+application/x-extension-shtml=google-chrome-unstable.desktop;google-chrome.desktop
+application/xhtml+xml=google-chrome-unstable.desktop;google-chrome.desktop
+application/x-extension-xhtml=google-chrome-unstable.desktop;google-chrome.desktop
+application/x-extension-xht=google-chrome-unstable.desktop;google-chrome.desktop
