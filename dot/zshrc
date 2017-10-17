@@ -16,6 +16,7 @@ source $HOME/.profile
 source $HOME/.gitprompt
 source $HOME/.prompt
 
+export FZF_DEFAULT_COMMAND='ag -g ""'
 export GOPATH=$HOME/dev/go
 
 if [[ `uname` == 'Linux' ]]; then

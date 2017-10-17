@@ -14,7 +14,6 @@ Plug 'pangloss/vim-javascript'
 Plug 'Raimondi/delimitMate'
 Plug 'SirVer/ultisnips'
 Plug '42Zavattas/vim-snippets'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'mxw/vim-jsx'
 Plug 'mattn/emmet-vim', { 'for': 'javascript' }
@@ -24,6 +23,9 @@ Plug 'tpope/vim-repeat'
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'sbdchd/neoformat'
 Plug 'w0rp/ale'
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 filetype plugin indent on
@@ -39,6 +41,8 @@ nmap <silent> <Space>h :wincmd h<CR>
 nmap <silent> <Space>t :wincmd j<CR>
 nmap <silent> <Space>n :wincmd k<CR>
 nmap <silent> <Space>s :wincmd l<CR>
+
+nnoremap <C-p> :Files<CR>
 
 " paste & select pasted text
 noremap <Leader>p p`[v`]
