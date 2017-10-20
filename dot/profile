@@ -44,12 +44,13 @@ alias unscaffold='git config --local user.name meriadec && git config --local us
 
 # misc
 alias vimup="vim +'PlugUpgrade|PlugInstall|PlugUpdate|qa!'"
-alias tada="aplay -q ~/dotfiles/assets/tada.wav"
 
 # dev
 vgrep () {
   vim $(grep -rn $1 src | cut -d : -f 1 | sort | uniq)
 }
+
+alias vv='vim $(fzf)'
 
 # wine
 

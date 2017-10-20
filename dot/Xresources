@@ -91,8 +91,8 @@ URxvt.pointerBlank:         true
 
 rofi.lines:               10
 rofi.font:                FiraCode-Bold bold 11
-rofi.color-normal:        #00000000,#aaffffff,#00000000,#22BF616A,red
-rofi.color-window:        #dd2b303b,base01
+rofi.color-normal:        #00000000,#ccffffff,#00000000,#bf616a,red
+rofi.color-window:        #2b303b,base01
 rofi.bw:                  0
 rofi.padding:             10
 rofi.fixed-num-lines:     false
