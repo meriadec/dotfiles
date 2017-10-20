@@ -66,7 +66,7 @@ URxvt.pointerBlank:         true
 #define red    #BF616A
 
 *.foreground:   base05
-*.background:   rgba:2b00/3000/3b00/eeee
+*.background:   base01
 *.cursorColor:  base05
 
 *.color0:       base00

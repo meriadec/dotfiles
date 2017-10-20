@@ -7,7 +7,6 @@ alias prof='vim ~/.profile && sprof'
 alias sprof='source ~/.profile'
 
 # hehe
-alias vim=nvim
 alias vmi=vim
 alias ivm=vim
 alias pd=pwd
