@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ $HIDPI == "1" ]; then
+  echo 'pute'
+  /usr/bin/spotify --force-device-scale-factor=2
+else
+  /usr/bin/spotify
+fi

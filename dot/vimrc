@@ -97,8 +97,8 @@ let &t_EI = "\<Esc>[2 q"
 syntax on
 
 " the chosen one
-colorscheme base16-ocean
 set background=dark
+colorscheme base16-oceanicnext
 
 set mouse=c
 

@@ -50,7 +50,7 @@ function safeLn {
   if [ -L "$lnName" ]; then
     lnDest=$(readlink $lnName)
     if [ "$lnDest" != "$lnTarget" ]; then
-      echo "[warning] DEST/$lnName is pointing the wrong destination ($lnDest)"
+      echo "[warning] $target/$lnName is pointing the wrong destination ($lnDest)"
       read -p "> Overwrite? (y/n) " -n 1 -r
       echo
       if [[ $REPLY == "y" ]]
@@ -60,7 +60,7 @@ function safeLn {
       fi
     fi
   elif [ -e "$lnName" ]; then
-    echo "[warning] DEST/$lnName exists and is not a symlink"
+    echo "[warning] $target/$lnName exists and is not a symlink"
     read -p "> Remove? (y/n) " -n 1 -r
     echo
     if [[ $REPLY == "y" ]]
