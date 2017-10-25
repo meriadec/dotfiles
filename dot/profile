@@ -49,7 +49,7 @@ vgrep () {
   vim $(grep -rn $1 src | cut -d : -f 1 | sort | uniq)
 }
 
-alias vv='vim $(fzf)'
+alias vv='toOpen=$(fzf) && [ "$toOpen" != "" ] && vim $toOpen'
 
 # wine
 
