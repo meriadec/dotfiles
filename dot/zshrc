@@ -17,7 +17,7 @@ source $HOME/.gitprompt
 source $HOME/.prompt
 
 export FZF_DEFAULT_COMMAND='rg --files --follow'
-export FZF_CTRL_T_COMMAND='rg --files --follow'
+export FZF_CTRL_T_COMMAND='rg --files --follow 2>/dev/null'
 export GOPATH=$HOME/dev/go
 
 fzfKeyBindings=/usr/share/fzf/key-bindings.zsh
