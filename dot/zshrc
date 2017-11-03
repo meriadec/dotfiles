@@ -17,7 +17,13 @@ source $HOME/.gitprompt
 source $HOME/.prompt
 
 export FZF_DEFAULT_COMMAND='rg --files --follow'
+export FZF_CTRL_T_COMMAND='rg --files --follow'
 export GOPATH=$HOME/dev/go
+
+fzfKeyBindings=/usr/share/fzf/key-bindings.zsh
+if [ -f $fzfKeyBindings ]; then
+  source $fzfKeyBindings
+fi
 
 if [[ `uname` == 'Linux' ]]; then
 
