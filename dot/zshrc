@@ -16,7 +16,7 @@ source $HOME/.profile
 source $HOME/.gitprompt
 source $HOME/.prompt
 
-export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
+export FZF_DEFAULT_COMMAND='rg --files --follow'
 export GOPATH=$HOME/dev/go
 
 if [[ `uname` == 'Linux' ]]; then

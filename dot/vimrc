@@ -62,6 +62,10 @@ nnoremap <Leader>m ^vg_
 " paste mode with <C-r>
 inoremap <silent> <C-r> <C-r><C-p>
 
+" use fzf to search inside files
+map <Leader>f :Find<space>
+command! -bang -nargs=* Find call fzf#vim#grep( 'rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
+
 " grep in current project & navigate in results
 " use silver searcher if possible
 command -nargs=+ -complete=file -bar Grep silent! grep! "<args>" | cwindow | redraw!
