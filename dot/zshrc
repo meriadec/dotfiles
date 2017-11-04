@@ -1,12 +1,12 @@
 #!/bin/bash
 
-export LANG=en_US.UTF-8
-export EDITOR="$(which nvim)"
-
-export ZSH=$HOME/.oh-my-zsh
-
 CASE_SENSITIVE="true"
 plugins=()
+
+export ZSH=$HOME/.oh-my-zsh
+export LANG=en_US.UTF-8
+export EDITOR="$(which vim)"
+export LS_COLORS="ln=32:di=35;35:ex=40;31;01"
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -15,15 +15,21 @@ source $HOME/.private
 source $HOME/.profile
 source $HOME/.gitprompt
 source $HOME/.prompt
+source $HOME/.path
+
+# fzf
 
 export FZF_DEFAULT_COMMAND='rg --files --follow'
 export FZF_CTRL_T_COMMAND='rg --files --follow 2>/dev/null'
-export GOPATH=$HOME/dev/go
 
 fzfKeyBindings=/usr/share/fzf/key-bindings.zsh
 if [ -f $fzfKeyBindings ]; then
   source $fzfKeyBindings
 fi
+
+# dev
+
+export GOPATH=$HOME/dev/go
 
 if [[ `uname` == 'Linux' ]]; then
 
@@ -38,47 +44,7 @@ if [[ `uname` == 'Linux' ]]; then
 
 fi
 
-export LS_COLORS="ln=32:di=35;35:ex=40;31;01"
-
-PATH=''
-
-# JS dev
-PATH=$PATH./node_modules/.bin
-
-# Android dev
-PATH=$PATH:$ANDROID_HOME/platform-tools
-PATH=$PATH:$ANDROID_HOME/tools
-
-# Go dev
-PATH=$PATH:$GOPATH/bin
-
-# ...
-PATH=$PATH:$HOME/bin
-PATH=$PATH:$HOME/.cargo/bin
-PATH=$PATH:$HOME/.config/yarn/global/node_modules/.bin
-PATH=$PATH:$HOME/.gem/ruby/2.4.0/bin
-
-PATH=$PATH:/usr/local/sbin
-PATH=$PATH:/usr/local/bin
-PATH=$PATH:/usr/sbin
-PATH=$PATH:/usr/bin
-PATH=$PATH:/sbin
-PATH=$PATH:/bin
-
-# OSX specifics
-if [[ `uname` == 'Darwin' ]]; then
-
-  PATH=$HOME/.gem/ruby/2.0.0/bin:$PATH
-  PATH=$HOME/.brew/bin:$PATH
-
-# Linux specifics
-elif [[ `uname` == 'Linux' ]]; then
-  PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
-fi
-
 if [ -z "$SSH_AUTH_SOCK" ] ; then
   eval `ssh-agent -s`
   ssh-add
 fi
-
-export PATH

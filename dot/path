@@ -1,0 +1,39 @@
+#!/bin/bash
+
+PATH=''
+
+# JS dev
+PATH=$PATH./node_modules/.bin
+
+# Android dev
+PATH=$PATH:$ANDROID_HOME/platform-tools
+PATH=$PATH:$ANDROID_HOME/tools
+
+# Go dev
+PATH=$PATH:$GOPATH/bin
+
+# ...
+PATH=$PATH:$HOME/bin
+PATH=$PATH:$HOME/.cargo/bin
+PATH=$PATH:$HOME/.config/yarn/global/node_modules/.bin
+PATH=$PATH:$HOME/.gem/ruby/2.4.0/bin
+
+PATH=$PATH:/usr/local/sbin
+PATH=$PATH:/usr/local/bin
+PATH=$PATH:/usr/sbin
+PATH=$PATH:/usr/bin
+PATH=$PATH:/sbin
+PATH=$PATH:/bin
+
+# OSX specifics
+if [[ `uname` == 'Darwin' ]]; then
+
+  PATH=$HOME/.gem/ruby/2.0.0/bin:$PATH
+  PATH=$HOME/.brew/bin:$PATH
+
+# Linux specifics
+elif [[ `uname` == 'Linux' ]]; then
+  PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
+fi
+
+export PATH
