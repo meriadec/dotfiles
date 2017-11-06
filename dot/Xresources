@@ -90,15 +90,13 @@ URxvt.pointerBlank:         true
 ! ROFI
 
 rofi.lines:               10
-rofi.font:                FiraCode-Bold bold 11
-rofi.color-normal:        #00000000,#ccffffff,#00000000,#bf616a,red
-rofi.color-window:        #2b303b,base01
+rofi.font:                Fira Code Retina 11
 rofi.bw:                  0
 rofi.padding:             10
 rofi.fixed-num-lines:     false
 rofi.terminal:            urxvt
 rofi.disable-history:     true
-rofi.line-padding:        5
+rofi.line-padding:        15
 rofi.hide-scrollbar:      true
-rofi.yoffset:             -130
+rofi.yoffset:             -400
 rofi.kb-cancel:           Escape,Control+c
