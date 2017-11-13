@@ -39,6 +39,7 @@ alias igts='gits'
 alias gitp='git push'
 alias gitc='git commit'
 alias gfop='git fetch origin --prune'
+alias gc='git checkout'
 alias scaffold='git config --local user.name TheScaffolder && git config --local user.email spam@forpurpose.io && git commit --amend --author "TheScaffolder <spam@forpurpose.io>" && git config --local --unset user.email && git config --local --unset user.name'
 alias unscaffold='git config --local user.name meriadec && git config --local user.email meriadec.pillet@gmail.com && git commit --amend --author "meriadec <meriadec.pillet@gmail.com>" && git config --local --unset user.email && git config --local --unset user.name'
 
@@ -50,7 +51,7 @@ vgrep () {
   vim $(grep -rn $1 src | cut -d : -f 1 | sort | uniq)
 }
 
-alias vv='toOpen=$(fzf) && [ "$toOpen" != "" ] && vim $toOpen'
+alias v='toOpen=$(fzf) && [ "$toOpen" != "" ] && vim $toOpen'
 
 # wine
 

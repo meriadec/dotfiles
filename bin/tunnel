@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e
+
+cd /etc/openvpn
+sudo openvpn config.ovpn
