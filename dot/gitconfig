@@ -10,3 +10,5 @@
 	editor = nvim
 	pager = less -S
 	excludesfile = ~/.gitignore_global
+[branch]
+	autosetuprebase = always
