@@ -45,6 +45,10 @@ if [[ `uname` == 'Linux' ]]; then
 fi
 
 if [ -z "$SSH_AUTH_SOCK" ] ; then
+  echo "> Starting ssh-agent"
   eval `ssh-agent -s`
+fi
+
+if [ -n "$DISPLAY" ] && ! ssh-add -l >/dev/null; then
   ssh-add
 fi
