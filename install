@@ -20,6 +20,10 @@ function dotMain {
   # create useful folders
   createFolderIfNeeded git
   createFolderIfNeeded .config
+  createFolderIfNeeded .local/share
+
+  # install fonts
+  safeLn "../../dotfiles/assets/fonts" ".local/share/fonts"
 
   # clone useful repos
   cloneRepo https://github.com/zsh-users/zsh-syntax-highlighting.git
