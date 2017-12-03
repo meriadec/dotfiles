@@ -2,5 +2,5 @@
 
 set -e
 
-cd /etc/openvpn/client/preprod
+cd /etc/openvpn/client/prod
 sudo openvpn config.ovpn
