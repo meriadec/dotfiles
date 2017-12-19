@@ -195,6 +195,9 @@ set wildmenu
 " indentation by language
 autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
 
+" highlight for json5
+au BufNewFile,BufRead *.json5 set filetype=javascript
+
 " quickfix split
 autocmd! FileType qf nnoremap <buffer> <leader><Enter> <C-w><Enter><C-w>L
 
