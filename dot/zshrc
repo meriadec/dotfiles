@@ -7,6 +7,7 @@ export ZSH=$HOME/.oh-my-zsh
 export LANG=en_US.UTF-8
 export EDITOR="$(which vim)"
 export LS_COLORS="ln=32:di=35;35:ex=40;31;01"
+export GPG_TTY=$(tty)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
