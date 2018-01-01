@@ -40,6 +40,11 @@ function dotMain {
     safeLn "dotfiles/$f" ".$(basename $f)"
   done
 
+  # gpg config
+  if [ -d "$target/.gnupg" ]; then
+    echo "pinentry-program /usr/bin/pinentry-curses" > "$target/.gnupg/gpg-agent.conf"
+  fi
+
   echo "> done"
 
 }
