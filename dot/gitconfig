@@ -12,5 +12,5 @@
 	excludesfile = ~/.gitignore_global
 [branch]
 	autosetuprebase = always
-[commit]
-	gpgsign = true
+; [commit]
+;   gpgsign = true
