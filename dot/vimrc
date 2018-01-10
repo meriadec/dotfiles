@@ -23,6 +23,7 @@ Plug 'tpope/vim-repeat'
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'sbdchd/neoformat'
 Plug 'w0rp/ale'
+Plug 'flowtype/vim-flow'
 
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
@@ -308,3 +309,6 @@ let g:go_fmt_command = "goimports"
 let g:ale_linters = { 'javascript': ['eslint'] }
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = 'ℹ'
+
+" vim-flow
+let g:flow#enable = 0
