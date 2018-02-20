@@ -27,6 +27,7 @@ alias min="cd ~/git/minus"
 alias api="cd ~/git/ledger-node-js-api"
 alias hid="cd ~/git/ledger-node-js-hid"
 alias app="cd ~/git/ledger-wallet-desktop"
+alias js="cd ~/git/ledgerjs"
 
 # git
 alias gd='git diff'
