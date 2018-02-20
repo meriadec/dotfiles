@@ -1,0 +1,18 @@
+#!/bin/bash
+
+vim -E ~/.vimrc << EOF
+  /__PRETTIER_TRIGGER__
+  normal! 4jd3jjp
+
+  normal! k
+  normal! i"
+  normal! j
+  normal! i"
+  normal! j
+  normal! i"
+  normal! j
+  normal! i"
+
+  update
+  quit
+EOF

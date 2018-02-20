@@ -203,6 +203,7 @@ au BufNewFile,BufRead *.json5 set filetype=javascript
 autocmd! FileType qf nnoremap <buffer> <leader><Enter> <C-w><Enter><C-w>L
 
 " neoformat
+" __PRETTIER_TRIGGER__
 let g:neoformat_javascript_prettier = {
 \   'exe': 'prettier',
 \   'args': [
