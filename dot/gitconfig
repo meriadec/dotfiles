@@ -9,6 +9,7 @@
 [core]
 	editor = nvim
 	excludesfile = ~/.gitignore_global
+	pager = less -F -X
 [branch]
 	autosetuprebase = always
 [commit]

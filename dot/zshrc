@@ -31,6 +31,8 @@ fi
 # dev
 
 export GOPATH=$HOME/dev/go
+export BOLOS_ENV=$HOME/bolos
+export BOLOS_SDK=$HOME/git/nanos-secure-sdk
 
 if [[ `uname` == 'Linux' ]]; then
 
