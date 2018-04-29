@@ -28,6 +28,7 @@ PATH=$PATH:/bin
 # OSX specifics
 if [[ `uname` == 'Darwin' ]]; then
 
+  PATH=/usr/local/Cellar/qt/5.10.1/bin:$PATH
   PATH=$HOME/.gem/ruby/2.0.0/bin:$PATH
   PATH=$HOME/.brew/bin:$PATH
 
