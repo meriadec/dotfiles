@@ -26,11 +26,11 @@ alias dot='cd ~/dotfiles'
 alias ma="cd ~/git/mjml-app"
 alias min="cd ~/git/minus"
 
-alias api="cd ~/git/ledger-node-js-api"
-alias hid="cd ~/git/ledger-node-js-hid"
-alias app="cd ~/git/ledger-wallet-desktop"
-alias com="cd ~/git/ledger-wallet-common"
-alias js="cd ~/git/ledgerjs"
+alias api="cd ~/ledger/ledger-node-js-api"
+alias hid="cd ~/ledger/ledger-node-js-hid"
+alias app="cd ~/ledger/ledger-live-desktop"
+alias com="cd ~/ledger/ledger-live-common"
+alias js="cd ~/ledger/ledgerjs"
 
 # git
 alias gd='git diff'
