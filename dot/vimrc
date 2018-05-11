@@ -43,6 +43,11 @@ nmap <silent> <Space>t :wincmd j<CR>
 nmap <silent> <Space>n :wincmd k<CR>
 nmap <silent> <Space>s :wincmd l<CR>
 
+" quick command in insert mode
+inoremap II <Esc>I
+inoremap AA <Esc>A
+inoremap OO <Esc>O
+
 " c-p to open files
 nnoremap <C-p> :Files<CR>
 

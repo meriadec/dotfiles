@@ -3,7 +3,7 @@ local theme                                     = {}
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome"
 theme.wallpaper                                 = theme.dir .. "/wallpaper.jpg"
 
-theme.useless_gap                               = 10
+theme.useless_gap                               = 6
 theme.border_width                              = 0
 
 theme.font                                      = "PragmataPro 8"

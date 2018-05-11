@@ -5,7 +5,7 @@ local wibox         = require("wibox")
 
 local smartBorders = {}
 
-local GUTTER = 20
+local GUTTER = 10
 local WEIGHT = 3
 local ARROW_WEIGHT = 15
 local ARROW_WIDTH = 100
@@ -13,18 +13,10 @@ local COLOR = gears.color("#2b303b")
 
 function smartBorders.set(c, firstRender)
 
-  -- createFragment(c, "top")
-  -- createFragment(c, "right")
-  -- createFragment(c, "bottom")
-  -- createFragment(c, "left")
-
-  -- do return end
-  local COLOR = gears.color("#2b303b")
-
-  local b_weight = 15
-  local b_string_weight = 4
-  local b_gutter = 20
-  local b_arrow = 120
+  local b_weight = 6
+  local b_string_weight = 2
+  local b_gutter = 10
+  local b_arrow = 60
 
   if c.floating then
     b_weight = 0
@@ -130,6 +122,8 @@ function smartBorders.set(c, firstRender)
   }) : setup { layout = wibox.layout.align.horizontal, }
 
 end
+
+-- TODO: finish that shit
 
 function createFragment(c, position)
 
