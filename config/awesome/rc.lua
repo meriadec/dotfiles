@@ -42,6 +42,7 @@ local function runOnce(cmd)
 end
 
 runOnce("termite")
+runOnce("glava")
 
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme.lua")
 
