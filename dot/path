@@ -24,6 +24,7 @@ PATH=$PATH:/usr/sbin
 PATH=$PATH:/usr/bin
 PATH=$PATH:/sbin
 PATH=$PATH:/bin
+PATH=$PATH:/usr/bin/core_perl
 
 # OSX specifics
 if [[ `uname` == 'Darwin' ]]; then
