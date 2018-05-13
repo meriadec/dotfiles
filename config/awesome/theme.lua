@@ -1,26 +1,33 @@
+local HIDPI = os.getenv("HIDPI") == "1"
+
 local theme                                     = {}
 
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome"
 theme.wallpaper                                 = theme.dir .. "/wallpaper.jpg"
 
 theme.useless_gap                               = 6
+if HIDPI then
+  theme.useless_gap                             = 16
+end
+
+
 theme.border_width                              = 0
 
-theme.font                                      = "PragmataPro 8"
+theme.font                                      = "PragmataPro Bold 8"
 theme.fg_normal                                 = "#586e75"
 theme.fg_focus                                  = "#232730"
 theme.fg_urgent                                 = "#cc9393"
 theme.bg_normal                                 = "#2b303b"
 theme.bg_widget                                 = "#bf616a88"
 theme.fg_widget                                 = "#232730"
-theme.bg_focus                                  = "#bf616a55"
+theme.bg_focus                                  = "#ffffff19"
 theme.bg_urgent                                 = "#1a1a1a"
 theme.border_normal                             = "#2b303b"
 theme.border_focus                              = "#ffffff"
 theme.border_marked                             = "#cc9393"
-theme.tasklist_bg_normal                        = "#00000000"
-theme.tasklist_fg_focus                         = "#bf616a"
-theme.tasklist_bg_focus                         = "#bf616a11"
+theme.tasklist_bg_normal                        = ""
+theme.tasklist_fg_focus                         = "#999999"
+theme.tasklist_bg_focus                         = "#242932"
 theme.bg_systray                                = "#343d46"
 theme.titlebar_bg_focus                         = theme.bg_focus
 theme.titlebar_bg_normal                        = theme.bg_normal

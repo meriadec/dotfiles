@@ -1,22 +1,32 @@
-local gears         = require("gears")
-local cairo         = require("lgi").cairo
-local awful         = require("awful")
-local wibox         = require("wibox")
+local gears = require("gears")
+local cairo = require("lgi").cairo
+local awful = require("awful")
+local wibox = require("wibox")
+
+local HIDPI = os.getenv("HIDPI") == "1"
 
 local smartBorders = {}
 
 local GUTTER = 10
 local WEIGHT = 3
-local ARROW_WEIGHT = 15
+local ARROW_WEIGHT = 40
 local ARROW_WIDTH = 100
 local COLOR = gears.color("#2b303b")
 
+if HIDPI then
+  GUTTER = 25
+  WEIGHT = 10
+  STRING_WEIGHT = 4
+  ARROW_WEIGHT = 100
+  ARROW_WIDTH = 40
+end
+
 function smartBorders.set(c, firstRender)
 
-  local b_weight = 6
-  local b_string_weight = 2
-  local b_gutter = 10
-  local b_arrow = 60
+  local b_weight = WEIGHT
+  local b_string_weight = STRING_WEIGHT
+  local b_gutter = GUTTER
+  local b_arrow = ARROW_WEIGHT
 
   if c.floating then
     b_weight = 0

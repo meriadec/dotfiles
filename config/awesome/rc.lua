@@ -9,8 +9,13 @@ local awful         = require("awful")
                       require("awful.autofocus")
 local smartBorders  = require("modules/smart-borders")
 
-local topBarHeight = 40
 local ENABLE_SMART_BORDERS = true
+local HIDPI = os.getenv("HIDPI") == "1"
+
+local topBarHeight = 40
+if HIDPI then
+  topBarHeight = 70
+end
 
 if awesome.startup_errors then
   naughty.notify({
@@ -42,7 +47,6 @@ local function runOnce(cmd)
 end
 
 runOnce("termite")
-runOnce("glava")
 
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme.lua")
 
@@ -223,7 +227,8 @@ awful.screen.connect_for_each_screen(function(s)
 
   s.mywibox = awful.wibar({
     position = "top",
-    y = 20,
+    border_width = 3,
+    border_color = "#22272f",
     screen = s,
     height = topBarHeight,
     visible = true,
@@ -234,10 +239,10 @@ awful.screen.connect_for_each_screen(function(s)
     {
       -- Left widgets
       layout = wibox.layout.fixed.horizontal,
-      s.mytaglist,
+      wibox.layout.margin(s.mytaglist, 8, 8, 8, 8),
     },
     -- Middle widget
-    s.mytasklist,
+    wibox.layout.margin(s.mytasklist, 8, 8, 8, 8),
     {
       -- Right widgets
       layout = wibox.layout.fixed.horizontal,
