@@ -234,15 +234,20 @@ awful.screen.connect_for_each_screen(function(s)
     visible = true,
   })
 
+  local WIDGET_MARGIN = 4
+  if HIDPI then
+    WIDGET_MARGIN = 8
+  end
+
   s.mywibox:setup {
     layout = wibox.layout.align.horizontal,
     {
       -- Left widgets
       layout = wibox.layout.fixed.horizontal,
-      wibox.layout.margin(s.mytaglist, 8, 8, 8, 8),
+      wibox.layout.margin(s.mytaglist, WIDGET_MARGIN, WIDGET_MARGIN, WIDGET_MARGIN, WIDGET_MARGIN),
     },
     -- Middle widget
-    wibox.layout.margin(s.mytasklist, 8, 8, 8, 8),
+    wibox.layout.margin(s.mytasklist, WIDGET_MARGIN, WIDGET_MARGIN, WIDGET_MARGIN, WIDGET_MARGIN),
     {
       -- Right widgets
       layout = wibox.layout.fixed.horizontal,

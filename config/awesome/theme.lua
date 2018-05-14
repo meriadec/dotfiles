@@ -6,14 +6,8 @@ theme.dir                                       = os.getenv("HOME") .. "/.config
 theme.wallpaper                                 = theme.dir .. "/wallpaper.jpg"
 
 theme.useless_gap                               = 6
-if HIDPI then
-  theme.useless_gap                             = 16
-end
-
-
 theme.border_width                              = 0
-
-theme.font                                      = "PragmataPro Bold 8"
+theme.font                                      = "PragmataPro Bold 10"
 theme.fg_normal                                 = "#586e75"
 theme.fg_focus                                  = "#232730"
 theme.fg_urgent                                 = "#cc9393"
@@ -32,6 +26,11 @@ theme.bg_systray                                = "#343d46"
 theme.titlebar_bg_focus                         = theme.bg_focus
 theme.titlebar_bg_normal                        = theme.bg_normal
 theme.titlebar_fg_focus                         = theme.fg_focus
+
+if HIDPI then
+  theme.useless_gap                             = 16
+  theme.font                                    = "PragmataPro Bold 8"
+end
 
 theme.menu_height                               = 60
 theme.menu_width                                = 140
