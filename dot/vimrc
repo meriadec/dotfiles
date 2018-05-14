@@ -16,14 +16,16 @@ Plug 'SirVer/ultisnips'
 Plug '42Zavattas/vim-snippets'
 Plug 'airblade/vim-gitgutter'
 Plug 'mxw/vim-jsx'
-Plug 'mattn/emmet-vim', { 'for': 'javascript' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'w0rp/ale'
 Plug 'flowtype/vim-flow'
-Plug 'rust-lang/rust.vim'
+Plug 'junegunn/goyo.vim'
+
+Plug 'mattn/emmet-vim', { 'for': 'javascript' }
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
