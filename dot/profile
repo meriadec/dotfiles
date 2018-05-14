@@ -11,6 +11,7 @@ alias sprof='source ~/.profile'
 alias vim=nvim
 alias vmi=vim
 alias ivm=vim
+alias vi=vim
 alias pd=pwd
 alias tgi=tig
 

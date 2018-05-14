@@ -7,7 +7,7 @@ theme.wallpaper                                 = theme.dir .. "/wallpaper.jpg"
 
 theme.useless_gap                               = 6
 theme.border_width                              = 0
-theme.font                                      = "PragmataPro Bold 10"
+theme.font                                      = "PragmataPro Bold 9"
 theme.fg_normal                                 = "#586e75"
 theme.fg_focus                                  = "#232730"
 theme.fg_urgent                                 = "#cc9393"

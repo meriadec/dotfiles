@@ -76,6 +76,7 @@ inoremap <silent> <C-r> <C-r><C-p>
 " use fzf to search inside files
 let g:fzf_layout = { 'down': '~80%' }
 nnoremap <c-f> :Find<space>
+nnoremap <Leader>f :Find<space><C-r><C-w><cr>
 command! -bang -nargs=* Find call fzf#vim#grep(
   \ 'rg --column --line-number --no-heading --fixed-strings --smart-case --hidden --follow --color "always" '.shellescape(<q-args>),
   \ 1,
