@@ -32,6 +32,8 @@ alias hid="cd ~/ledger/ledger-node-js-hid"
 alias app="cd ~/ledger/ledger-live-desktop"
 alias com="cd ~/ledger/ledger-live-common"
 alias js="cd ~/ledger/ledgerjs"
+alias lib="cd ~/ledger/lib-ledger-core"
+alias build="cd ~/ledger/lib-ledger-core-build"
 
 # git
 alias gd='git diff'
