@@ -208,6 +208,12 @@ local function set_wallpaper(s)
   end
 end
 
+local function updateScreenPadding(nb)
+  local screen = awful.screen.focused()
+  local v = screen.padding.top + nb
+  awful.screen.padding(screen, { top = v, right = v, bottom = v, left = v })
+end
+
 screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
@@ -319,6 +325,9 @@ globalkeys = awful.util.table.join(
     -- On the fly useless gaps change
     awful.key({ altkey, "Control" }, "+", function () lain.util.useless_gaps_resize(10) end),
     awful.key({ altkey, "Control" }, "-", function () lain.util.useless_gaps_resize(-10) end),
+
+    awful.key({ altkey, "Shift", "Control" }, "+", function () updateScreenPadding(10) end),
+    awful.key({ altkey, "Shift", "Control" }, "-", function () updateScreenPadding(-10) end),
 
     awful.key({ altkey }, "Tab", function ()
       awful.client.focus.history.previous()
