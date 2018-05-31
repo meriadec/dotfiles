@@ -1,9 +1,10 @@
 #!/bin/bash
+# shellcheck disable=SC2155
 
 cRed=$'%{\e[0;31m%}'
 cYellow=$'%{\e[0;33m%}'
 cBlue=$'%{\e[1;34m%}'
-cNice=$'%{\e[0;36m%}'
+# cNice=$'%{\e[0;36m%}'
 cNop=$'%{\e[0;0m%}'
 
 function lastExitCode() {
@@ -16,4 +17,8 @@ function lastExitCode() {
 }
 
 # export PS1='${cNice}%n${cNop} ${cRed}%m${cNop} $(lastExitCode) ${cYellow}%1~${cNop} ${cBlue}\$${cNop} '
-export PS1='$(lastExitCode) ${cYellow}%1~${cNop} ${cBlue}\$${cNop} '
+hostName=""
+if [[ $SSH_CLIENT != "" ]]; then
+  hostName="${cRed}%m${cNop} "
+fi
+export PS1="${hostName}$(lastExitCode) ${cYellow}%1~${cNop} ${cBlue}\$${cNop} "
