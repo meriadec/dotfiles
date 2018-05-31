@@ -15,4 +15,5 @@ function lastExitCode() {
   fi
 }
 
-export PS1='${cNice}%n${cNop} ${cRed}%m${cNop} $(lastExitCode) ${cYellow}%1~${cNop} ${cBlue}\$${cNop} '
+# export PS1='${cNice}%n${cNop} ${cRed}%m${cNop} $(lastExitCode) ${cYellow}%1~${cNop} ${cBlue}\$${cNop} '
+export PS1='$(lastExitCode) ${cYellow}%1~${cNop} ${cBlue}\$${cNop} '
