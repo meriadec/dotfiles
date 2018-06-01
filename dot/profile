@@ -3,6 +3,9 @@
 export ZAVATTA='192.99.2.67'
 export CAVERN='91.121.143.211'
 
+# node-gyp build using all cores
+export JOBS=max
+
 # let .profile manage .profile
 alias prof='vim ~/.profile && sprof'
 alias sprof='source ~/.profile'
@@ -14,6 +17,7 @@ alias ivm=vim
 alias vi=vim
 alias pd=pwd
 alias tgi=tig
+alias gti=git
 
 # `ls` thoughts
 alias lt='ls -lt'

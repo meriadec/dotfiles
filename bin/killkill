@@ -1,0 +1,5 @@
+#!/bin/bash
+
+killall flow 2>/dev/null && echo "[✓] killed flow"
+killall node 2>/dev/null && echo "[✓] killed node"
+killall electron 2>/dev/null && echo "[✓] killed electron"
