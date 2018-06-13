@@ -1,6 +1,3 @@
-# 1 - Create needed folders
-# 2 - Install zsh-syntax-highlighting
-# 3 - Create or update all symlinks
 install: build
 	@./scripts/install.sh
 

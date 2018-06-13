@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source scripts/utils.sh
+
 # mock install by using `./install <mock-folder>`
 
 targetFolder=$1
@@ -45,7 +47,7 @@ function dotMain {
     echo "pinentry-program /usr/bin/pinentry-curses" > "$target/.gnupg/gpg-agent.conf"
   fi
 
-  echo "> install success"
+  LOG "Success!" success
 
 }
 
@@ -65,22 +67,22 @@ function safeLn {
       if [[ $REPLY == "y" ]]
       then
         ln -sf "$lnTarget" "$lnName"
-        [ $? -eq 0 ] && echo "> installed $lnName"
+        [ $? -eq 0 ] && LOG "installed $lnName"
       fi
     fi
   elif [ -e "$lnName" ]; then
-    echo "[warning] $target/$lnName exists and is not a symlink"
+    LOG "[warning] $target/$lnName exists and is not a symlink"
     read -p "> Remove? (y/n) " -n 1 -r
     echo
     if [[ $REPLY == "y" ]]
     then
       rm -rf $lnName
       ln -s "$lnTarget" "$lnName"
-      [ $? -eq 0 ] && echo "> installed $lnName"
+      [ $? -eq 0 ] && LOG "installed $lnName"
     fi
   else
     ln -s "$lnTarget" "$lnName"
-    [ $? -eq 0 ] && echo "> installed $lnName"
+    [ $? -eq 0 ] && LOG "installed $lnName"
   fi
 
   popd >/dev/null
@@ -94,7 +96,7 @@ function createFolderIfNeeded {
   folderName=$1
 
   if [ ! -d "$folderName" ]; then
-    echo "> creating $folderName folder"
+    LOG "creating $folderName folder"
     mkdir -p $folderName || exit 1
   fi
 
@@ -110,7 +112,7 @@ function cloneRepo {
   folderName="$(echo $repoName | sed -E 's/.*\/([^/]*).git$/\1/g')"
 
   if [ ! -d "$folderName" ]; then
-    echo "> installing ${folderName}..."
+    LOG "installing ${folderName}..."
     git clone $repoName
   fi
 

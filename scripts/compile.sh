@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source scripts/utils.sh
 source theme.sh
 
 TEMPLATE_FILES=$(find dot config -name '*.template')
@@ -37,8 +38,8 @@ for TEMPLATE_FILE in $TEMPLATE_FILES; do
   sed --in-place "s/$\[COLOR_COLOR15\]/$COLOR_COLOR15/g" $TMP_FILE
   cp $TMP_FILE $TARGET
 
-  echo "> compiled $TARGET"
+  LOG "compiled $TARGET"
 done
 
 rm $TMP_FILE
-echo "> compile success"
+LOG "compile success"

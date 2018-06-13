@@ -1,11 +1,15 @@
 #!/bin/bash
 
+source scripts/utils.sh
 source theme.sh
 
 rm -rf .tmp
 mkdir .tmp
 
 SIZE='100x100'
+
+LOG 'building colors...'
+NOW=`TIMESTAMP`
 
 convert -size $SIZE canvas:$COLOR_FOREGROUND .tmp/01_FOREGROUND.png
 convert -size $SIZE canvas:$COLOR_BACKGROUND .tmp/02_BACKGROUND.png
@@ -32,4 +36,5 @@ convert -size $SIZE canvas:$COLOR_COLOR15 .tmp/19_COLOR15.png
 convert -label %t .tmp/* -frame 1x1+0+0 miff:- |\
   montage - -tile x2 -geometry '150x150+0+0>' colors.png
 
-echo '> created colors.png'
+DIFF=`MSDIFF $NOW`
+LOG "created colors.png ($DIFF)"
