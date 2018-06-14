@@ -57,8 +57,8 @@ nnoremap <C-p> :Files<CR>
 inoremap <c-s> <Esc>:w<CR>
 
 " navigate between lint errors
-nmap <silent> <Leader>e <Plug>(ale_previous_wrap)
-nmap <silent> <Leader>E <Plug>(ale_next_wrap)
+nmap <silent> <Leader>e <Plug>(ale_next_wrap)
+nmap <silent> <Leader>E <Plug>(ale_previous_wrap)
 
 " paste & select pasted text
 noremap <Leader>p p`[v`]
@@ -216,6 +216,7 @@ set wildmenu
 
 " indentation by language
 autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd BufNewFile,BufRead *.gyp set syntax=javascript
 
 " highlight for json5
 au BufNewFile,BufRead *.json5 set filetype=javascript
