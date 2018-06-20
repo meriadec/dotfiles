@@ -23,6 +23,8 @@ COLOR_COLOR13=#dfe1e8
 COLOR_COLOR14=#ab7967
 COLOR_COLOR15=#eff1f5
 
+AWESOME_SCREEN_PADDING=100
+
 if [ -e custom.sh ]; then
   source custom.sh
 fi

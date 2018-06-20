@@ -5,6 +5,7 @@ local theme                                     = {}
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome"
 theme.wallpaper                                 = theme.dir .. "/wallpaper.jpg"
 
+theme.screen_padding                            = $[AWESOME_SCREEN_PADDING]
 theme.useless_gap                               = 6
 theme.border_width                              = 0
 theme.font                                      = "PragmataPro Bold 9"

@@ -36,6 +36,7 @@ for TEMPLATE_FILE in $TEMPLATE_FILES; do
   sed --in-place "s/$\[COLOR_COLOR13\]/$COLOR_COLOR13/g" $TMP_FILE
   sed --in-place "s/$\[COLOR_COLOR14\]/$COLOR_COLOR14/g" $TMP_FILE
   sed --in-place "s/$\[COLOR_COLOR15\]/$COLOR_COLOR15/g" $TMP_FILE
+  sed --in-place "s/$\[AWESOME_SCREEN_PADDING\]/$AWESOME_SCREEN_PADDING/g" $TMP_FILE
   cp $TMP_FILE $TARGET
 
   LOG "compiled $TARGET"
