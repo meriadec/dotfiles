@@ -48,13 +48,8 @@ function createFragment(c, position, firstRender)
   -- used to center line on corners
   local OFFSET = ARROW_WEIGHT / 2 - WEIGHT / 2
 
-  local IMG_W = W + 400
-  local IMG_H = H + 400
-
-  if firstRender == true then
-    IMG_W = W + SPACE * 2
-    IMG_H = H + SPACE
-  end
+  local IMG_W = W + 2 * SPACE
+  local IMG_H = H + 2 * SPACE
 
   local img = cairo.ImageSurface.create(cairo.Format.ARGB32, IMG_W, IMG_H)
   local ctx  = cairo.Context(img)

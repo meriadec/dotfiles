@@ -378,7 +378,7 @@ clientkeys = awful.util.table.join(
   awful.key({ modkey }, "f", function (c)
     c.fullscreen = not c.fullscreen
     if c.fullscreen == false then
-      smartBorders.set(c)
+      smartBorders.set(c, true)
     end
     c:raise()
   end),
@@ -386,7 +386,7 @@ clientkeys = awful.util.table.join(
   awful.key({ modkey }, "m", function (c)
     c.maximized = not c.maximized
     if c.maximized == false then
-      smartBorders.set(c)
+      smartBorders.set(c, true)
     end
     c:raise()
   end),
