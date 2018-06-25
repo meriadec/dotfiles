@@ -7,4 +7,5 @@ xbindkeys
 
 xrdb merge ~/.Xresources
 eval "$(ssh-agent)"
+exec unagi &
 exec awesome

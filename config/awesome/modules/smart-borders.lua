@@ -11,13 +11,15 @@ local GUTTER = 10
 local WEIGHT = 2
 local ARROW_WEIGHT = 6
 local ARROW_WIDTH = 60
-local COLOR = gears.color("#2b303b")
+local SMART_GAP = 5
+local COLOR = gears.color("#ffffff55")
 
 if HIDPI then
-  GUTTER = 25
-  WEIGHT = 3
-  ARROW_WEIGHT = 12
-  ARROW_WIDTH = 100
+  GUTTER = 20
+  WEIGHT = 1
+  ARROW_WEIGHT = 4
+  ARROW_WIDTH = 60
+  SMART_GAP = 5
 end
 
 function smartBorders.set(c, firstRender)
@@ -46,7 +48,8 @@ function createFragment(c, position, firstRender)
   local H = c.height
 
   -- used to center line on corners
-  local OFFSET = ARROW_WEIGHT / 2 - WEIGHT / 2
+  -- local OFFSET = ARROW_WEIGHT / 2 - WEIGHT / 2
+  local OFFSET = 0
 
   local IMG_W = W + 2 * SPACE
   local IMG_H = H + 2 * SPACE
@@ -58,38 +61,34 @@ function createFragment(c, position, firstRender)
 
   if position == "top" then
     ctx:rectangle(0, OFFSET, W + SPACE * 2, WEIGHT)
-
-    ctx:rectangle(0, WEIGHT, ARROW_WEIGHT, ARROW_WIDTH)
-    ctx:rectangle(0, 0, ARROW_WIDTH, ARROW_WEIGHT)
-
+    ctx:rectangle(SMART_GAP, SMART_GAP, ARROW_WEIGHT, ARROW_WIDTH)
+    ctx:rectangle(0, 0, WEIGHT, ARROW_WIDTH)
+    ctx:rectangle(SMART_GAP, SMART_GAP, ARROW_WIDTH, ARROW_WEIGHT)
     if firstRender == true then
-      ctx:rectangle(W + SPACE * 2 - ARROW_WEIGHT, 0, ARROW_WEIGHT, ARROW_WIDTH)
-      ctx:rectangle(W - ARROW_WIDTH + SPACE * 2, 0, ARROW_WIDTH, ARROW_WEIGHT)
+      ctx:rectangle(W + SPACE * 2 - ARROW_WEIGHT - SMART_GAP, SMART_GAP, ARROW_WEIGHT, ARROW_WIDTH)
+      ctx:rectangle(W + SPACE * 2 - WEIGHT, 0, WEIGHT, ARROW_WIDTH)
+      ctx:rectangle(W - ARROW_WIDTH + SPACE * 2 - SMART_GAP, SMART_GAP, ARROW_WIDTH, ARROW_WEIGHT)
     else
-      ctx:rectangle(W - ARROW_WEIGHT, 0, ARROW_WEIGHT, ARROW_WIDTH)
-      ctx:rectangle(W - ARROW_WIDTH, 0, ARROW_WIDTH, ARROW_WEIGHT)
+      ctx:rectangle(W - ARROW_WEIGHT - SMART_GAP, SMART_GAP, ARROW_WEIGHT, ARROW_WIDTH)
+      ctx:rectangle(W - WEIGHT, 0, WEIGHT, ARROW_WIDTH)
+      ctx:rectangle(W - ARROW_WIDTH - SMART_GAP, SMART_GAP, ARROW_WIDTH, ARROW_WEIGHT)
     end
-
   elseif position == "bottom" then
     ctx:rectangle(0, SPACE - WEIGHT - OFFSET, W + SPACE * 2, WEIGHT)
-
-    ctx:rectangle(0, 0, ARROW_WEIGHT, ARROW_WIDTH)
-    ctx:rectangle(0, SPACE - ARROW_WEIGHT, ARROW_WIDTH, ARROW_WEIGHT)
-
-    ctx:rectangle(W - ARROW_WIDTH, SPACE - ARROW_WEIGHT, ARROW_WIDTH, ARROW_WEIGHT)
-    ctx:rectangle(W - ARROW_WEIGHT, 0, ARROW_WEIGHT, ARROW_WIDTH)
-
+    ctx:rectangle(0, 0, WEIGHT, SPACE)
+    ctx:rectangle(W - WEIGHT, 0, WEIGHT, SPACE)
+    ctx:rectangle(SMART_GAP, 0, ARROW_WEIGHT, SPACE - SMART_GAP)
+    ctx:rectangle(SMART_GAP, SPACE - SMART_GAP - ARROW_WEIGHT, ARROW_WIDTH, ARROW_WEIGHT)
+    ctx:rectangle(W - ARROW_WIDTH, SPACE - ARROW_WEIGHT - SMART_GAP, ARROW_WIDTH - SMART_GAP, ARROW_WEIGHT)
+    ctx:rectangle(W - ARROW_WEIGHT - SMART_GAP, 0, ARROW_WEIGHT, SPACE - SMART_GAP)
   elseif position == "left" then
     ctx:rectangle(OFFSET, 0, WEIGHT, H)
-
-    ctx:rectangle(0, 0, ARROW_WEIGHT, ARROW_WIDTH - SPACE)
-    ctx:rectangle(0, H - ARROW_WIDTH - SPACE, ARROW_WEIGHT, ARROW_WIDTH - SPACE)
-
+    ctx:rectangle(SMART_GAP, 0, ARROW_WEIGHT, ARROW_WIDTH - SPACE)
+    ctx:rectangle(SMART_GAP, H - ARROW_WIDTH - SPACE, ARROW_WEIGHT, ARROW_WIDTH - SPACE)
   elseif position == "right" then
     ctx:rectangle(GUTTER - OFFSET, 0, WEIGHT, H)
-
-    ctx:rectangle(SPACE - ARROW_WEIGHT, 0, ARROW_WEIGHT, ARROW_WIDTH - SPACE)
-    ctx:rectangle(SPACE - ARROW_WEIGHT, H - ARROW_WIDTH - SPACE, ARROW_WEIGHT, ARROW_WIDTH - SPACE)
+    ctx:rectangle(SPACE - ARROW_WEIGHT - SMART_GAP, 0, ARROW_WEIGHT, ARROW_WIDTH - SPACE)
+    ctx:rectangle(SPACE - ARROW_WEIGHT - SMART_GAP, H - ARROW_WIDTH - SPACE, ARROW_WEIGHT, ARROW_WIDTH - SPACE)
   end
 
   ctx:fill()
