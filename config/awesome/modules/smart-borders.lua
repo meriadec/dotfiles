@@ -8,11 +8,11 @@ local HIDPI = os.getenv("HIDPI") == "1"
 local smartBorders = {}
 
 local GUTTER = 10
-local WEIGHT = 2
-local ARROW_WEIGHT = 6
+local WEIGHT = 1
+local ARROW_WEIGHT = 3
 local ARROW_WIDTH = 60
-local SMART_GAP = 5
-local COLOR = gears.color("#ffffff55")
+local SMART_GAP = 3
+local COLOR = gears.color("#ffffff33")
 
 if HIDPI then
   GUTTER = 20
