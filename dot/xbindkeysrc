@@ -1,22 +1,17 @@
-# Spotify mapping
-# ---------------
-
-# Play/Pause
 "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
 XF86AudioPlay
 
-# Next
 "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
 XF86AudioNext
 
-# Previous
 "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
 XF86AudioPrev
 
-# Stop
 "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop"
 XF86AudioStop
 
-# Switch keyboard
-"switch-key-layouts"
-XF86Sleep
+"VAL=`cat /sys/class/backlight/intel_backlight/brightness` ; NEW_VAL=$(($VAL - 100)) ; echo $NEW_VAL > /sys/class/backlight/intel_backlight/brightness"
+XF86MonBrightnessDown
+
+"VAL=`cat /sys/class/backlight/intel_backlight/brightness` ; NEW_VAL=$(($VAL + 100)) ; echo $NEW_VAL > /sys/class/backlight/intel_backlight/brightness"
+XF86MonBrightnessUp
