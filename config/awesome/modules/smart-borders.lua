@@ -7,7 +7,7 @@ local HIDPI = os.getenv("HIDPI") == "1"
 
 local smartBorders = {}
 
-local GUTTER = 10
+local GUTTER = 15
 local WEIGHT = 0
 local ARROW_WEIGHT = 3
 local ARROW_WIDTH = 60
