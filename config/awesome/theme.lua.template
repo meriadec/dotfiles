@@ -28,7 +28,7 @@ theme.taglist_fg_focus                          = "#ffffff44"
 theme.bg_systray                                = "#343d46"
 
 if HIDPI then
-  theme.useless_gap                             = 0
+  theme.useless_gap                             = 15
   theme.font                                    = "PragmataPro Bold 8"
 end
 
