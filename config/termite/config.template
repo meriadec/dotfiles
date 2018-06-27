@@ -1,5 +1,5 @@
 [options]
-font = PragmataPro 15
+font = PragmataPro $[TERM_FONT_SIZE]
 
 [colors]
 foreground = $[COLOR_FOREGROUND]

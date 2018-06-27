@@ -16,6 +16,7 @@ for TEMPLATE_FILE in $TEMPLATE_FILES; do
 
   cp $TEMPLATE_FILE $TMP_FILE
   sed --in-place "s/$\[DPI\]/$DPI/g" $TMP_FILE
+  sed --in-place "s/$\[TERM_FONT_SIZE\]/$TERM_FONT_SIZE/g" $TMP_FILE
   sed --in-place "s/$\[COLOR_FOREGROUND\]/$COLOR_FOREGROUND/g" $TMP_FILE
   sed --in-place "s/$\[COLOR_FOREGROUND\]/$COLOR_FOREGROUND/g" $TMP_FILE
   sed --in-place "s/$\[COLOR_BACKGROUND\]/$COLOR_BACKGROUND/g" $TMP_FILE
