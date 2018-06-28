@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo chgrp brightness /sys/class/backlight/intel_backlight/brightness
+sudo chmod 664 /sys/class/backlight/intel_backlight/brightness
