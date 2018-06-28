@@ -18,7 +18,7 @@ if HIDPI then
   GUTTER = 20
   WEIGHT = 0
   ARROW_WEIGHT = 4
-  ARROW_WIDTH = 60
+  ARROW_WIDTH = 80
   SMART_GAP = 5
 end
 
