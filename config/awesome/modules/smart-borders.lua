@@ -12,12 +12,12 @@ local WEIGHT = 0
 local ARROW_WEIGHT = 3
 local ARROW_WIDTH = 60
 local SMART_GAP = 3
-local COLOR = gears.color("#ffffff33")
+local COLOR = gears.color("#00000066")
 
 if HIDPI then
   GUTTER = 20
   WEIGHT = 0
-  ARROW_WEIGHT = 4
+  ARROW_WEIGHT = 6
   ARROW_WIDTH = 80
   SMART_GAP = 5
 end
