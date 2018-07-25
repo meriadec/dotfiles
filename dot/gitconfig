@@ -6,6 +6,7 @@
 	ui = true
 [push]
 	default = simple
+	followTags = true
 [core]
 	editor = nvim
 	excludesfile = ~/.gitignore_global
