@@ -54,7 +54,8 @@ inoremap OO <Esc>O
 nnoremap <C-p> :Files<CR>
 
 " c-s to save
-inoremap <c-s> <Esc>:w<CR>
+inoremap <c-s> <Esc>:x<CR>
+nnoremap <c-s> :x<CR>
 
 " navigate between lint errors
 nmap <silent> <Leader>e <Plug>(ale_next_wrap)

@@ -2,9 +2,6 @@
 
 PATH=''
 
-# JS dev
-PATH=$PATH./node_modules/.bin
-
 # Android dev
 PATH=$PATH:$ANDROID_HOME/platform-tools
 PATH=$PATH:$ANDROID_HOME/tools
