@@ -9,7 +9,7 @@ local awful         = require("awful")
                       require("awful.autofocus")
 local smartBorders  = require("modules/smart-borders")
 
-local ENABLE_SMART_BORDERS = true
+local ENABLE_SMART_BORDERS = false
 local HIDPI = os.getenv("HIDPI") == "1"
 
 local topBarHeight = 40
@@ -377,16 +377,20 @@ globalkeys = awful.util.table.join(
 clientkeys = awful.util.table.join(
   awful.key({ modkey }, "f", function (c)
     c.fullscreen = not c.fullscreen
-    if c.fullscreen == false then
-      smartBorders.set(c, true)
+    if ENABLE_SMART_BORDERS == true then
+      if c.fullscreen == false then
+        smartBorders.set(c, true)
+      end
     end
     c:raise()
   end),
 
   awful.key({ modkey }, "m", function (c)
     c.maximized = not c.maximized
-    if c.maximized == false then
-      smartBorders.set(c, true)
+    if ENABLE_SMART_BORDERS == true then
+      if c.maximized == false then
+        smartBorders.set(c, true)
+      end
     end
     c:raise()
   end),

@@ -3,7 +3,7 @@ local HIDPI = os.getenv("HIDPI") == "1"
 local theme                                     = {}
 
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome"
-theme.wallpaper                                 = theme.dir .. "/wallpaper.png"
+theme.wallpaper                                 = theme.dir .. "/wallpaper.jpg"
 
 theme.screen_padding                            = $[AWESOME_SCREEN_PADDING]
 theme.useless_gap                               = 6
@@ -12,7 +12,7 @@ theme.font                                      = "PragmataPro Bold 9"
 theme.fg_normal                                 = "#586e75"
 theme.fg_focus                                  = "#232730"
 theme.fg_urgent                                 = "#cc9393"
-theme.bg_normal                                 = "#2b303b00"
+theme.bg_normal                                 = "#2b303b"
 theme.bg_widget                                 = "#bf616a88"
 theme.fg_widget                                 = "#232730"
 theme.bg_focus                                  = "#ffffff00"
