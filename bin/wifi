@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -e
+
+WIFI_INTERFACE=wlp1s0
+
+function main () {
+  local networks
+  local chosen
+  local active
+
+  networks=$(netctl list | sed 's/^..//g')
+  chosen=$(echo "$networks" | choose) || exit 1
+
+  isInterfaceUp && sudo ip link set "$WIFI_INTERFACE" down
+
+  active=$(getActiveNetwork)
+
+  [ "$active" != "" ]       && sudo netctl stop-all
+  [ "$active" = "$chosen" ] && notify-send "already connected to $chosen" && exit 0
+
+  echo "starting $chosen"
+  sudo netctl start "$chosen" &
+  while [ -d /proc/$! ] ; do echo -n '.' ; sleep 0.5 ; done ; echo
+
+  echo "waiting for network"
+  while ! ping -c 1 8.8.8.8 >/dev/null 2>/dev/null ; do echo -n '.' ; sleep 0.5 ; done ; echo
+
+  notify-send "connected to $chosen"
+}
+
+function choose () {
+  dmenu -nb '#2b303b' -sb '#4f5b66' -i -b
+}
+
+function isInterfaceUp () {
+  ip link show $WIFI_INTERFACE | grep ',UP>' > /dev/null
+}
+
+function getActiveNetwork () {
+  netctl list | grep "^\\*" | sed 's/^..//g'
+}
+
+main
