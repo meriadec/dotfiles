@@ -1,10 +1,12 @@
 #!/bin/bash
 
+# shellcheck disable=SC2123
 PATH=''
 
 # Android dev
-PATH=$PATH:$ANDROID_HOME/platform-tools
 PATH=$PATH:$ANDROID_HOME/tools
+PATH=$PATH:$ANDROID_HOME/tools/bin
+PATH=$PATH:$ANDROID_HOME/platform-tools
 
 # Go dev
 PATH=$PATH:$GOPATH/bin
