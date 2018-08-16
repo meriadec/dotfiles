@@ -9,19 +9,32 @@ function main () {
   local chosen
   local active
 
+  # gain root privileges
+  sudo ls -l >/dev/null
+
   networks=$(netctl list | sed 's/^..//g')
-  chosen=$(echo "$networks" | choose) || exit 1
+  chosen=$(echo "$networks" | fzf) || exit 1
 
   isInterfaceUp && sudo ip link set "$WIFI_INTERFACE" down
 
   active=$(getActiveNetwork)
 
-  [ "$active" != "" ]       && sudo netctl stop-all
-  [ "$active" = "$chosen" ] && notify-send "already connected to $chosen" && exit 0
+  [ "$active" != "" ] \
+    && echo "stopping active network $active" \
+    && sudo netctl stop-all
+
+  [ "$active" = "$chosen" ] \
+    && notify-send "already connected to $chosen" \
+    && exit 0
 
   echo "starting $chosen"
-  sudo netctl start "$chosen" &
-  while [ -d /proc/$! ] ; do echo -n '.' ; sleep 0.5 ; done ; echo
+  sudo netctl start "$chosen" 2>/dev/null >/dev/null &
+  startPid=$!
+
+  while [ -d /proc/$startPid ] ; do
+    echo -n '.' ; sleep 0.5
+  done ; echo
+  startPid=""
 
   echo "waiting for network"
   while ! ping -c 1 8.8.8.8 >/dev/null 2>/dev/null ; do echo -n '.' ; sleep 0.5 ; done ; echo
@@ -40,5 +53,11 @@ function isInterfaceUp () {
 function getActiveNetwork () {
   netctl list | grep "^\\*" | sed 's/^..//g'
 }
+
+function cleanup () {
+  [ "$startPid" != "" ] && sudo kill -9 $startPid
+}
+
+trap cleanup EXIT
 
 main
