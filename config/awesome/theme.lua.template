@@ -6,7 +6,7 @@ theme.dir                                       = os.getenv("HOME") .. "/.config
 theme.wallpaper                                 = theme.dir .. "/wallpaper.jpg"
 
 theme.screen_padding                            = $[AWESOME_SCREEN_PADDING]
-theme.useless_gap                               = 6
+theme.useless_gap                               = 0
 theme.border_width                              = 0
 theme.font                                      = "PragmataPro Bold 9"
 theme.fg_normal                                 = "#586e75"
