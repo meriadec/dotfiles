@@ -1,33 +1,37 @@
 #!/bin/bash
 
-set -e
-
 WIFI_INTERFACE=wlp1s0
 
 function main () {
-  local networks
   local chosen
   local active
 
   # gain root privileges
+  # FIXME find a better way
   sudo ls -l >/dev/null
 
-  networks=$(netctl list | sed 's/^..//g')
-  chosen=$(echo "$networks" | fzf) || exit 1
+  # choose network
+  chosen=$(getChosenNetwork) || exit 1
 
-  isInterfaceUp && sudo ip link set "$WIFI_INTERFACE" down
+  # set interface down if needed
+  isInterfaceUp && \
+    sudo ip link set "$WIFI_INTERFACE" down
 
+  # check if there is an active network
   active=$(getActiveNetwork)
 
+  if [ "$active" = "$chosen" ] ; then
+    (ping -c 1 8.8.8.8 2>/dev/null >/dev/null \
+      && echo "already connected to $chosen" \
+      && exit 0) \
+      || sudo netctl stop-all
+  fi
+
+  # stop if active
   [ "$active" != "" ] \
     && echo "stopping active network $active" \
     && sudo netctl stop-all
 
-  [ "$active" = "$chosen" ] \
-    && notify-send "already connected to $chosen" \
-    && exit 0
-
-  echo "starting $chosen"
   sudo netctl start "$chosen" 2>/dev/null >/dev/null &
   startPid=$!
 
@@ -36,10 +40,9 @@ function main () {
   done ; echo
   startPid=""
 
-  echo "waiting for network"
   while ! ping -c 1 8.8.8.8 >/dev/null 2>/dev/null ; do echo -n '.' ; sleep 0.5 ; done ; echo
 
-  notify-send "connected to $chosen"
+  echo "connected to $chosen"
 }
 
 function choose () {
@@ -52,6 +55,12 @@ function isInterfaceUp () {
 
 function getActiveNetwork () {
   netctl list | grep "^\\*" | sed 's/^..//g'
+}
+
+function getChosenNetwork () {
+  local networks
+  networks=$(netctl list | sed 's/^..//g')
+  echo "$networks" | fzf
 }
 
 function cleanup () {
