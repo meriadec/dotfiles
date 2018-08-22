@@ -7,12 +7,13 @@ local HIDPI = os.getenv("HIDPI") == "1"
 
 local smartBorders = {}
 
-local GUTTER = 15
-local WEIGHT = 0
-local ARROW_WEIGHT = 3
-local ARROW_WIDTH = 60
-local SMART_GAP = 3
-local COLOR = gears.color("#00000066")
+local GUTTER = 10
+local WEIGHT = 1
+local STRING_OFFSET = 2
+local ARROW_WEIGHT = 5
+local ARROW_WIDTH = 50
+local SMART_GAP = 0
+local COLOR = gears.color("#2b303b")
 
 if HIDPI then
   GUTTER = 20
@@ -49,7 +50,7 @@ function createFragment(c, position, firstRender)
 
   -- used to center line on corners
   -- local OFFSET = ARROW_WEIGHT / 2 - WEIGHT / 2
-  local OFFSET = 0
+  local OFFSET = STRING_OFFSET
 
   local IMG_W = W + 2 * SPACE
   local IMG_H = H + 2 * SPACE

@@ -9,7 +9,7 @@ local awful         = require("awful")
                       require("awful.autofocus")
 local smartBorders  = require("modules/smart-borders")
 
-local ENABLE_SMART_BORDERS = false
+local ENABLE_SMART_BORDERS = true
 local HIDPI = os.getenv("HIDPI") == "1"
 
 local topBarHeight = 40
@@ -68,6 +68,7 @@ local initialLayouts = {
 }
 
 awful.layout.layouts = {
+  awful.layout.suit.tile.left,
   awful.layout.suit.tile,
   awful.layout.suit.fair,
   awful.layout.suit.tile.bottom,
@@ -109,10 +110,11 @@ local function infoText(widget, value, unit, label)
   widget:set_markup(
     " "
     .. label
-    .. " "
-    .. markup("#BF616Aaa", "" .. value .. "")
+    .. ""
+    .. markup("#BF616Aaa", "<b>" .. value .. "</b>")
     -- .. markup("#BF616Aaa", "<b>" .. value .. "</b>")
-    .. markup("#BF616A99", unit)
+    .. markup("#ffffff22", unit)
+    -- .. markup("#BF616A99", unit)
     .. " "
   )
 end
@@ -137,7 +139,7 @@ lain.widgets.calendar.attach(textClock, {
 })
 
 -- MEM
-local memwidget = lain.widgets.mem({ settings = function() infoText(widget, mem_now.used, "MB", "mem") end })
+local memwidget = lain.widgets.mem({ settings = function() infoText(widget, mem_now.used, "mb", "mem") end })
 
 -- CPU
 local cpuwidget = lain.widgets.cpu({ settings = function() infoText(widget, cpu_now.usage, "%", "cpu") end })
@@ -158,6 +160,13 @@ local netwidget = lain.widgets.net({
     widget:set_markup(markup("#7AC82E", " " .. net_now.received)
     .. "" ..
     markup("#46A8C3", " " .. net_now.sent .. " "))
+  end
+})
+
+-- Battery
+local bat = lain.widgets.bat({
+  settings = function()
+    infoText(widget, bat_now.perc, "%", "bat")
   end
 })
 
@@ -238,10 +247,10 @@ awful.screen.connect_for_each_screen(function(s)
     border_color = "#22272f",
     screen = s,
     height = topBarHeight,
-    visible = true,
+    visible = false,
   })
 
-  local WIDGET_MARGIN = 4
+  local WIDGET_MARGIN = 0
   if HIDPI then
     WIDGET_MARGIN = 8
   end
@@ -251,7 +260,7 @@ awful.screen.connect_for_each_screen(function(s)
     {
       -- Left widgets
       layout = wibox.layout.fixed.horizontal,
-      wibox.layout.margin(s.mytaglist, WIDGET_MARGIN, WIDGET_MARGIN, WIDGET_MARGIN, WIDGET_MARGIN),
+      wibox.layout.margin(s.mytaglist, WIDGET_MARGIN, WIDGET_MARGIN + 20, WIDGET_MARGIN, WIDGET_MARGIN),
     },
     -- Middle widget
     wibox.layout.margin(s.mytasklist, WIDGET_MARGIN, WIDGET_MARGIN, WIDGET_MARGIN, WIDGET_MARGIN),
@@ -259,14 +268,15 @@ awful.screen.connect_for_each_screen(function(s)
       -- Right widgets
       layout = wibox.layout.fixed.horizontal,
       wibox.layout.margin(systray, 5, 0, 5, 0),
-      volume,
+      netwidget,
+      wibox.layout.margin(volume, 20, 0, 0, 0),
       memwidget,
       cpuwidget,
-      tempwidget,
-      netwidget,
-      textClock,
+      bat,
+      -- tempwidget,
+      wibox.layout.margin(textClock, 20, 10, 0, 0),
       --                                 L  R  T  B
-      wibox.layout.margin(s.mylayoutbox, 5, 2, 1, 2),
+      -- wibox.layout.margin(s.mylayoutbox, 5, 2, 1, 2),
     },
   }
 end)

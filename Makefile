@@ -2,7 +2,7 @@ install: build
 	@./scripts/install.sh
 
 # Parse the theme.sh variables and replace them in *.template files
-build: colors compile
+build: compile
 
 compile:
 	@./scripts/compile.sh
