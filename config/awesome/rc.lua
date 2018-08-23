@@ -58,18 +58,18 @@ local browser    = os.getenv("BROWSER")
 local tagnames   = { " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 " }
 
 local initialLayouts = {
-  awful.layout.suit.tile,
-  awful.layout.suit.tile,
-  awful.layout.suit.tile,
-  awful.layout.suit.tile,
-  awful.layout.suit.tile,
-  awful.layout.suit.tile,
-  awful.layout.suit.tile,
+  awful.layout.suit.tile.left,
+  awful.layout.suit.tile.left,
+  awful.layout.suit.tile.left,
+  awful.layout.suit.tile.left,
+  awful.layout.suit.tile.left,
+  awful.layout.suit.tile.left,
+  awful.layout.suit.tile.left,
 }
 
 awful.layout.layouts = {
   awful.layout.suit.tile.left,
-  awful.layout.suit.tile,
+  lain.layout.centerwork,
   awful.layout.suit.fair,
   awful.layout.suit.tile.bottom,
   awful.layout.suit.floating,
