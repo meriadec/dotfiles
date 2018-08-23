@@ -13,6 +13,7 @@ PATH=$PATH:$GOPATH/bin
 
 # ...
 PATH=$PATH:$HOME/bin
+PATH=$PATH:$HOME/.yarn/bin
 PATH=$PATH:$HOME/.cargo/bin
 PATH=$PATH:$HOME/.config/yarn/global/node_modules/.bin
 PATH=$PATH:$HOME/.gem/ruby/2.4.0/bin
@@ -26,14 +27,14 @@ PATH=$PATH:/bin
 PATH=$PATH:/usr/bin/core_perl
 
 # OSX specifics
-if [[ `uname` == 'Darwin' ]]; then
+if [[ $(uname) == 'Darwin' ]]; then
 
   PATH=/usr/local/Cellar/qt/5.10.1/bin:$PATH
   PATH=$HOME/.gem/ruby/2.0.0/bin:$PATH
   PATH=$HOME/.brew/bin:$PATH
 
 # Linux specifics
-elif [[ `uname` == 'Linux' ]]; then
+elif [[ $(uname) == 'Linux' ]]; then
   PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
 fi
 

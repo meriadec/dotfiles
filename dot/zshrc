@@ -5,7 +5,7 @@ plugins=()
 
 export ZSH=$HOME/.oh-my-zsh
 export LANG=en_US.UTF-8
-export EDITOR="$(which vim)"
+export EDITOR="$(which nvim)"
 export LS_COLORS="ln=32:di=35;35:ex=40;31;01"
 export GPG_TTY=$(tty)
 
