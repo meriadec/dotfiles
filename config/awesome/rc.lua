@@ -68,11 +68,11 @@ local initialLayouts = {
 }
 
 awful.layout.layouts = {
-  awful.layout.suit.tile.left,
+  awful.layout.suit.tile,
   lain.layout.centerwork,
+  awful.layout.suit.tile.left,
   awful.layout.suit.fair,
   awful.layout.suit.tile.bottom,
-  awful.layout.suit.floating,
   -- awful.layout.suit.fair.horizontal,
   -- awful.layout.suit.floating,
   -- awful.layout.suit.tile,
@@ -355,15 +355,15 @@ globalkeys = awful.util.table.join(
     end),
 
     -- Standard program
-    awful.key({ modkey }, "Return", function () awful.spawn(terminal) end),
-    awful.key({ modkey, "Control" }, "r", awesome.restart),
+    awful.key({ modkey }, "Return",       function () awful.spawn(terminal) end),
+    awful.key({ modkey, "Control" }, "r",                       awesome.restart),
 
-    awful.key({ modkey, "Control" }, "s", function () awful.tag.incmwfact( 0.005) end),
-    awful.key({ modkey, "Control" }, "h", function () awful.tag.incmwfact(-0.005) end),
+    awful.key({ modkey, "Control" }, "s", function ()  awful.tag.incmwfact( 0.005) end),
+    awful.key({ modkey, "Control" }, "h", function ()  awful.tag.incmwfact(-0.005) end),
     awful.key({ modkey, "Control" }, "t", function () awful.client.incwfact( 0.02) end),
     awful.key({ modkey, "Control" }, "n", function () awful.client.incwfact(-0.02) end),
 
-    awful.key({ modkey }, "space", function () awful.layout.inc( 1) end),
+    awful.key({ modkey }, "space",          function ()  awful.layout.inc(1) end),
     awful.key({ modkey, "Shift" }, "space", function () awful.layout.inc(-1) end),
 
     -- ALSA volume control
