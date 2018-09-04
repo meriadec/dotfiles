@@ -67,6 +67,12 @@ alias hdcast='ffcast -s ffmpeg -f x11grab -framerate 60 -show_region 1 -s %s -i 
 alias bye='shutdown now'
 alias upd='pacaur -Syu --noconfirm'
 
+function snth () {
+  ls -1t ~/Downloads \
+    | fzf --height 10 \
+    | sed "s/^/$(echo $HOME | sed 's/\//\\\//g')\/Downloads\//g"
+}
+
 # dev
 vgrep () {
   vim $(grep -rn $1 src | cut -d : -f 1 | sort | uniq)

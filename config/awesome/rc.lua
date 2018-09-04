@@ -9,7 +9,7 @@ local awful         = require("awful")
                       require("awful.autofocus")
 local smartBorders  = require("modules/smart-borders")
 
-local ENABLE_SMART_BORDERS = true
+local ENABLE_SMART_BORDERS = false
 local HIDPI = os.getenv("HIDPI") == "1"
 
 local topBarHeight = 40
@@ -358,8 +358,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "Return",       function () awful.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r",                       awesome.restart),
 
-    awful.key({ modkey, "Control" }, "s", function ()  awful.tag.incmwfact( 0.005) end),
-    awful.key({ modkey, "Control" }, "h", function ()  awful.tag.incmwfact(-0.005) end),
+    awful.key({ modkey, "Control" }, "h", function () awful.tag.incmwfact(0.005) end),
+    awful.key({ modkey, "Control" }, "s", function () awful.tag.incmwfact(-0.005) end),
     awful.key({ modkey, "Control" }, "t", function () awful.client.incwfact( 0.02) end),
     awful.key({ modkey, "Control" }, "n", function () awful.client.incwfact(-0.02) end),
 
