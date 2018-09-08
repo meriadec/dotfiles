@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# wesh - launch a command in bg and get notified when finished
+#
+# usage:
+#   wesh <command>
+#
+# example:
+#   wesh yarn
+#   wesh cmake -DBUILD_TESTS=OFF -DTARGET_JNI=ON ../src
+
+function notif () {
+  local title=$1
+  local desc=$2
+  local level=$3
+  if [ "$(uname)" == "Darwin" ]; then
+    osascript -e "display notification \"$desc\" with title \"$title\""
+  else
+    notify-send "$title" "$desc" -u "$level"
+  fi
+}
+
+( ("$@" &> /tmp/wesh.log \
+  && notif "job success" "\`$*\` finished without error" "normal") \
+  || notif "job failed" "\`$*\` failed. see /tmp/wesh.log" "critical") \
+&
+
+echo "You will be notified when \`$*\` is finished"
