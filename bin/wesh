@@ -9,20 +9,38 @@
 #   wesh yarn
 #   wesh cmake -DBUILD_TESTS=OFF -DTARGET_JNI=ON ../src
 
+export WESH_HOME=$HOME/.wesh
+
+! [[ -d  $WESH_HOME ]]      && mkdir "$WESH_HOME"
+! [[ -d  $WESH_HOME/pids ]] && mkdir "$WESH_HOME/pids"
+
+function wesh () {
+  local tmpFile
+  local pid
+
+  tmpFile=$(mktemp --suffix=wesh)
+
+  ( ("$@" &> "$tmpFile" && notif "success" "$*"            "normal")   \
+                        || notif "fail"    "$* > $tmpFile" "critical") \
+  &
+
+  pid=$!
+  echo "$*" > "$WESH_HOME/pids/$pid"
+
+  echo "* (pid: $pid) $*"
+}
+
 function notif () {
   local title=$1
   local desc=$2
   local level=$3
-  if [ "$(uname)" == "Darwin" ]; then
-    osascript -e "display notification \"$desc\" with title \"$title\""
-  else
-    notify-send "$title" "$desc" -u "$level"
-  fi
+
+  [[ $(uname) == "Linux" ]]  && notify-send -u "$level" "$title" "$desc"
+
+  [[ $(uname) == "Darwin" ]] && osascript \
+    -e "display notification \"$desc\" with title \"$title\""
+
+  return 0
 }
 
-( ("$@" &> /tmp/wesh.log \
-  && notif "job success" "\`$*\` finished without error" "normal") \
-  || notif "job failed" "\`$*\` failed. see /tmp/wesh.log" "critical") \
-&
-
-echo "You will be notified when \`$*\` is finished"
+wesh "$@"

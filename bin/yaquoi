@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# yaquoi - get a summary of wesh'ed commands (see: wesh)
+#
+# usage:
+#   yaquoi
+
+! [[ -d  $WESH_HOME ]]      && mkdir "$WESH_HOME"
+! [[ -d  $WESH_HOME/pids ]] && mkdir "$WESH_HOME/pids"
+
+function yaquoi () {
+  local pids
+
+  cd "$WESH_HOME/pids" || exit 1
+
+  mapfile -t pids < <(ls -1)
+
+  for pid in "${pids[@]}"; do
+    local pidFile="$WESH_HOME/pids/$pid"
+    ! [[ -e /proc/$pid ]] && rm "$pidFile"
+  done
+
+  mapfile -t pids < <(ls -1)
+
+  if [[ "${#pids[@]}" == 0 ]]; then
+    echo "No running jobs"
+    exit 0
+  fi
+
+  printf "%-10s %-30s %-10s\\n" "PID" "COMMAND" "UPTIME"
+
+  for pid in "${pids[@]}"; do
+    local pidFile="$WESH_HOME/pids/$pid"
+    printf "%-10s %-30s %-10s\\n" \
+      "$pid" \
+      "$(cat "$pidFile")" \
+      "$(ps --no-headers -p "$pid" -o etime | sed 's/ //g')"
+  done
+}
+
+yaquoi "$@"

@@ -18,6 +18,10 @@ source $HOME/.gitprompt
 source $HOME/.prompt
 source $HOME/.path
 
+# wesh
+
+export WESH_HOME=$HOME/.wesh
+
 # fzf
 
 export FZF_DEFAULT_COMMAND='rg --files --follow'
