@@ -45,6 +45,9 @@ nmap <silent> <Space>t :wincmd j<CR>
 nmap <silent> <Space>n :wincmd k<CR>
 nmap <silent> <Space>s :wincmd l<CR>
 
+" reformat
+nnoremap <silent> <Leader><Leader> :ALEFix<CR>
+
 " quick command in insert mode
 inoremap II <Esc>I
 inoremap AA <Esc>A
@@ -322,7 +325,7 @@ let g:go_fmt_command = "goimports"
 " ale
 let g:ale_linters = { 'javascript': ['eslint'] }
 let g:ale_fixers = { 'javascript': ['eslint', 'prettier'] }
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = 'ℹ'
