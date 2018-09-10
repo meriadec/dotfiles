@@ -35,6 +35,7 @@ alias dl='cd ~/Downloads'
 alias api="cd ~/ledger/ledger-node-js-api"
 alias hid="cd ~/ledger/ledger-node-js-hid"
 alias app="cd ~/ledger/ledger-live-desktop"
+alias mob="cd ~/ledger/ledger-live-mobile"
 alias com="cd ~/ledger/ledger-live-common"
 alias bind="cd ~/ledger/lib-ledger-core-node-bindings"
 alias js="cd ~/ledger/ledgerjs"
