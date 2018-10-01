@@ -46,13 +46,13 @@ local function runOnce(cmd)
   awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", findme, cmd))
 end
 
-runOnce("termite")
+runOnce("kitty")
 
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/theme.lua")
 
 local modkey     = "Mod4"
 local altkey     = "Mod1"
-local terminal   = "termite"
+local terminal   = "kitty"
 local editor     = "nvim"
 local browser    = os.getenv("BROWSER")
 local tagnames   = { " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 " }
