@@ -59,6 +59,7 @@ alias unscaffold='git config --local user.name meriadec && git config --local us
 # misc
 alias vimup="vim +'PlugUpgrade|PlugInstall|PlugUpdate|qa!'"
 alias plop="notify-send -u critical -i ~/dotfiles/assets/images/chirac.jpg Hey\!"
+alias sss="killall slack ; (slack >/dev/null 2>/dev/null &)"
 
 # random
 alias public-ip='dig +short myip.opendns.com @resolver1.opendns.com'
