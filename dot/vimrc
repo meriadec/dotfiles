@@ -127,8 +127,8 @@ let &t_EI = "\<Esc>[2 q"
 syntax on
 
 " the chosen one
-set background=dark
-" colorscheme base16-oceanicnext
+let base16colorspace=256
+colorscheme base16-material
 
 set mouse=c
 
@@ -173,7 +173,7 @@ set nowb
 set hidden
 
 " show cursor line
-" set cursorline
+set cursorline
 
 " move on search
 set incsearch
