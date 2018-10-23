@@ -17,7 +17,7 @@ function lastExitCode() {
 }
 
 if [[ $SSH_CLIENT != "" ]]; then
-  export PS1='${cRed}%n${cNop} ${cRed}%m${cNop} $(lastExitCode) ${cYellow}%1~${cNop} ${cBlue}\$${cNop} '
+  export PS1='${cRed}%n${cNop} ${cNice}%m${cNop} $(lastExitCode) ${cYellow}%1~${cNop} ${cBlue}\$${cNop} '
 else
   export PS1='$(lastExitCode) ${cYellow}%1~${cNop} ${cBlue}\$${cNop} '
 fi

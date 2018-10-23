@@ -1,28 +1,55 @@
 #!/bin/bash
+# shellcheck disable=SC2155,SC1126,SC1090
 
-CASE_SENSITIVE="true"
-plugins=()
+# ============================================================================ #
+#                                                                              #
+#                                    .zshrc                                    #
+#                                                                              #
+# ============================================================================ #
 
-export ZSH=$HOME/.oh-my-zsh
+#    --------------------------------------------------------------------------#
+# => globals                                                                   #
+#    --------------------------------------------------------------------------#
+
+# common
+
 export LANG=en_US.UTF-8
-export EDITOR="$(which nvim)"
+export EDITOR="$(command -v nvim)"
 export LS_COLORS="ln=32:di=35;35:ex=40;31;01"
 export GPG_TTY=$(tty)
 
-source $ZSH/oh-my-zsh.sh
-source $HOME/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# dev
 
-source $HOME/.private
-source $HOME/.profile
-source $HOME/.gitprompt
-source $HOME/.prompt
-source $HOME/.path
+export GOPATH=$HOME/dev/go
+export BOLOS_ENV=$HOME/bolos
+export BOLOS_SDK=$HOME/git/nanos-secure-sdk
 
-# wesh
+if [[ $(uname) == 'Linux' ]]; then
+  export ANDROID_HOME=/opt/android-sdk
+  export BROWSER=/usr/sbin/google-chrome-unstable
+  export TERMINAL=$TERM
+fi
 
-export WESH_HOME=$HOME/.wesh
+#    --------------------------------------------------------------------------#
+# => oh-my-zsh                                                                 #
+#    --------------------------------------------------------------------------#
 
-# fzf
+export ZSH=$HOME/.oh-my-zsh
+# shellcheck disable=SC2034
+CASE_SENSITIVE="true"
+# shellcheck disable=SC2034
+plugins=()
+source "$ZSH/oh-my-zsh.sh"
+
+#    --------------------------------------------------------------------------#
+# => zsh-syntax-highlighting                                                   #
+#    --------------------------------------------------------------------------#
+
+source "$HOME/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+#    --------------------------------------------------------------------------#
+# => fzf                                                                       #
+#    --------------------------------------------------------------------------#
 
 export FZF_DEFAULT_COMMAND='rg --files --follow'
 export FZF_CTRL_T_COMMAND='rg --files --follow 2>/dev/null'
@@ -32,42 +59,44 @@ if [ -f $fzfKeyBindings ]; then
   source $fzfKeyBindings
 fi
 
-# dev
+#    --------------------------------------------------------------------------#
+# => nvm                                                                       #
+#    --------------------------------------------------------------------------#
 
-export GOPATH=$HOME/dev/go
-export BOLOS_ENV=$HOME/bolos
-export BOLOS_SDK=$HOME/git/nanos-secure-sdk
+# echo -n "loading nvm..."
+# export NVM_DIR=/usr/share/nvm
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# clear
 
-if [[ `uname` == 'Linux' ]]; then
-
-  export ANDROID_HOME=/opt/android-sdk
-  export BROWSER=/usr/sbin/google-chrome-unstable
-  export TERMINAL=$TERM
-
-  if [[ $TERM == xterm-termite ]]; then
-    . /etc/profile.d/vte.sh 2>/dev/null
-    __vte_osc7 2>/dev/null
-  fi
-
-fi
+#    --------------------------------------------------------------------------#
+# => ssh                                                                       #
+#    --------------------------------------------------------------------------#
 
 if [ -z "$SSH_AUTH_SOCK" ] ; then
   echo "> Starting ssh-agent"
-  eval `ssh-agent -s`
+  eval "ssh-agent -s"
 fi
 
 if [ -n "$DISPLAY" ] && ! ssh-add -l >/dev/null; then
   ssh-add
 fi
 
-# Base16 Shell
+#    --------------------------------------------------------------------------#
+# => base16                                                                    #
+#    --------------------------------------------------------------------------#
+
 BASE16_SHELL="$HOME/.config/base16-shell/"
 [ -n "$PS1" ] && \
-    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
-        eval "$("$BASE16_SHELL/profile_helper.sh")"
+  [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+  eval "$("$BASE16_SHELL/profile_helper.sh")"
 
-# echo -n "loading nvm..."
-# export NVM_DIR=/usr/share/nvm
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# clear
+#    --------------------------------------------------------------------------#
+# => modules                                                                   #
+#    --------------------------------------------------------------------------#
+
+source "$HOME/.private"
+source "$HOME/.profile"
+source "$HOME/.gitprompt"
+source "$HOME/.prompt"
+source "$HOME/.path"
