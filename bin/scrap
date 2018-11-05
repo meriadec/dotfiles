@@ -1,0 +1,39 @@
+#!/bin/env bash
+
+tmpDir=$(mktemp -d)
+
+# shellcheck disable=SC2012
+mapfile -t filesSelected < <(ls -1t "$HOME" | rg '.*\.(png|jpg)' | fzf -m)
+
+for file in "${filesSelected[@]}"; do
+  cp "$HOME/$file" "$tmpDir"
+  tmpName="$tmpDir/$file"
+  printf "Add label for \\e[2;33m%s\\e[2;0m (Y/n) " "$file"
+  addLabel=0
+  while true; do
+    read -r yn
+    case $yn in
+      [Yy]* ) addLabel=1; break;;
+      [Nn]* ) exit;;
+      '') addLabel=1; break ;;
+      * ) echo "Please answer yes or no.";;
+    esac
+  done
+  if [[ "$addLabel" == "1" ]]; then
+    read -rp "Enter a label: " label
+    montage \
+      -label "$label" \
+      -font cmr10 \
+      -pointsize 40 \
+      "$tmpName" \
+      -geometry +0+0 \
+      "toto.png"
+    echo "i wil add label"
+  fi
+done
+
+function cleanup () {
+  rm -rf "$tmpDir"
+}
+
+trap cleanup EXIT
