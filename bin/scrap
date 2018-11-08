@@ -1,36 +1,49 @@
 #!/bin/env bash
 
+set -e
+
 tmpDir=$(mktemp -d)
 
 # shellcheck disable=SC2012
-mapfile -t filesSelected < <(ls -1t "$HOME" | rg '.*\.(png|jpg)' | fzf -m)
+mapfile -t filesSelected < <(ls -1t "$HOME" | rg '.*\.(png|jpg)' | fzf -m --reverse --header "Select images with <tab> then press <enter>")
+
+ARRAY=()
 
 for file in "${filesSelected[@]}"; do
   cp "$HOME/$file" "$tmpDir"
   tmpName="$tmpDir/$file"
-  printf "Add label for \\e[2;33m%s\\e[2;0m (Y/n) " "$file"
-  addLabel=0
+
+  printf "Display \\e[2;33m%s\\e[2;0m (N/y) " "$file"
+  display=0
   while true; do
     read -r yn
     case $yn in
-      [Yy]* ) addLabel=1; break;;
-      [Nn]* ) exit;;
-      '') addLabel=1; break ;;
+      [Yy]* ) display=1; break;;
+      [Nn]* ) break;;
+      '') break ;;
       * ) echo "Please answer yes or no.";;
     esac
   done
-  if [[ "$addLabel" == "1" ]]; then
-    read -rp "Enter a label: " label
-    montage \
-      -label "$label" \
-      -font cmr10 \
-      -pointsize 40 \
-      "$tmpName" \
-      -geometry +0+0 \
-      "toto.png"
-    echo "i wil add label"
+
+  if [[ "$display" == "1" ]]; then
+    feh "$tmpName"
   fi
+
+  read -rp "Enter a label: " label
+  labelledName="$tmpName.labelled"
+  montage \
+    -label "$label" \
+    -font cmr10 \
+    -pointsize 40 \
+    "$tmpName" \
+    -geometry +0+0 \
+    "$labelledName"
+
+  ARRAY+=("$labelledName")
 done
+
+convert -background white -border 20 -bordercolor white +append "${ARRAY[@]}" ~/res.jpg
+echo "Successfully created ~/res.jpg"
 
 function cleanup () {
   rm -rf "$tmpDir"
