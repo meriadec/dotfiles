@@ -21,7 +21,7 @@ alias tgi=tig
 alias gti=git
 
 # `ls` thoughts
-alias lt='ls -lt'
+alias lh='ls -lth'
 
 # folders
 alias gg='cd ~/git'
