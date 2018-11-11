@@ -128,7 +128,7 @@ syntax on
 
 " the chosen one
 let base16colorspace=256
-colorscheme base16-material
+colorscheme base16-zenburn
 
 set mouse=c
 
