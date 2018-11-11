@@ -1,7 +1,7 @@
 setxkbmap dvp
 setxkbmap -option compose:ralt
 
-xset r rate 150 100
+xset r rate 150 200
 xset -b
 xbindkeys
 
