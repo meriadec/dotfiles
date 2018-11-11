@@ -43,6 +43,8 @@ bindsym $mod+d split v
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
+bindsym $mod+p sticky toggle
+
 # change container layout (stacked, tabbed, toggle split)
 # bindsym $mod+l layout stacking
 # bindsym $mod+l layout tabbed
@@ -59,6 +61,9 @@ bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
+
+bindsym $mod+Shift+Return    move scratchpad
+bindsym $mod+m               scratchpad show
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -121,24 +126,6 @@ mode "resize" {
 bindsym $mod+Shift+r mode "resize"
 bindsym $mod+Tab      workspace back_and_forth
 
-# bar {
-#   # mode            hide
-#   # modifier        Mod1
-#   # position        top
-
-#   status_command  i3status
-#   colors {
-#     background #000000
-#     statusline #ffffff
-#     separator #666666
-#     focused_workspace  #ffffff #000000 #ffffff
-#     active_workspace   #000000 #ffffff #ffffff
-#     inactive_workspace #333333 #222222 #888888
-#     urgent_workspace   #2f343a #900000 #ffffff
-#     binding_mode       #2f343a #900000 #ffffff
-#   }
-# }
-
 # color defines for zenburn styled i3
 set $bg     #2c2c2e
 set $fg     #9f9f9f
@@ -157,18 +144,15 @@ client.unfocused            $bg        $bg         $ia
 client.focused_inactive     $bg        $bg         $ac
 client.urgent               $rd        $rd         $tx
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
 bar {
-    status_command i3status --config ~/.config/i3/i3status.conf
-
-    colors {
-        background          $bg
-        statusline          $fg
-        separator           $hi
-        focused_workspace   $gn        $bg        $ac
-        active_workspace    $gn        $ac        $tx
-        inactive_workspace  $bg        $bg        $ia
-        urgent_workspace    $rd        $bg        $ac
-    }
+  status_command i3status --config ~/.config/i3/i3status.conf
+  colors {
+    background          $bg
+    statusline          $fg
+    separator           $hi
+    focused_workspace   $gn        $bg        $ac
+    active_workspace    $gn        $ac        $tx
+    inactive_workspace  $bg        $bg        $ia
+    urgent_workspace    $rd        $bg        $ac
+  }
 }
