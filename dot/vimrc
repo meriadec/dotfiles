@@ -162,7 +162,7 @@ set sidescroll=1
 set autoread
 
 " show the 80 chars column
-" set colorcolumn=80
+set colorcolumn=80
 
 " don't create useless files
 set noswapfile
