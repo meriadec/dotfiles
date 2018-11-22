@@ -1,5 +1,3 @@
-#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-
 set $mod Mod4
 
 font pango:Fira Code 8
@@ -139,17 +137,14 @@ client.focused_inactive     $bg        $bg         $ac
 client.urgent               $rd        $rd         $tx
 
 bar {
-  i3bar_command $HOME/.config/polybar/launch.sh
+ status_command i3status --config ~/.config/i3/i3status.conf
+ colors {
+   background          $bg
+   statusline          $fg
+   separator           $hi
+   focused_workspace   $gn        $bg        $ac
+   active_workspace    $gn        $ac        $tx
+   inactive_workspace  $bg        $bg        $ia
+   urgent_workspace    $rd        $bg        $ac
+ }
 }
-#bar {
-#  status_command i3status --config ~/.config/i3/i3status.conf
-#  colors {
-#    background          $bg
-#    statusline          $fg
-#    separator           $hi
-#    focused_workspace   $gn        $bg        $ac
-#    active_workspace    $gn        $ac        $tx
-#    inactive_workspace  $bg        $bg        $ia
-#    urgent_workspace    $rd        $bg        $ac
-#  }
-#}
