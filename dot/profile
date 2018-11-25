@@ -21,7 +21,9 @@ alias tgi=tig
 alias gti=git
 
 # `ls` thoughts
-alias lh='ls -lth'
+function lh () {
+  ls -1th --color=always | head -n ${1-1}
+}
 
 # folders
 alias gg='cd ~/git'
@@ -68,6 +70,7 @@ alias g=$BROWSER
 alias hdcast='ffcast -s ffmpeg -f x11grab -framerate 60 -show_region 1 -s %s -i %D+%c -c:v libx264rgb -crf 0 -preset ultrafast'
 alias bye='shutdown now'
 alias upd='trizen -Syu'
+alias ledger-live='ledger-live-desktop'
 
 function snth () {
   ls -1t ~/Downloads \
