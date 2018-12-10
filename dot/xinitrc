@@ -1,3 +1,5 @@
+systemctl --user import-environment DISPLAY
+
 setxkbmap dvp
 setxkbmap -option compose:ralt
 
