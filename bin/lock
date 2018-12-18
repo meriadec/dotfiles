@@ -1,13 +1,25 @@
 #!/bin/bash
 
-options=(
+OPTIONS=(
   "smoke"
   "lunch"
-  "not here now"
+  "back in 10min"
   "back in a sec"
+  "meeting"
 )
 
-( IFS=$'\n'; echo "${options[*]}" ) \
-  | dmenu \
-  | tti "$(mktemp --suffix .png)" \
-  | xargs -I {} i3lock -i {} -b -u -f
+OPTION=$( ( IFS=$'\n'; echo "${OPTIONS[*]}" ) | dmenu)
+IMG_PATH=$(echo "$OPTION" | tti "$(mktemp --suffix .png)")
+
+# fix because apparently incorrect png headers
+convert "$IMG_PATH" "$IMG_PATH"
+
+DECORATION_PATH=$(echo "$HOME/dotfiles/assets/lock/$OPTION.png" | sed 's/ /-/g')
+
+if [[ -f $DECORATION_PATH ]]; then
+  composite \
+    -geometry +100+100 \
+    "$DECORATION_PATH" "$IMG_PATH" "$IMG_PATH"
+fi
+
+i3lock -i "$IMG_PATH" -b -u -f
