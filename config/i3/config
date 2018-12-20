@@ -14,7 +14,7 @@ bindsym $mod+Shift+c kill
 bindsym $mod+r exec dmenu_run
 # bindsym $mod+r exec rofi -show run
 
-bindsym $mod+b bar mode toggle
+bindsym $mod+b bar hidden_state toggle
 
 # change focus
 bindsym $mod+h focus left
@@ -103,7 +103,7 @@ bindsym $mod+Shift+Control+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+Control+s exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-bindsym $mod+minus exec "escrotum -s %Y-%m-%d_\$wx\$h.png"
+bindsym $mod+minus exec "escrotum -s %Y-%m-%d_%H-%M-%S_\$wx\$h.png"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -139,16 +139,16 @@ client.focused_inactive     $bg        $bg         $ac
 client.urgent               $rd        $rd         $tx
 
 bar {
- mode hide
- modifier None
- status_command i3status --config ~/.config/i3/i3status.conf
- colors {
-   background          $bg
-   statusline          $fg
-   separator           $hi
-   focused_workspace   $gn        $bg        $ac
-   active_workspace    $gn        $ac        $tx
-   inactive_workspace  $bg        $bg        $ia
-   urgent_workspace    $rd        $bg        $ac
- }
+  mode hide
+  modifier None
+  status_command i3status --config ~/.config/i3/i3status.conf
+  colors {
+    background          $bg
+    statusline          $fg
+    separator           $hi
+    focused_workspace   $gn        $bg        $ac
+    active_workspace    $gn        $ac        $tx
+    inactive_workspace  $bg        $bg        $ia
+    urgent_workspace    $rd        $bg        $ac
+  }
 }
