@@ -23,6 +23,8 @@ set $base0F #0097a7
 # Basic bar configuration using the Base16 variables.
 bar {
     status_command i3status
+    mode hide
+    modifier None
 
     colors {
         background $base00
@@ -30,7 +32,7 @@ bar {
         statusline $base04
 
         # State             Border  BG      Text
-        focused_workspace   $base05 $base0D $base00
+        focused_workspace   $base0D $base0D $base00
         active_workspace    $base05 $base03 $base00
         inactive_workspace  $base03 $base01 $base05
         urgent_workspace    $base08 $base08 $base00
