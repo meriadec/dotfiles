@@ -1,30 +1,28 @@
-## Base16 Icy Dark
-# Author: icyphox (https://icyphox.ga)
+## Base16 Material
+# Author: Nate Peterson
 #
 # You can use these variables anywhere in the i3 configuration file.
 
-set $base00 #021012
-set $base01 #031619
-set $base02 #041f23
-set $base03 #052e34
-set $base04 #064048
-set $base05 #095b67
-set $base06 #0c7c8c
-set $base07 #109cb0
-set $base08 #16c1d9
-set $base09 #b3ebf2
-set $base0A #80deea
-set $base0B #4dd0e1
-set $base0C #26c6da
-set $base0D #00bcd4
-set $base0E #00acc1
-set $base0F #0097a7
+set $base00 #263238
+set $base01 #2E3C43
+set $base02 #314549
+set $base03 #546E7A
+set $base04 #B2CCD6
+set $base05 #EEFFFF
+set $base06 #EEFFFF
+set $base07 #FFFFFF
+set $base08 #F07178
+set $base09 #F78C6C
+set $base0A #FFCB6B
+set $base0B #C3E88D
+set $base0C #89DDFF
+set $base0D #82AAFF
+set $base0E #C792EA
+set $base0F #FF5370
 
 # Basic bar configuration using the Base16 variables.
 bar {
     status_command i3status
-    mode hide
-    modifier None
 
     colors {
         background $base00
@@ -32,7 +30,7 @@ bar {
         statusline $base04
 
         # State             Border  BG      Text
-        focused_workspace   $base0D $base0D $base00
+        focused_workspace   $base05 $base0D $base00
         active_workspace    $base05 $base03 $base00
         inactive_workspace  $base03 $base01 $base05
         urgent_workspace    $base08 $base08 $base00

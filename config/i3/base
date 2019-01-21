@@ -1,5 +1,7 @@
 set $mod Mod4
 
+new_window none
+
 font pango:Fira Code 8
 
 # APPLICATIONS

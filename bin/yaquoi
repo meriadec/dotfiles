@@ -5,6 +5,8 @@
 # usage:
 #   yaquoi
 
+WESH_HOME=$HOME/.wesh
+
 ! [[ -d  $WESH_HOME ]]      && mkdir "$WESH_HOME"
 ! [[ -d  $WESH_HOME/pids ]] && mkdir "$WESH_HOME/pids"
 
