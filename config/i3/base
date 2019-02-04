@@ -68,7 +68,7 @@ bindsym $mod+m               scratchpad show
 set $ws1 "1: main"
 set $ws2 "2: dev"
 set $ws3 "3: run"
-set $ws4 "4: slack"
+set $ws4 "4: random"
 set $ws5 "5: random"
 set $ws6 "6: random"
 set $ws7 "7: random"

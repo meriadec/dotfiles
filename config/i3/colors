@@ -23,6 +23,8 @@ set $base0F #FF5370
 # Basic bar configuration using the Base16 variables.
 bar {
     status_command i3status
+mode hide
+modifier None
 
     colors {
         background $base00
