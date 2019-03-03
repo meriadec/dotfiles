@@ -74,6 +74,7 @@ alias g=$BROWSER
 alias hdcast='ffcast -s ffmpeg -f x11grab -framerate 60 -show_region 1 -s %s -i %D+%c -c:v libx264rgb -crf 0 -preset ultrafast'
 alias bye='shutdown now'
 alias upd='trizen -Syu'
+alias i='trizen -S'
 alias ledger-live='ledger-live-desktop'
 
 function snth () {

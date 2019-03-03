@@ -10,6 +10,8 @@ xbindkeys
 xrdb merge ~/.Xresources
 eval "$(ssh-agent)"
 
+exec compton &
+
 cat \
   $HOME/.config/i3/base \
   $HOME/.config/i3/colors \

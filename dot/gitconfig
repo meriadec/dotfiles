@@ -15,3 +15,9 @@
 	autosetuprebase = always
 [commit]
   gpgsign = true
+[tig "color"]
+	# A strange looking cursor line
+	cursor		= white	default underline
+	# UI colors
+	# title-blur	= white	blue
+	# title-focus	= white	blue	bold
