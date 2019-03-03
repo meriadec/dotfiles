@@ -24,6 +24,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'junegunn/goyo.vim'
+Plug 'sbdchd/neoformat'
 
 Plug 'mattn/emmet-vim', { 'for': 'javascript' }
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -48,7 +49,7 @@ nmap <silent> <Space>n :wincmd k<CR>
 nmap <silent> <Space>s :wincmd l<CR>
 
 " reformat
-nnoremap <silent> <Leader><Leader> :ALEFix<CR>
+nnoremap <silent> <Leader><Leader> :Neoformat<CR>
 
 " quick command in insert mode
 inoremap II <Esc>I
@@ -335,9 +336,7 @@ let g:go_fmt_command = "goimports"
 
 " ale
 let g:ale_linters = { 'javascript': ['eslint', 'flow'] }
-let g:ale_fixers = { 'javascript': ['eslint', 'prettier'], 'typescript': ['prettier'] }
-let g:ale_fix_on_save = 1
-let g:ale_javascript_prettier_use_local_config = 1
+let g:ale_fixers = { 'javascript': ['eslint'], 'typescript': [] }
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = 'ℹ'
 let g:ale_set_highlights = 0
@@ -363,3 +362,6 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+" neoformat
+autocmd BufWritePre *.js Neoformat
