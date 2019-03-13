@@ -364,4 +364,4 @@ let g:fzf_colors =
   \ 'header':  ['fg', 'Comment'] }
 
 " neoformat
-autocmd BufWritePre *.js Neoformat
+" autocmd BufWritePre *.js Neoformat

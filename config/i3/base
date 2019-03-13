@@ -1,8 +1,8 @@
 set $mod Mod4
 
-new_window none
+# new_window none
 hide_edge_borders smart
-default_border pixel 1
+default_border pixel 2
 
 font pango:Fira Code 8
 

@@ -25,6 +25,9 @@ function lh () {
   ls -1th --color=always | head -n ${1-1}
 }
 
+# extract files from grep like results
+alias files='cut -d : -f 1 | sort | uniq'
+
 # folders
 alias gg='cd ~/git'
 alias le='cd ~/ledger'
