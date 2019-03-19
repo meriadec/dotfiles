@@ -24,7 +24,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'junegunn/goyo.vim'
-Plug 'sbdchd/neoformat'
+Plug 'prettier/vim-prettier', { 'branch': 'release/1.x' }
 
 Plug 'mattn/emmet-vim', { 'for': 'javascript' }
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -49,7 +49,7 @@ nmap <silent> <Space>n :wincmd k<CR>
 nmap <silent> <Space>s :wincmd l<CR>
 
 " reformat
-nnoremap <silent> <Leader><Leader> :Neoformat<CR>
+nnoremap <silent> <Leader><Leader> :Prettier<CR>
 
 " quick command in insert mode
 inoremap II <Esc>I

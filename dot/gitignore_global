@@ -1,1 +1,3 @@
 ctags
+.local-ci
+local-ci.log
