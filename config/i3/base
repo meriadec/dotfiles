@@ -10,6 +10,7 @@ font pango:Fira Code 8
 
 bindsym $mod+Return exec kitty
 bindsym $mod+c exec google-chrome-unstable
+bindsym $mod+e exec ~/bin/pick-emoji
 
 # move floating windows with $mod+mouse
 floating_modifier $mod
