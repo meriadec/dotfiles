@@ -1,0 +1,9 @@
+#!/bin/sh
+
+chosen=$(rg -v "#" ~/.config/emoji | dmenu -i -l 20 -fn Monospace-11)
+
+[ "$chosen" != "" ] || exit
+
+c=$(echo "$chosen" | sed "s/ .*//")
+echo "$c" | tr -d '\n' | xsel -ib
+notify-send "'$c' copied to clipboard." &
