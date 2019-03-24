@@ -54,10 +54,10 @@ source "$HOME/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 export FZF_DEFAULT_COMMAND='rg --files --follow'
 export FZF_CTRL_T_COMMAND='rg --files --follow 2>/dev/null'
 
-fzfKeyBindings=/etc/profile.d/fzf.zsh
-if [ -f $fzfKeyBindings ]; then
-  source $fzfKeyBindings
-fi
+FZF_HOME=/usr/share/fzf
+
+source "$FZF_HOME/completion.zsh"
+source "$FZF_HOME/key-bindings.zsh"
 
 #    --------------------------------------------------------------------------#
 # => base16                                                                    #
