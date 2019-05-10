@@ -26,7 +26,7 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'junegunn/goyo.vim'
 Plug 'prettier/vim-prettier', { 'branch': 'release/1.x' }
 
-Plug 'mattn/emmet-vim', { 'for': 'javascript' }
+Plug 'mattn/emmet-vim', { 'for': ['javascript', 'typescript'] }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
