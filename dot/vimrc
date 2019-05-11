@@ -365,3 +365,17 @@ let g:fzf_colors =
 
 " neoformat
 " autocmd BufWritePre *.js Neoformat
+
+let g:typescript_indent_disable = 1
+
+" dark red
+" hi tsxTagName guifg=#FF0000
+
+" orange
+hi tsxCloseString guifg=#FF0000
+" hi tsxCloseTag guifg=#FF0000
+" hi tsxAttributeBraces guifg=#FF0000
+" hi tsxEqual guifg=#FF0000
+
+" yellow
+" hi tsxAttrib guifg=#F00000 cterm=italic
