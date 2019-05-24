@@ -74,7 +74,7 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 
 if [ -z "$SSH_AUTH_SOCK" ] ; then
   echo "> Starting ssh-agent"
-  eval "ssh-agent -s"
+  eval "$(ssh-agent -s)"
 fi
 
 if [ -n "$DISPLAY" ] && ! ssh-add -l >/dev/null; then
