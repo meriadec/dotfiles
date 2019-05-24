@@ -30,6 +30,12 @@ output * bg #323232 solid_color
 # resumed. It will also lock your screen before your computer goes to sleep.
 
 ### Input configuration
+
+input * {
+  repeat_rate 200
+  repeat_delay 150
+}
+
 #
 # Example configuration:
 #
@@ -49,6 +55,9 @@ output * bg #323232 solid_color
     bindsym $mod+Return exec $term
     bindsym $mod+c exec $browser
 
+    bindsym $mod+p sticky toggle
+    bindsym $mod+b bar hidden_state toggle
+
     # Kill focused window
     bindsym $mod+Shift+c kill
 
@@ -67,6 +76,8 @@ output * bg #323232 solid_color
 
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+Control+s exec swaymsg exit
+
+    bindsym $mod+Tab      workspace back_and_forth
 
     # Move your focus around
     bindsym $mod+$left focus left
@@ -124,8 +135,8 @@ output * bg #323232 solid_color
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
     # respectively.
-    bindsym $mod+b splith
-    bindsym $mod+v splitv
+    bindsym $mod+v splith
+    bindsym $mod+d splitv
 
     # Switch the current container between different layout styles
     # bindsym $mod+s layout stacking
@@ -136,7 +147,7 @@ output * bg #323232 solid_color
     bindsym $mod+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+space floating toggle
+    bindsym $mod+Control+space floating toggle
 
     # Swap focus between the tiling area and the floating area
     bindsym $mod+space focus mode_toggle
@@ -158,29 +169,29 @@ output * bg #323232 solid_color
 #
 # Resizing containers:
 #
-# mode "resize" {
-#     bindsym $left resize shrink width 10px
-#     bindsym $down resize grow height 10px
-#     bindsym $up resize shrink height 10px
-#     bindsym $right resize grow width 10px
+mode "resize" {
 
-#     # Ditto, with arrow keys
-#     bindsym Left resize shrink width 10px
-#     bindsym Down resize grow height 10px
-#     bindsym Up resize shrink height 10px
-#     bindsym Right resize grow width 10px
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
 
-#     # Return to default mode
-#     bindsym Return mode "default"
-#     bindsym Escape mode "default"
-# }
-# bindsym $mod+Shift+r mode "resize"
+    # Return to default mode
+    bindsym $mod+Shift+r mode "default"
+    bindsym q mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+r mode "resize"
 
 #
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
+    mode hide
+    modifier none
     position bottom
 
     # When the status_command prints a new line to stdout, swaybar updates.
@@ -193,5 +204,3 @@ bar {
         inactive_workspace #32323200 #32323200 #5c5c5c
     }
 }
-
-include /etc/sway/config.d/*
