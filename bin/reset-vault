@@ -3,20 +3,28 @@
 set -e
 
 cd ~/ledger/vault-integration
-git pull origin master
+git pull upstream master
+
 docker-compose down --remove-orphans
 docker-compose pull
 docker-compose up -d
 
 cd ~/ledger/ledger-vault-hsm-driver
-git pull origin develop-drop2
+git fetch upstream
+git checkout "$HSM_DRIVER_VERSION"
+git pull upstream "$HSM_DRIVER_VERSION"
+
 # shellcheck disable=SC1091
 source venv/bin/activate
 python3 hsmaas.py init --compartment-id "$VAULT_COMPARTMENT_ID" --clean
 
 cd ~/ledger/ledger-vault-api
-git pull origin develop-drop2
+git fetch upstream
+git checkout "$VAULT_API_VERSION"
+git pull upstream "$VAULT_API_VERSION"
+
 cd ~/ledger/ledger-vault-api/tests/integration
+
 # shellcheck disable=SC1091
 source venv/bin/activate
 
@@ -27,6 +35,9 @@ while true; do
   sleep 1
 done
 
-python test_onboarding.py
+#python test_onboarding.py
 
-notify-send -u critical "Onboarding finished 👌" "Vault ready to go! 🚀"
+notify-send \
+  -u critical \
+  -i ~/dotfiles/assets/rick.png \
+  "Onboarding finished 👌" "Vault ready to go! 🚀"
