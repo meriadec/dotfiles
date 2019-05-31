@@ -1,0 +1,106 @@
+#!/bin/bash
+
+set -e
+
+VAULT_WORKSPACE=${VAULT_WORKSPACE:-$HOME/.vault}
+
+function usage() {
+  echo "usage:"
+  echo "    vault -h             display this help message."
+  echo "    vault -e             display vault env"
+  echo "    vault main -i        init fresh main env, and use it"
+  echo "    vault main           use the main environment"
+  echo "    vault tmp            use a temporary fresh vault environment"
+}
+
+function main () {
+  while getopts ":he" opt; do
+    case ${opt} in
+      e )
+        display_env
+        exit 0
+        ;;
+      h )
+        usage
+        exit 0
+        ;;
+      \? )
+        echo "invalid option: -$OPTARG" 1>&2
+        exit 1
+        ;;
+    esac
+  done
+  shift $((OPTIND -1))
+
+  subcommand=$1; shift  # Remove 'pip' from the argument list
+
+  echo "sub = $subcommand"
+
+  case "$subcommand" in
+    main)
+      ensure_env_fetched
+
+      SHOULD_RESET=0
+
+      # Process package options
+      while getopts ":i" opt; do
+        case ${opt} in
+          i )
+            SHOULD_RESET=1
+            ;;
+          \? )
+            echo "invalid option: -$OPTARG" 1>&2
+            exit 1
+            ;;
+        esac
+      done
+      shift $((OPTIND -1))
+      ;;
+    tmp)
+      ensure_env_fetched
+      ;;
+    *)
+      usage
+      exit 0
+      ;;
+  esac
+}
+
+function display_env() {
+  show_env VAULT_COMPARTMENT_ID 34
+  show_env VAULT_HSM_ENDPOINT 32
+  show_env VAULT_API_VERSION 35
+  show_env HSM_DRIVER_VERSION 35
+  show_env DEVICE_API_VERSION 35
+  show_env WALLET_DAEMON_VERSION 35
+}
+
+function ensure_env_fetched() {
+  mkdir -p "$VAULT_WORKSPACE"
+  sync_repo vault-integration         master
+  sync_repo ledger-vault-hsm-driver   "$HSM_DRIVER_VERSION"
+  sync_repo ledger-vault-api          "$VAULT_API_VERSION"
+}
+
+function sync_repo() {
+  printf "\e[34m- syncing %s on branch \e[32m%s\e[34m... \e[0m" "$1" "$2"
+  cd "$VAULT_WORKSPACE" || exit 1
+  if ! [[ -d "$1" ]]; then
+    git clone "git@github.com:LedgerHQ/$1.git" >/dev/null
+  fi
+  cd "$1"
+  branch=$(git branch | grep '\*' | cut -d ' ' -f 2)
+  if [[ $branch != "$2" ]]; then
+    git fetch >/dev/null
+    git checkout "$2" >/dev/null
+  fi
+  git pull >/dev/null
+  cd "$OLDPWD" || exit 1
+  echo "[OK]"
+}
+
+function show_env() {
+  printf "%-25s\033[%sm%s\033[0m\n" "$1" "$2" "${!1}"
+}
+
+main "$@"

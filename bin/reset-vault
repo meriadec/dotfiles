@@ -7,7 +7,7 @@ git pull upstream master
 
 docker-compose down --remove-orphans
 docker-compose pull
-docker-compose up -d
+docker-compose up --build -d
 
 cd ~/ledger/ledger-vault-hsm-driver
 git fetch upstream
@@ -35,7 +35,7 @@ while true; do
   sleep 1
 done
 
-#python test_onboarding.py
+python test_simple_onboarding.py
 
 notify-send \
   -u critical \
