@@ -25,20 +25,24 @@ function main () {
         exit 0
         ;;
       \? )
-        echo "invalid option: -$OPTARG" 1>&2
+        echo "invalid option: -$OPTARG. see vault -h" 1>&2
         exit 1
         ;;
     esac
   done
   shift $((OPTIND -1))
 
-  subcommand=$1; shift  # Remove 'pip' from the argument list
-
-  echo "sub = $subcommand"
+  subcommand=$1;
+  if [[ $subcommand == "" ]]; then
+    usage
+    exit 1
+  fi
+  shift
 
   case "$subcommand" in
     main)
       ensure_env_fetched
+      stop_containers
 
       SHOULD_RESET=0
 
@@ -55,15 +59,90 @@ function main () {
         esac
       done
       shift $((OPTIND -1))
+
+      if [[ "$SHOULD_RESET" == "1" ]]; then
+        down_containers
+        reset_compartment
+        sync_containers
+      fi
+
+      up_containers
+      wait_up_gate
+
+      if [[ "$SHOULD_RESET" == "1" ]]; then
+        run_onboarding
+      fi
+
+      notify-send \
+        -u critical \
+        -i ~/dotfiles/assets/rick.png \
+        "Finished 👌" "Vault ready to go! 🚀"
       ;;
     tmp)
-      ensure_env_fetched
+      echo "TODO: temporary env"
+      exit 0
       ;;
     *)
       usage
       exit 0
       ;;
   esac
+}
+
+function run_onboarding() {
+  cd "$VAULT_WORKSPACE/ledger-vault-api/tests/integration"
+  if ! [[ -d venv ]]; then
+    python3 -m venv venv
+    (
+      source venv/bin/activate
+      pip install -r requirements.txt
+    )
+  fi
+  (
+    source venv/bin/activate
+    python test_simple_onboarding.py
+  )
+  cd - &>/dev/null
+}
+
+function stop_containers() {
+  cd "$VAULT_WORKSPACE/vault-integration"
+  docker-compose stop
+  cd - &>/dev/null
+}
+
+function down_containers() {
+  cd "$VAULT_WORKSPACE/vault-integration"
+  docker-compose down --remove-orphans
+  cd - &>/dev/null
+}
+
+function up_containers() {
+  cd "$VAULT_WORKSPACE/vault-integration"
+  docker-compose up --build -d
+  cd - &>/dev/null
+}
+
+function sync_containers() {
+  cd "$VAULT_WORKSPACE/vault-integration"
+  docker-compose pull
+  cd - &>/dev/null
+}
+
+function wait_up_gate() {
+  printf "\e[34m- waiting for gate... \e[0m"
+  while true; do
+    if curl --connect-timeout 0.2 http://localhost:5000/ledger1/_health &>/dev/null ; then
+      break
+    fi
+    printf "."
+    sleep 0.2
+  done
+  echo "[OK]"
+}
+
+function reset_compartment() {
+  hsmaas init --compartment-id "$VAULT_COMPARTMENT_ID" --clean
 }
 
 function display_env() {
@@ -77,14 +156,25 @@ function display_env() {
 
 function ensure_env_fetched() {
   mkdir -p "$VAULT_WORKSPACE"
+  if ! command -v hsmaas &>/dev/null; then
+    echo "hsmaas not found. installing..."
+    pip3 install git+ssh://git@github.com/LedgerHQ/vault-scripts.git@master --user
+  fi
+  display_env
   sync_repo vault-integration         master
-  sync_repo ledger-vault-hsm-driver   "$HSM_DRIVER_VERSION"
   sync_repo ledger-vault-api          "$VAULT_API_VERSION"
 }
 
+function ensure_set() {
+  if [[ "${!1}" == "" ]]; then
+    printf "\e[31merror: \$%s is not set\e[0m\n" "$1"
+    exit 1
+  fi
+}
+
 function sync_repo() {
-  printf "\e[34m- syncing %s on branch \e[32m%s\e[34m... \e[0m" "$1" "$2"
-  cd "$VAULT_WORKSPACE" || exit 1
+  printf "\e[34m- syncing %s on branch \e[35m%s\e[34m... \e[0m" "$1" "$2"
+  cd "$VAULT_WORKSPACE"
   if ! [[ -d "$1" ]]; then
     git clone "git@github.com:LedgerHQ/$1.git" >/dev/null
   fi
@@ -95,11 +185,12 @@ function sync_repo() {
     git checkout "$2" >/dev/null
   fi
   git pull >/dev/null
-  cd "$OLDPWD" || exit 1
+  cd "$OLDPWD"
   echo "[OK]"
 }
 
 function show_env() {
+  ensure_set "$1"
   printf "%-25s\033[%sm%s\033[0m\n" "$1" "$2" "${!1}"
 }
 
