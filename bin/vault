@@ -100,7 +100,7 @@ function run_onboarding() {
   fi
   (
     source venv/bin/activate
-    python test_simple_onboarding.py
+    python test_onboarding.py
   )
   cd - &>/dev/null
 }
