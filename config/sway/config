@@ -2,11 +2,14 @@ input * xkb_layout "dvp"
 
 set $mod Mod4
 set $term kitty
-set $browser google-chrome-unstable --force-device-scale-factor=2
+set $browser google-chrome-unstable
+# set $browser google-chrome-unstable --force-device-scale-factor=2
 set $menu dmenu_run
 
 # set $wallpaper /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png
 # output * bg $wallpaper fill
+
+for_window [title="Volume Control"] floating enable; resize grow left 200, resize grow right 200, resize grow down 150, resize grow up 100
 
 set $left h
 set $down t
@@ -15,7 +18,7 @@ set $right s
 
 output * bg #323232 solid_color
 # output DP-3 resolution 1920x1080
-# output DP-3 scale 2
+output DP-3 scale 2
 
 # Example configuration:
 #
@@ -54,6 +57,7 @@ input * {
     # start terminal
     bindsym $mod+Return exec $term
     bindsym $mod+c exec $browser
+    bindsym $mod+Shift+v exec pavucontrol
 
     bindsym $mod+p sticky toggle
     bindsym $mod+b bar hidden_state toggle
