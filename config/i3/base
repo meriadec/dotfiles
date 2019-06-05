@@ -110,7 +110,7 @@ bindsym $mod+Shift+Control+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+Control+s exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
-bindsym $mod+minus exec "escrotum -s %Y-%m-%d_%H-%M-%S_\$wx\$h.png"
+bindsym $mod+minus exec maim -d 0.5 -s "$(date +%s).png"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
