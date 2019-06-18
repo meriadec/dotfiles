@@ -1,20 +1,37 @@
 #!/bin/bash
 
+#                   ██╗   ██╗ █████╗ ██╗   ██╗██╗  ████████╗
+#                   ██║   ██║██╔══██╗██║   ██║██║  ╚══██╔══╝
+#                   ██║   ██║███████║██║   ██║██║     ██║
+#                   ╚██╗ ██╔╝██╔══██║██║   ██║██║     ██║
+#                    ╚████╔╝ ██║  ██║╚██████╔╝███████╗██║
+#                     ╚═══╝  ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝
+
+# exit on errors
 set -e
 
+# directory where repos will be cloned
 VAULT_WORKSPACE=${VAULT_WORKSPACE:-$HOME/.vault}
 
 function usage() {
   echo "usage:"
-  echo "    vault -h             display this help message."
-  echo "    vault -e             display vault env"
-  echo "    vault main -i        init fresh main env, and use it"
-  echo "    vault main           use the main environment"
-  echo "    vault tmp            use a temporary fresh vault environment"
+  echo "  vault -h                             display this help message."
+  echo "  vault -e                             display vault env"
+  echo "  vault                                start vault-integration"
+  echo "  vault -i <scenario> [...scenarios]   init and start vault-integration, and eventually run given scenario(s)"
+  echo "  vault -s <scenario> [...scenarios]   run given scenario(s)"
+  echo ""
+  echo "available scenarios are:"
+  list_scenarios
 }
 
 function main () {
-  while getopts ":he" opt; do
+  create_default_scenarios
+
+  SHOULD_RESET=0
+  SHOULD_RUN=0
+
+  while getopts ":heis" opt; do
     case ${opt} in
       e )
         display_env
@@ -24,6 +41,13 @@ function main () {
         usage
         exit 0
         ;;
+      i )
+        SHOULD_RESET=1
+        SHOULD_RUN=1
+        ;;
+      s )
+        SHOULD_RUN=1
+        ;;
       \? )
         echo "invalid option: -$OPTARG. see vault -h" 1>&2
         exit 1
@@ -32,82 +56,53 @@ function main () {
   done
   shift $((OPTIND -1))
 
-  subcommand=$1;
-  if [[ $subcommand == "" ]]; then
-    usage
-    exit 1
+  ensure_env_fetched
+
+  if [[ "$SHOULD_RESET" == "1" ]]; then
+    stop_containers
+    down_containers
+    reset_compartment
+    sync_containers
   fi
-  shift
 
-  case "$subcommand" in
-    main)
-      ensure_env_fetched
-      stop_containers
+  up_containers
+  wait_up_gate
 
-      SHOULD_RESET=0
+  if [[ "$SHOULD_RUN" == "1" ]]; then
+    # loop on scripts
+    while (( "$#" )); do
+      run_scenario "$1"
+      shift
+    done
+  fi
 
-      # Process package options
-      while getopts ":i" opt; do
-        case ${opt} in
-          i )
-            SHOULD_RESET=1
-            ;;
-          \? )
-            echo "invalid option: -$OPTARG" 1>&2
-            exit 1
-            ;;
-        esac
-      done
-      shift $((OPTIND -1))
-
-      if [[ "$SHOULD_RESET" == "1" ]]; then
-        down_containers
-        reset_compartment
-        sync_containers
-      fi
-
-      up_containers
-      wait_up_gate
-
-      if [[ "$SHOULD_RESET" == "1" ]]; then
-        run_onboarding
-      fi
-
-      notify-send \
-        -u critical \
-        -i ~/dotfiles/assets/rick.png \
-        "Finished 👌" "Vault ready to go! 🚀"
-      ;;
-    tmp)
-      echo "TODO: temporary env"
-      exit 0
-      ;;
-    *)
-      usage
-      exit 0
-      ;;
-  esac
+  notify-send \
+    -u critical \
+    -i ~/dotfiles/assets/rick.png \
+    "Finished 👌" "Vault ready to go! 🚀"
 }
 
-function run_onboarding() {
+function run_scenario() {
   cd "$VAULT_WORKSPACE/ledger-vault-api/tests/integration"
   if ! [[ -d venv ]]; then
     python3 -m venv venv
     (
+      # shellcheck disable=SC1091
       source venv/bin/activate
       pip install -r requirements.txt
     )
   fi
   (
+    # shellcheck disable=SC1091
     source venv/bin/activate
-    python test_onboarding.py
+    bash "$VAULT_WORKSPACE/scenarios/$1"
   )
   cd - &>/dev/null
 }
 
 function stop_containers() {
   cd "$VAULT_WORKSPACE/vault-integration"
-  docker-compose stop
+  docker-compose stop --timeout 1
   cd - &>/dev/null
 }
 
@@ -165,6 +160,18 @@ function ensure_env_fetched() {
   sync_repo ledger-vault-api          "$VAULT_API_VERSION"
 }
 
+function create_default_scenarios() {
+  mkdir -p "$VAULT_WORKSPACE/scenarios"
+  echo "$SCENARIO_ONBOARDING" > "$VAULT_WORKSPACE/scenarios/onboarding"
+  echo "$SCENARIO_STATE_1" > "$VAULT_WORKSPACE/scenarios/state-1"
+}
+
+function list_scenarios() {
+  for filename in "$VAULT_WORKSPACE"/scenarios/*; do
+    printf "  %-22s%s\n" "$(basename "$filename")" "$(cat "$filename" | grep DESC | sed 's/^# DESC //g')"
+  done
+}
+
 function ensure_set() {
   if [[ "${!1}" == "" ]]; then
     printf "\e[31merror: \$%s is not set\e[0m\n" "$1"
@@ -193,5 +200,28 @@ function show_env() {
   ensure_set "$1"
   printf "%-25s\033[%sm%s\033[0m\n" "$1" "$2" "${!1}"
 }
+
+read -r -d '' SCENARIO_ONBOARDING << EOF || true
+# DESC Simple onboarding. Fresh start. 3 admins.
+
+python test_onboarding.py
+EOF
+
+read -r -d '' SCENARIO_STATE_1 << EOF || true
+# DESC Create & approve 12 operators.
+
+python test_user_creation.py --user 3 --approve
+python test_user_creation.py --user 4 --approve
+python test_user_creation.py --user 5 --approve
+python test_user_creation.py --user 6 --approve
+python test_user_creation.py --user 7 --approve
+python test_user_creation.py --user 8 --approve
+python test_user_creation.py --user 9 --approve
+python test_user_creation.py --user 10 --approve
+python test_user_creation.py --user 11 --approve
+python test_user_creation.py --user 12 --approve
+python test_user_creation.py --user 13 --approve
+python test_user_creation.py --user 14 --approve
+EOF
 
 main "$@"
