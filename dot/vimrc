@@ -160,7 +160,7 @@ set tabstop=2
 set shiftwidth=2
 
 " don't wrap long lines
-" set nowrap
+set nowrap
 
 " always show status bar
 set laststatus=2
