@@ -25,6 +25,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'junegunn/goyo.vim'
 Plug 'prettier/vim-prettier', { 'branch': 'release/1.x' }
+Plug 'jceb/vim-orgmode'
 
 Plug 'mattn/emmet-vim', { 'for': ['javascript', 'typescript'] }
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -160,7 +161,7 @@ set tabstop=2
 set shiftwidth=2
 
 " don't wrap long lines
-" set nowrap
+set nowrap
 
 " always show status bar
 set laststatus=2

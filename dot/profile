@@ -78,7 +78,6 @@ alias hdcast='ffcast -s ffmpeg -f x11grab -framerate 60 -show_region 1 -s %s -i 
 alias bye='shutdown now'
 alias upd='trizen -Syu'
 alias i='trizen -S'
-alias ledger-live='ledger-live-desktop'
 
 function snth () {
   ls -1t ~/Downloads \

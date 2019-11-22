@@ -6,6 +6,7 @@ OPTIONS=(
   "back in 10min"
   "back in a sec"
   "meeting"
+  "useless meeting"
 )
 
 OPTION=$( ( IFS=$'\n'; echo "${OPTIONS[*]}" ) | dmenu)

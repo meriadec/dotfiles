@@ -1,0 +1,7 @@
+#!/bin/bash
+
+BRANCH=$(git branch | rg -v '\*' | sed 's/ //g' | fzf --reverse)
+
+if [[ "$BRANCH" != "" ]]; then
+  git checkout "$BRANCH"
+fi
