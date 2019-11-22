@@ -3,7 +3,6 @@
 /custom.sh
 
 /dot/Xresources
-/config/termite/config
-/config/awesome/theme.lua
+/dot/gitconfig
 /config/i3/config
 /config/kitty/kitty.conf

@@ -1,0 +1,25 @@
+[user]
+  name = meriadec
+  email = meriadec.pillet@gmail.com
+  signingkey = $[SIGNING_KEY]
+
+[commit]
+  gpgsign = true
+
+[branch]
+  autosetuprebase = always
+
+[color]
+  ui = true
+
+[push]
+  default = simple
+  followTags = true
+
+[core]
+  editor = nvim
+  excludesfile = ~/.gitignore_global
+  pager = less -F -X
+
+[tig "color"]
+  cursor    = white default underline
