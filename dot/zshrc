@@ -26,7 +26,7 @@ export BOLOS_SDK=$HOME/git/nanos-secure-sdk
 
 if [[ $(uname) == 'Linux' ]]; then
   export ANDROID_HOME=/opt/android-sdk
-  export BROWSER=/usr/sbin/google-chrome-unstable
+  export BROWSER=/usr/sbin/google-chrome-stable
   export TERMINAL=$TERM
 fi
 
