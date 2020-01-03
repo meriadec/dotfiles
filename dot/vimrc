@@ -146,7 +146,6 @@ set signcolumn=yes
 
 " encoding, etc.
 set encoding=utf-8
-set termencoding=utf-8
 
 " correct strange bug
 set backspace=indent,eol,start

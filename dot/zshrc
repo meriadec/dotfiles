@@ -23,6 +23,7 @@ export GPG_TTY=$(tty)
 export GOPATH=$HOME/dev/go
 export BOLOS_ENV=$HOME/bolos
 export BOLOS_SDK=$HOME/git/nanos-secure-sdk
+export GEM_HOME=$HOME/.gem/ruby/2.6.0
 
 if [[ $(uname) == 'Linux' ]]; then
   export ANDROID_HOME=/opt/android-sdk
