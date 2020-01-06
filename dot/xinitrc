@@ -10,11 +10,9 @@ xbindkeys
 xrdb merge ~/.Xresources
 eval "$(ssh-agent)"
 
-exec compton &
+exec picom &
 
-cat \
-  $HOME/.config/i3/base \
-  $HOME/.config/i3/colors \
-  > $HOME/.config/i3/config
+feh --bg-scale ~/dotfiles/assets/images/wallpaper.jpg
+base16-pick material
 
 exec i3
