@@ -16,7 +16,7 @@
 #define COLOR (#00000044 * ((d / 60) + 1))
 /* Direction that the bars are facing, 0 for inward, 1 for outward */
 #define DIRECTION 0
-#define FLIP 0
+#define FLIP 1
 /* Whether to switch left/right audio buffers */
 #define INVERT 0
 
