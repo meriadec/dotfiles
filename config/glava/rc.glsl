@@ -1,30 +1,9 @@
+#request mod bars-inverted
 
-/* The module to use. A module is a set of shaders used to produce
-   the visualizer. The structure for a module is the following:
-   
-   module_name [directory]
-       1.frag [file: fragment shader],
-       2.frag [file: fragment shader],
-       ...
-       
-   Shaders are loaded in numerical order, starting at '1.frag',
-   continuing indefinitely. The results of each shader (except
-   for the final pass) is given to the next shader in the list
-   as a 2D sampler.
-   
-   See documentation for more details. */
-#request mod bars
-
-/* Window hints */
-#request setfloating  false
+#request setfloating  true
 #request setdecorated true
 #request setfocused   false
 #request setmaximized false
-
-/* Force window geometry (locking the window in place), useful
-   for some pesky WMs that try to reposition the window when
-   embedding in the desktop. */
-#request setforcegeometry false
 
 /* Set window background opacity mode. Possible values are:
    
@@ -41,6 +20,10 @@
    "none"   - Disable window opacity completely. */
 #request setopacity "native"
 
+/* Whether to average and mirror left and right audio input channels.
+   This may cause some modules to only render a single channel. */
+#request setmirror false
+
 /* OpenGL context and GLSL shader versions, do not change unless
    you *absolutely* know what you are doing. */
 #request setversion 3 3
@@ -50,9 +33,9 @@
 #request settitle "GLava"
 
 /* Window geometry (x, y, width, height) */
-#request setgeometry 0 0 800 600
+#request setgeometry 0 0 2560 1440
 
-/* Window background color (RGB format).
+/* Window background color (RGBA format).
    Does not work with `setopacity "xroot"` */
 #request setbg 00000000
 
@@ -63,18 +46,21 @@
    
    This will set _NET_WM_WINDOW_TYPE to _NET_WM_WINDOW_TYPE_(TYPE),
    where (TYPE) is the one of the window types listed (after being
-   converted to uppercase). More information can be found at:
+   converted to uppercase).
    
-   https://standards.freedesktop.org/wm-spec/wm-spec-1.3.html#idm140130317606816
+   Alternatively, you can set this value to "!", which will cause
+   the window to be unmanaged. If this is set, then `addxwinstate`
+   will do nothing, but you can use "!+" and "!-" to stack on top
+   or below other windows.
 */
-#request setxwintype "normal"
+#request setxwintype "!"
 
 /* (X11 only) EWMH Window state atoms (multiple can be specified).
    Possible values are:
    
    "modal", "sticky", "maximized_vert", "maximized_horz",
    "shaded", "skip_taskbar", "skip_pager", "hidden", "fullscreen",
-   "above", "below", "demands_attention", "focused"
+   "above", "below", "demands_attention", "focused", "pinned"
    
    This will add _NET_WM_STATE_(TYPE) atoms to _NET_WM_STATE,
    where (TYPE) is one of the window states listed (after being
@@ -89,10 +75,22 @@
 // #request addxwinstate "skip_taskbar"
 // #request addxwinstate "skip_pager"
 // #request addxwinstate "above"
+// #request addxwinstate "pinned"
 
-/* PulseAudio source. Can be a number or a name of an audio
-   sink or device to record from. Set to "auto" to use the
-   default output device. */
+/* (X11 only) Use the XShape extension to support clicking through
+   the GLava window. Useful when you want to interact with other
+   desktop windows (icons, menus, desktop shells). Enabled by
+   default when GLava itself is a desktop window. */
+#request setclickthrough false
+
+/* Audio source
+
+   When the "pulseaudio" backend is set, this can be a number or
+   a name of an audio sink or device to record from. Set to "auto"
+   to use the default output device.
+   
+   When the "fifo" backend is set, "auto" is interpreted as
+   "/tmp/mpd.fifo". Otherwise, a valid path should be provided. */
 #request setsource "auto"
 
 /* Buffer swap interval (vsync), set to '0' to prevent
@@ -114,11 +112,20 @@
    
    This will delay data output by one update frame, so it can
    desync audio with visual effects on low UPS configs. */
-#request setinterpolate true
+#request setinterpolate false
 
 /* Frame limiter, set to the frames per second (FPS) desired or
-   simple set to zero (or lower) to disable the frame limiter. */
+   simply set to zero (or lower) to disable the frame limiter. */
 #request setframerate 0
+
+/* Suspends rendering if a fullscreen window is focused while
+   GLava is still visible (ie. on another monitor). This prevents
+   rendering from interfering with other graphically intensive
+   tasks.
+
+   If GLava is minimized or completely obscured, it will not
+   render regardless of this option. */
+#request setfullscreencheck false
 
 /* Enable/disable printing framerate every second. 'FPS' stands
    for 'Frames Per Second', and 'UPS' stands for 'Updates Per
@@ -172,8 +179,35 @@
    
    Lower sample rates also can make output more choppy, when
    not using interpolation. It's generally OK to leave this
-   value unless you have a strange PulseAudio configuration. */
+   value unless you have a strange PulseAudio configuration.
+
+   This option does nothing when using the "fifo" audio
+   backend. Instead, an ideal rate should be be configured
+   in the application generating the output. */
 #request setsamplerate 22050
+
+/* Enable GPU acceleration of the audio buffer's fourier transform.
+   This drastically reduces CPU usage, but should be avoided on
+   old integrated graphics hardware.
+   
+   Enabling this also enables acceleration for post-FFT processing
+   effects, such as gravity, averaging, windowing, and interpolation. */
+#request setaccelfft true
+
+/*                    ** DEPRECATED **
+   Force window geometry (locking the window in place), useful
+   for some pesky WMs that try to reposition the window when
+   embedding in the desktop.
+   
+   This routinely sends X11 events and should be avoided. */
+#request setforcegeometry false
+
+/*                    ** DEPRECATED **
+   Force window to be raised (focused in some WMs), useful for
+   WMs that have their own stacking order for desktop windows.
+   
+   This routinely sends X11 events and should be avoided. */
+#request setforceraised false
 
 /*                    ** DEPRECATED **
    Scale down the audio buffer before any operations are 
