@@ -192,7 +192,6 @@
    
    Enabling this also enables acceleration for post-FFT processing
    effects, such as gravity, averaging, windowing, and interpolation. */
-#request setaccelfft true
 
 /*                    ** DEPRECATED **
    Force window geometry (locking the window in place), useful
