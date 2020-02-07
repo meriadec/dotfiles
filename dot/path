@@ -9,6 +9,12 @@ PATH=$PATH:$ANDROID_HOME/tools
 PATH=$PATH:$ANDROID_HOME/tools/bin
 PATH=$PATH:$ANDROID_HOME/platform-tools
 
+# Python
+PATH=$PATH:$HOME/.pyenv/shims
+
+# gif generation
+PATH=$PATH:$HOME/git/gifgen
+
 # Shitty ruby env
 PATH=$PATH:$GEM_HOME/bin
 
