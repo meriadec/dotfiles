@@ -50,6 +50,7 @@ alias bind="cd ~/ledger/lib-ledger-core-node-bindings"
 alias js="cd ~/ledger/ledgerjs"
 alias lib="cd ~/ledger/lib-ledger-core"
 alias build="cd ~/ledger/lib-ledger-core-build"
+alias vt="cd ~/ledger/vaulty"
 
 # git
 alias gd='git diff'
