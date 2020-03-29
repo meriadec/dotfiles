@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [[ "$EUID" -ne 0 ]]; then
+  echo "run with sudo, bolosse"
+  exit 1
+fi
+
+echo ":: stopping connection..."
+ipsec auto --down L2TP-PSK
+echo "d vpn-connection" > /var/run/xl2tpd/l2tp-control
+
+echo ":: stopping services..."
+systemctl stop xl2tpd
+systemctl stop openswan

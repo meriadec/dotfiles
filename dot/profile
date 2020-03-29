@@ -11,6 +11,8 @@ export JOBS=max
 alias prof='vim ~/.profile && sprof'
 alias sprof='source ~/.profile'
 
+alias rg='rg --hidden'
+
 # hehe
 alias vim=nvim
 alias vmi=vim

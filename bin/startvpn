@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [[ "$EUID" -ne 0 ]]; then
+  echo "run with sudo, bolosse"
+  exit 1
+fi
+
+echo ":: starting openswan..."
+systemctl start openswan
+sleep 3
+
+echo ":: starting xl2tpd..."
+systemctl start xl2tpd
+sleep 3
+
+echo ":: adding connection..."
+ipsec auto --up L2TP-PSK
+sleep 5
+
+echo ":: configuring vpn..."
+echo "c vpn-connection" > /var/run/xl2tpd/l2tp-control
+sleep 5
+
+VPN_IP=$(ping -c 1 paris.vpn.ledger.fr | grep PING | sed -E 's/[^ ]+ [^ ]+ \(([^)]*)\).*/\1/g')
+echo ":: will route all traffic to $VPN_IP"
