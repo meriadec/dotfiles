@@ -52,7 +52,7 @@ source "$HOME/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 # => fzf                                                                       #
 #    --------------------------------------------------------------------------#
 
-export FZF_DEFAULT_COMMAND='rg --files --follow'
+export FZF_DEFAULT_COMMAND='rg -g !.git/ --hidden --files --follow'
 export FZF_CTRL_T_COMMAND='rg --files --follow 2>/dev/null'
 
 FZF_HOME=/usr/share/fzf

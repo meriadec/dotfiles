@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ip route add 213.215.6.86 via 192.168.0.254 dev wlp1s0
+ip route add default via 192.0.2.1 dev ppp0

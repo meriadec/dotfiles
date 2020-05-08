@@ -29,6 +29,7 @@ function lh () {
 
 # extract files from grep like results
 alias files='cut -d : -f 1 | sort | uniq'
+alias flowfiles='rg "^Error" | cut -d " " -f 3 | cut -d : -f 1 | sort | uniq'
 
 # folders
 alias gg='cd ~/git'
@@ -45,7 +46,7 @@ alias app="cd ~/ledger/ledger-live-desktop"
 alias vf="cd ~/ledger/ledger-vault-front"
 alias gate="cd ~/ledger/ledger-vault-api"
 alias hsm="cd ~/ledger/ledger-vault-hsm-driver"
-alias int="cd ~/ledger/vault-integration"
+alias int="cd ~/.vault/vault-integration"
 alias mob="cd ~/ledger/ledger-live-mobile"
 alias com="cd ~/ledger/ledger-live-common"
 alias bind="cd ~/ledger/lib-ledger-core-node-bindings"

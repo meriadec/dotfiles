@@ -2,3 +2,4 @@ ctags
 .local-ci
 local-ci.log
 .idea/
+yarn-error.log

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ "$EUID" -ne 0 ]]; then
+  echo "run with sudo, bolosse"
+  exit 1
+fi
+
+ip route add 34.245.57.206 via 192.0.2.1
