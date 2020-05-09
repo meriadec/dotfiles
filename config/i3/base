@@ -1,5 +1,7 @@
 set $mod Mod4
 
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
 # new_window none
 hide_edge_borders smart
 default_border pixel 2
@@ -10,7 +12,7 @@ font pango:Fira Code 8
 
 bindsym $mod+Return exec kitty
 bindsym $mod+c exec google-chrome-unstable
-bindsym $mod+e exec ~/bin/pick-emoji
+bindsym $mod+BackSpace exec ~/bin/pick-address
 
 # move floating windows with $mod+mouse
 floating_modifier $mod
@@ -68,9 +70,9 @@ bindsym $mod+m               scratchpad show
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1: main"
-set $ws2 "2: dev"
-set $ws3 "3: run"
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
 set $ws4 "4: random"
 set $ws5 "5: random"
 set $ws6 "6: random"
