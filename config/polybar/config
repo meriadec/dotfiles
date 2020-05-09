@@ -9,31 +9,16 @@ secondary = #192024
 alert = #bd2c40
 
 [bar/default]
-;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 64
-
-
 bottom = false
 fixed-center = true
-
-;offset-x = 1%
-;offset-y = 1%
-radius = 0
-; dim-value = 0.1
-
 background = ${colors.background}
 foreground = ${colors.foreground}
-
-line-size = 0
-line-color = #f00
-
-border-bottom-size = 6
 border-color = ${colors.secondary}
-
-padding-left = 0
-padding-top = 5
-padding-right = 0
+border-bottom-size = 6
+radius = 0
+line-size = 0
 
 module-margin-left = 2
 module-margin-right = 2
@@ -41,13 +26,10 @@ module-margin-right = 2
 font-0 = misc fixed:pixelsize=20;4
 font-1 = Hurmit Nerd Font Mono:pixelsize=32;8
 font-2 = Fira Code:pixelsize=20;4
-; font-0 = fira code:pixelsize=24;1
-; font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 
 modules-left = i3
 modules-center = date
 modules-right = wlan crypto xbacklight alsa battery
-; modules-right = filesystem xbacklight pulseaudio memory cpu wlan battery temperature date powermenu
 
 ; tray-position = right
 ; tray-padding = 2
@@ -57,12 +39,6 @@ modules-right = wlan crypto xbacklight alsa battery
 ;wm-restack = i3
 
 ;override-redirect = true
-
-;scroll-up = bspwm-desknext
-;scroll-down = bspwm-deskprev
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -316,9 +292,10 @@ format-volume = <label-volume>  <bar-volume>
 label-volume = 
 label-volume-foreground = ${root.foreground}
 
-format-muted-prefix = " "
-format-muted-foreground = ${colors.foreground}
-label-muted = Muted
+format-muted-foreground = #f0949d
+format-muted-padding = 2
+format-muted-background = #663e43
+label-muted = 
 
 bar-volume-width = 5
 bar-volume-foreground-0 = #55aa55
