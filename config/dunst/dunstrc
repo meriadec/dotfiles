@@ -29,7 +29,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "300x5-30+20"
+    geometry = "700x5-30+100"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -54,17 +54,17 @@
     separator_height = 2
 
     # Padding between text and separator.
-    padding = 8
+    padding = 32
 
     # Horizontal padding.
-    horizontal_padding = 8
+    horizontal_padding = 32
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 0
+    frame_width = 4
 
     # Defines color of the frame around the notification window.
-    frame_color = "#aaaaaa"
+    frame_color = "#ff0000"
 
     # Define a color for the separator.
     # possible values are:
@@ -86,7 +86,7 @@
 
     ### Text ###
 
-    font = Monospace 8
+    font = Fira Code 12
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -160,13 +160,14 @@
     ### Icons ###
 
     # Align icons left/right/off
-    icon_position = off
+    icon_position = left
 
     # Scale larger icons down to this size, set to 0 to disable
-    max_icon_size = 32
+    max_icon_size = 64
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+    # icon_path = /usr/share/icons/Papirus-Dark/24x24/actions/
+    # icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
     ### History ###
 
@@ -273,28 +274,25 @@
     context = ctrl+shift+period
 
 [urgency_low]
-    # IMPORTANT: colors have to be defined in quotation marks.
-    # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#222222"
-    foreground = "#888888"
+    background = "#1f292e"
+    foreground = "#b2ccd6"
+    frame_color = "#1c2429"
     timeout = 10
-    # Icon for notifications with low urgency, uncomment to enable
-    #icon = /path/to/icon
+    icon = /usr/share/icons/Papirus/64x64/devices/drive-multidisk.svg
 
 [urgency_normal]
-    background = "#285577"
-    foreground = "#ffffff"
+    background = "#1f292e"
+    foreground = "#b2ccd6"
+    frame_color = "#1c2429"
     timeout = 10
-    # Icon for notifications with normal urgency, uncomment to enable
-    #icon = /path/to/icon
+    icon = /usr/share/icons/Papirus/64x64/devices/drive-multidisk.svg
 
 [urgency_critical]
-    background = "#900000"
-    foreground = "#ffffff"
-    frame_color = "#ff0000"
+    background = "#663e43"
+    foreground = "#f0949d"
+    frame_color = "#784a4f"
     timeout = 0
-    # Icon for notifications with critical urgency, uncomment to enable
-    #icon = /path/to/icon
+    icon = /usr/share/icons/Papirus/64x64/apps/system-error.svg
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.

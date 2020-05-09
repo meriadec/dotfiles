@@ -1,9 +1,7 @@
 [colors]
-; background = ${xrdb:color0:#222}
 background = #1f292e
 background-alt = #263238
-background-dark = #1C2429
-;foreground = ${xrdb:color7:#222}
+background-dark = #1c2429
 foreground = #b2ccd6
 foreground-alt = #263238
 primary = #546e7a
@@ -348,6 +346,8 @@ full-at = 98
 
 ; format-charging = <label-charging>
 format-charging = <animation-charging> <label-charging>
+format-charging-padding = 3
+format-charging-background = ${colors.background-dark}
 
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-padding = 3
