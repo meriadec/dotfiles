@@ -20,18 +20,20 @@ border-bottom-size = 6
 radius = 0
 line-size = 0
 
-module-margin-left = 2
-module-margin-right = 2
+module-margin-left = 0
+module-margin-right = 0
 
-font-0 = misc fixed:pixelsize=20;4
-font-1 = Hurmit Nerd Font Mono:pixelsize=32;8
+font-0 = Fira Code:pixelsize=20;4
+font-1 = Hurmit Nerd Font Mono:pixelsize=32;6
 font-2 = Fira Code:pixelsize=20;4
+font-3 = meri:pixelsize=20;4
 
 modules-left = i3
-modules-center = date
-modules-right = wlan crypto xbacklight alsa battery
+modules-center =
+modules-right = crypto vpn wlan xbacklight alsa battery date
 
-; tray-position = right
+;tray-position = center
+;tray-detached = false
 ; tray-padding = 2
 ;tray-background = #0063ff
 
@@ -104,7 +106,7 @@ wrapping-scroll = false
 ; Only show workspaces on the same output as the bar
 ;pin-workspaces = true
 
-label-mode-padding = 2
+label-mode-padding = 3
 label-mode-foreground = ${colors.secondary}
 label-mode-background = #c3e88d
 label-mode-font = 3
@@ -113,11 +115,11 @@ label-mode-font = 3
 label-focused = %index%
 label-focused-background = ${colors.background-alt}
 label-focused-underline= ${colors.primary}
-label-focused-padding = 3
+label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %index%
-label-unfocused-padding = 3
+label-unfocused-padding = 2
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %index%
@@ -182,6 +184,7 @@ bar-fill-foreground = #9f78e1
 bar-empty = •
 bar-empty-font = 2
 bar-empty-foreground = ${colors.background-alt}
+format-padding = 2
 
 [module/backlight-acpi]
 inherit = module/xbacklight
@@ -210,6 +213,7 @@ interface = wlp1s0
 interval = 3.0
 
 format-connected = <ramp-signal>
+format-connected-padding = 2
 format-connected-underline = #9f78e1
 label-connected = %essid%
 
@@ -288,6 +292,7 @@ bar-volume-empty-foreground = ${colors.foreground}
 [module/alsa]
 type = internal/alsa
 
+format-volume-padding = 2
 format-volume = <label-volume>  <bar-volume>
 label-volume = 
 label-volume-foreground = ${root.foreground}
@@ -321,15 +326,13 @@ battery = BAT0
 adapter = AC0
 full-at = 98
 
-; format-charging = <label-charging>
 format-charging = <animation-charging> <label-charging>
-format-charging-padding = 3
-format-charging-background = ${colors.background-dark}
+;format-charging-background = ${colors.background-dark}
 
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-padding = 3
-format-discharging-background = ${colors.background-dark}
-; format-discharging = <animation-discharging> <label-discharging>
+format-discharging-font = 3
+;format-discharging-background = ${colors.background-dark}
 
 format-full = 100%
 format-full-prefix = " "
@@ -436,9 +439,28 @@ interval = 10
 [module/crypto]
 type = custom/script
 interval = 3
-exec = /home/meri/.config/polybar/get-btc-price
-format = <label>
-format-prefix = "ﴑ  "
-format-padding = 4
-format-background = ${colors.background-alt}
+exec = ~/.config/polybar/get-btc-price
 
+format = <label>
+label = %{T3}%output%%{T-}
+format-prefix = "ﴑ "
+format-padding = 2
+format-background = ${colors.background-dark}
+
+[module/space]
+type = custom/script
+exec = echo " "
+
+[module/vpn]
+type = custom/script
+
+format = <label>
+format-padding = 2
+format-background = ${colors.background-alt}
+;format-background = #393553
+
+label = 歷 %output%
+
+click-left = kill -USR1 %pid%
+exec = ~/.config/polybar/toggle-vpn.sh
+tail = true
