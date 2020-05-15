@@ -9,6 +9,7 @@ secondary = #192024
 alert = #bd2c40
 
 [bar/default]
+enable-ipc = true
 width = 100%
 height = 64
 bottom = false
@@ -220,6 +221,7 @@ label-connected = %essid%
 ;format-connected-background = #ff0000
 
 format-disconnected = 睊
+format-disconnected-padding = 2
 ;format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
@@ -260,7 +262,7 @@ format-underline = #0a6cf5
 
 label = %{T3}%date%%time%%{T-}
 label-background = ${colors.background-dark}
-label-padding = 3
+label-padding = 2
 
 [module/pulseaudio]
 type = internal/pulseaudio
@@ -327,17 +329,18 @@ adapter = AC0
 full-at = 98
 
 format-charging = <animation-charging> <label-charging>
+format-charging-padding = 2
 ;format-charging-background = ${colors.background-dark}
 
 format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-padding = 3
+format-discharging-padding = 2
 format-discharging-font = 3
 ;format-discharging-background = ${colors.background-dark}
 
 format-full = 100%
 format-full-prefix = " "
 format-full-background = #263E32
-format-full-padding = 3
+format-full-padding = 2
 format-full-prefix-foreground = ${colors.foreground}
 
 ramp-capacity-0 = 
@@ -455,11 +458,11 @@ exec = echo " "
 type = custom/script
 
 format = <label>
-format-padding = 2
+format-padding = 0
 format-background = ${colors.background-alt}
 ;format-background = #393553
 
-label = 歷 %output%
+;label = 歷 %output%
 
 click-left = kill -USR1 %pid%
 exec = ~/.config/polybar/toggle-vpn.sh

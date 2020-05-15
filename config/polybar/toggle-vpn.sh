@@ -3,7 +3,10 @@
 t=0
 
 toggle() {
-    t=$(((t + 1) % 2))
+  if [[ $IS_STOPPING -eq 1 ]] || [[ $IS_LAUNCHING -eq 1 ]]; then
+    return
+  fi
+  t=$(((t + 1) % 2))
 }
 
 
@@ -11,28 +14,49 @@ trap "toggle" USR1
 
 IS_RUNNING=0
 IS_LAUNCHING=0
+IS_STOPPING=0
 
-function launch() {
-  sleep 2
+function startvpn() {
+  IS_LAUNCHING=1
+  echo "   Starting vpn...  "
+  /home/meri/bin/startvpn
   IS_RUNNING=1
   IS_LAUNCHING=0
 }
 
-while true; do
-    if [[ $t -eq 1 ]]; then
+function stopvpn() {
+  IS_STOPPING=1
+  echo "   Stopping vpn...  "
+  /home/meri/bin/stopvpn
+  IS_RUNNING=0
+  IS_STOPPING=0
+}
 
-      if [[ $IS_RUNNING -eq 0 ]]; then
-        if [[ $IS_LAUNCHING -eq 0 ]]; then
-          IS_LAUNCHING=1
-          echo " Starting vpn..."
-          launch
-          echo "VPN ON"
-        fi
-        echo "Starting..."
+while true; do
+  if [[ $t -eq 1 ]]; then
+
+    # TOGGLE ON
+
+    if [[ $IS_RUNNING -eq 0 ]]; then
+      if [[ $IS_LAUNCHING -eq 0 ]]; then
+        startvpn
       fi
-    else
-      echo "No VPN"
     fi
-    sleep 1 &
-    wait
+    echo "%{B#263E32}  歷 VPN ON  %{B-}"
+
+  else
+
+    # TOGGLE OFF
+
+    if [[ $IS_RUNNING -eq 1 ]]; then
+      if [[ $IS_STOPPING -eq 0 ]]; then
+        stopvpn
+      fi
+    fi
+    echo "  歷 VPN OFF  "
+
+  fi
+
+  sleep 1 &
+  wait
 done
