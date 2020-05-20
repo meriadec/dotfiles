@@ -11,7 +11,7 @@ font pango:Fira Code 8
 # APPLICATIONS
 
 bindsym $mod+Return exec kitty
-bindsym $mod+c exec google-chrome-unstable
+bindsym $mod+c exec google-chrome-stable
 bindsym $mod+BackSpace exec ~/bin/pick-address
 
 # move floating windows with $mod+mouse

@@ -27,7 +27,7 @@ export GEM_HOME=$HOME/.gem/ruby/2.6.0
 
 if [[ $(uname) == 'Linux' ]]; then
   export ANDROID_HOME=/opt/android-sdk
-  export BROWSER=/usr/sbin/google-chrome-unstable
+  export BROWSER=/usr/sbin/google-chrome-stable
   export TERMINAL=$TERM
 fi
 
