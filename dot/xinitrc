@@ -14,6 +14,4 @@ exec picom &
 
 feh --bg-scale ~/dotfiles/assets/images/bg.png
 
-#base16-pick material
-
 exec i3
