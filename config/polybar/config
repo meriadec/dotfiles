@@ -31,7 +31,7 @@ font-3 = meri:pixelsize=20;4
 
 modules-left = i3
 modules-center =
-modules-right = crypto vpn wlan xbacklight alsa battery date
+modules-right = crypto wlan xbacklight alsa battery date
 
 ;tray-position = center
 ;tray-detached = false
@@ -449,21 +449,3 @@ label = %{T3}%output%%{T-}
 format-prefix = "ﴑ "
 format-padding = 2
 format-background = ${colors.background-dark}
-
-[module/space]
-type = custom/script
-exec = echo " "
-
-[module/vpn]
-type = custom/script
-
-format = <label>
-format-padding = 0
-format-background = ${colors.background-alt}
-;format-background = #393553
-
-;label = 歷 %output%
-
-click-left = kill -USR1 %pid%
-exec = ~/.config/polybar/toggle-vpn.sh
-tail = true
