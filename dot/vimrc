@@ -68,6 +68,9 @@ nnoremap <c-s> :x<CR>
 nmap <silent> <Leader>e <Plug>(ale_next_wrap)
 nmap <silent> <Leader>E <Plug>(ale_previous_wrap)
 
+" see ale details
+nnoremap <Leader>d :ALEDetail<CR>
+
 " paste & select pasted text
 noremap <Leader>p p`[v`]
 noremap <Leader>P P`[v`]
@@ -233,6 +236,7 @@ set wildmenu
 autocmd Filetype go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd BufNewFile,BufRead *.gyp set syntax=javascript
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+autocmd BufNewFile,BufRead tsconfig.json set filetype=json5
 
 " highlight for json5
 au BufNewFile,BufRead *.json5 set filetype=javascript

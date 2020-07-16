@@ -25,6 +25,8 @@ export BOLOS_ENV=$HOME/bolos
 export BOLOS_SDK=$HOME/git/nanos-secure-sdk
 export GEM_HOME=$HOME/.gem/ruby/2.6.0
 
+export NODE_OPTIONS="--max-old-space-size=8192"
+
 if [[ $(uname) == 'Linux' ]]; then
   export ANDROID_HOME=/opt/android-sdk
   export BROWSER=/usr/sbin/google-chrome-stable
