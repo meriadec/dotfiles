@@ -23,10 +23,11 @@ PATH=$PATH:$GOPATH/bin
 
 # ...
 PATH=$PATH:$HOME/bin
+PATH=$PATH:$HOME/endorsement/bin
 PATH=$PATH:$HOME/.local/bin
+PATH=$PATH:./node_modules/.bin
 PATH=$PATH:$HOME/.yarn/bin
 PATH=$PATH:$HOME/.cargo/bin
-PATH=$PATH:./node_modules/.bin
 PATH=$PATH:$HOME/.config/yarn/global/node_modules/.bin
 
 PATH=$PATH:/usr/bin/core_perl
