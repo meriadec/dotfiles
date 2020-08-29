@@ -27,6 +27,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'prettier/vim-prettier', { 'branch': 'release/1.x' }
 Plug 'jceb/vim-orgmode'
 Plug 'lilydjwg/colorizer'
+Plug 'cespare/vim-toml'
 
 Plug 'mattn/emmet-vim', { 'for': ['javascript', 'typescript'] }
 Plug 'fatih/vim-go', { 'for': 'go' }

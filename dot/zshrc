@@ -13,8 +13,12 @@
 
 # common
 
+export TERMINAL=$TERM
 export LANG=en_US.UTF-8
-export EDITOR="$(command -v nvim)"
+
+export EDITOR=nvim
+export BROWSER=/usr/sbin/google-chrome-stable
+
 export LS_COLORS="ln=32:di=35;35:ex=40;31;01"
 export GPG_TTY=$(tty)
 
@@ -24,14 +28,8 @@ export GOPATH=$HOME/dev/go
 export BOLOS_ENV=$HOME/bolos
 export BOLOS_SDK=$HOME/git/nanos-secure-sdk
 export GEM_HOME=$HOME/.gem/ruby/2.6.0
-
-export NODE_OPTIONS="--max-old-space-size=8192"
-
-if [[ $(uname) == 'Linux' ]]; then
-  export ANDROID_HOME=/opt/android-sdk
-  export BROWSER=/usr/sbin/google-chrome-stable
-  export TERMINAL=$TERM
-fi
+# export NODE_OPTIONS="--max-old-space-size=8192"
+# export ANDROID_HOME=/opt/android-sdk
 
 #    --------------------------------------------------------------------------#
 # => oh-my-zsh                                                                 #
@@ -88,8 +86,11 @@ fi
 # => modules                                                                   #
 #    --------------------------------------------------------------------------#
 
-source "$HOME/.private"
 source "$HOME/.profile"
+source "$HOME/.path"
 source "$HOME/.gitprompt"
 source "$HOME/.prompt"
-source "$HOME/.path"
+
+source "$HOME/.private"
+
+# eval "$(starship init zsh)"

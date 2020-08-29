@@ -84,31 +84,9 @@ alias bye='shutdown now'
 alias upd='trizen -Syu'
 alias i='trizen -S'
 
-function snth () {
-  ls -1t ~/Downloads \
-    | fzf --height 10 \
-    | sed "s/^/$(echo $HOME | sed 's/\//\\\//g')\/Downloads\//g"
+alias purge='sync; echo 3 | sudo tee /proc/sys/vm/drop_caches'
+alias open=xdg-open
+
+say () {
+   espeak -a 200 $1 2>/dev/null
 }
-
-# dev
-vgrep () {
-  vim $(grep -rn $1 src | cut -d : -f 1 | sort | uniq)
-}
-
-# Linux specifics
-if [[ `uname` == 'Linux' ]]; then
-
-  # clipboard copy
-  alias pbcopy='xsel --clipboard --input'
-
-  # purge memory
-  alias purge='sync; echo 3 | sudo tee /proc/sys/vm/drop_caches'
-
-  # open
-  alias open=xdg-open
-
-  say () {
-     espeak -a 200 $1 2>/dev/null
-  }
-
-fi
