@@ -28,8 +28,10 @@ Plug 'prettier/vim-prettier', { 'branch': 'release/1.x' }
 Plug 'jceb/vim-orgmode'
 Plug 'lilydjwg/colorizer'
 Plug 'cespare/vim-toml'
+Plug 'gutenye/json5.vim'
 
-Plug 'mattn/emmet-vim', { 'for': ['javascript', 'typescript'] }
+Plug 'mattn/emmet-vim', { 'for': ['javascript', 'typescript', 'typescript.tsx'] }
+" Plug 'mattn/emmet-vim', { 'for': ['javascript', 'typescript'] }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
@@ -331,11 +333,13 @@ let g:NERDDefaultAlign = 'left'
 " emmet
 " let g:user_emmet_install_global = 0
 let g:user_emmet_settings = {
-\  'javascript.jsx' : {
-\    'extends' : 'jsx',
-\  },
+\ 'typescript' : {
+\     'extends' : 'jsx',
+\ },
 \}
+
 autocmd FileType javascript.jsx EmmetInstall
+autocmd FileType typescript.tsx EmmetInstall
 
 " vim-go
 let g:go_fmt_command = "goimports"
