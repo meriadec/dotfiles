@@ -1,43 +1,11 @@
 #!/bin/bash
 
-set -e
+set -euxo pipefail
 
-cd ~/ledger/vault-integration
-git pull upstream master
+function plop () {
+  notify-send -u critical -i ~/dotfiles/assets/rick.png Hey\! "$1"
+}
 
-docker-compose down --remove-orphans
-docker-compose pull
-docker-compose up --build -d
-
-cd ~/ledger/ledger-vault-hsm-driver
-git fetch upstream
-git checkout "$HSM_DRIVER_VERSION"
-git pull upstream "$HSM_DRIVER_VERSION"
-
-# shellcheck disable=SC1091
-source venv/bin/activate
-python3 hsmaas.py init --compartment-id "$VAULT_COMPARTMENT_ID" --clean
-
-cd ~/ledger/ledger-vault-api
-git fetch upstream
-git checkout "$VAULT_API_VERSION"
-git pull upstream "$VAULT_API_VERSION"
-
-cd ~/ledger/ledger-vault-api/tests/integration
-
-# shellcheck disable=SC1091
-source venv/bin/activate
-
-while true; do
-  if curl http://localhost:5000/ledger1/_health &>/dev/null ; then
-    break
-  fi
-  sleep 1
-done
-
-python test_simple_onboarding.py
-
-notify-send \
-  -u critical \
-  -i ~/dotfiles/assets/rick.png \
-  "Onboarding finished 👌" "Vault ready to go! 🚀"
+cd /home/meri/.vault/vault-integration
+ps aux | rg docker | rg containerd-shim | awk '{ print $2 }' | xargs -r sudo kill -9 || true
+docker-compose down --remove-orphans && docker-compose pull && hsmaas init --compartment-id "$VAULT_COMPARTMENT_ID" --clean && docker-compose up -d && plop "env reset" || plop "fail"
