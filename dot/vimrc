@@ -24,11 +24,12 @@ Plug 'junegunn/goyo.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'junegunn/goyo.vim'
-Plug 'prettier/vim-prettier', { 'branch': 'release/1.x' }
+Plug 'prettier/vim-prettier'
 Plug 'jceb/vim-orgmode'
 Plug 'lilydjwg/colorizer'
 Plug 'cespare/vim-toml'
 Plug 'gutenye/json5.vim'
+Plug 'jxnblk/vim-mdx-js'
 
 Plug 'mattn/emmet-vim', { 'for': ['javascript', 'typescript', 'typescript.tsx'] }
 " Plug 'mattn/emmet-vim', { 'for': ['javascript', 'typescript'] }
@@ -321,6 +322,7 @@ endfunction
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/vim-snippets']
 
 " vim jsx
 let g:jsx_ext_required = 0
@@ -347,6 +349,7 @@ let g:go_fmt_command = "goimports"
 " ale
 let g:ale_linters = { 'javascript': ['eslint', 'flow'] }
 let g:ale_fixers = { 'javascript': ['eslint'], 'typescript': [] }
+let g:typescript_compiler_options = '--esModuleInterop'
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = 'ℹ'
 let g:ale_set_highlights = 0
