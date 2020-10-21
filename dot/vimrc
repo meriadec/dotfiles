@@ -61,6 +61,7 @@ nnoremap <silent> <Leader><Leader> :Prettier<CR>
 inoremap II <Esc>I
 inoremap AA <Esc>A
 inoremap OO <Esc>O
+imap <C-M> <CR><C-d><Esc>O
 
 " c-p to open files
 nnoremap <C-p> :Files<CR>

@@ -1,0 +1,24 @@
+snippet log
+console.log(${1:\`${2}\`});${0}
+endsnippet
+
+snippet d
+const { ${1} } = ${2:props};${0}
+endsnippet
+
+snippet rc
+// @flow
+
+import React from "react";
+
+type Props = {|
+|};
+
+const ${1:MyComponent} = () => {
+	return (
+	  <div>${0}</div>
+	)
+}
+
+export default $1
+endsnippet
