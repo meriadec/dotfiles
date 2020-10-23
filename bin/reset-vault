@@ -2,10 +2,19 @@
 
 set -euxo pipefail
 
+NO_PULL=${NO_PULL:-0}
+
 function plop () {
   notify-send -u critical -i ~/dotfiles/assets/rick.png Hey\! "$1"
 }
 
 cd /home/meri/.vault/vault-integration
+
+function pullIfNeeded() {
+  if [[ "$NO_PULL" != "1" ]]; then
+    docker-compose pull
+  fi
+}
+
 ps aux | rg docker | rg containerd-shim | awk '{ print $2 }' | xargs -r sudo kill -9 || true
-docker-compose down --remove-orphans && docker-compose pull && hsmaas init --compartment-id "$VAULT_COMPARTMENT_ID" --clean && docker-compose up -d && plop "env reset" || plop "fail"
+(docker-compose down --remove-orphans && pullIfNeeded && hsmaas init --compartment-id "$VAULT_COMPARTMENT_ID" --clean && docker-compose up -d && plop "env reset") || plop "fail"
