@@ -31,6 +31,10 @@ xrp=(
   "rEWoXTmxwqqnPdYqtVEuoRgJXARXxf21Sn\0icon\x1fface-laugh"
 )
 
+tezos=(
+  "tz1aiA3JtWw1hPTmmc9uyXK4boY2EjbRCPQ6"
+)
+
 IFS=$'\n'
 
 currency=$(echo -e "\
@@ -38,6 +42,7 @@ currency=$(echo -e "\
  Bitcoin (testnet)\0icon\x1fbitcoin
  Ethereum\0icon\x1fethereumwallet
  Ethereum (ropsten)\0icon\x1fethereumwallet
+ Tezos\0icon\x1fethereumwallet
  XRP\0icon\x1fface-laugh" | rofi -i -dmenu -format i:s)
 
 [[ "$currency" == "" ]] && exit 0
@@ -47,7 +52,8 @@ list=""
 [[ "$currency" == "1: Bitcoin (testnet)" ]] && list="${bitcoin_testnet[*]}"
 [[ "$currency" == "2: Ethereum" ]] && list="${ethereum[*]}"
 [[ "$currency" == "3: Ethereum (ropsten)" ]] && list="${ropsten[*]}"
-[[ "$currency" == "4: XRP" ]] && list="${xrp[*]}"
+[[ "$currency" == "4: Tezos" ]] && list="${tezos[*]}"
+[[ "$currency" == "5: XRP" ]] && list="${xrp[*]}"
 
 addr=$(echo -e "$list" | rofi -i -dmenu -format i:s)
 

@@ -61,7 +61,6 @@ nnoremap <silent> <Leader><Leader> :Prettier<CR>
 inoremap II <Esc>I
 inoremap AA <Esc>A
 inoremap OO <Esc>O
-imap <C-M> <CR><C-d><Esc>O
 
 " c-p to open files
 nnoremap <C-p> :Files<CR>
@@ -323,7 +322,7 @@ endfunction
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/vim-snippets']
+" let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/vim-snippets']
 
 " vim jsx
 let g:jsx_ext_required = 0

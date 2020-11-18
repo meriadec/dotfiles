@@ -8,7 +8,9 @@ function plop () {
   notify-send -u critical -i ~/dotfiles/assets/rick.png Hey\! "$1"
 }
 
-cd /home/meri/.vault/vault-integration
+if ! systemctl is-active docker --quiet ; then
+  sudo systemctl start docker
+fi
 
 function pullIfNeeded() {
   if [[ "$NO_PULL" != "1" ]]; then
@@ -16,5 +18,14 @@ function pullIfNeeded() {
   fi
 }
 
-ps aux | rg docker | rg containerd-shim | awk '{ print $2 }' | xargs -r sudo kill -9 || true
-(docker-compose down --remove-orphans && pullIfNeeded && hsmaas init --compartment-id "$VAULT_COMPARTMENT_ID" --clean && docker-compose up -d && plop "env reset") || plop "fail"
+cd /home/meri/.vault/vault-integration
+
+(
+  (
+    stop-vault && \
+    pullIfNeeded && \
+    hsmaas init --compartment-id "$VAULT_COMPARTMENT_ID" --clean && \
+    docker-compose up -d
+  ) && \
+  plop "Vault has been reset"
+) || plop "Failed to reset"

@@ -48,7 +48,7 @@ bindsym $mod+Shift+c              kill
 bindsym $mod+Shift+Control+s      exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 bindsym $mod+minus                exec maim -d 0.5 -s "$(date +%s).png"
 bindsym $mod+Return               exec kitty
-bindsym $mod+c                    exec google-chrome-stable
+bindsym $mod+c                    exec chromium
 bindsym $mod+BackSpace            exec ~/bin/pick-address
 bindsym $mod+r                    exec rofi -show drun
 bindsym $mod+l                    exec /usr/local/bin/spawn-chrome
@@ -64,6 +64,7 @@ bindsym $mod+Shift+s              move right
 
 bindsym $mod+v                    split h
 bindsym $mod+d                    split v
+bindsym $mod+m                    layout tabbed
 
 bindsym $mod+f                    fullscreen toggle
 bindsym $mod+p                    sticky toggle
