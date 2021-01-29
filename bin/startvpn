@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -euxo pipefail
 
 sudo ipsec auto --up L2TP-PSK &>/dev/null
 echo "c vpn-connection" > /var/run/xl2tpd/l2tp-control

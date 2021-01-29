@@ -11,6 +11,8 @@ export JOBS=max
 alias prof='vim ~/.profile && sprof'
 alias sprof='source ~/.profile'
 
+alias pdfjoin='pdfjam --fitpaper true --suffix joined'
+
 alias rg='rg --hidden'
 
 # hehe

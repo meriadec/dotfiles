@@ -20,7 +20,7 @@ ethereum=(
 )
 
 ropsten=(
-  "0xD7a15BAEB7EA05C9660CBe03fB7999c2C2e57625\0icon\x1fethereumwallet"
+  "0x7B724C24A2e76f6b7156F77F1753293987A8b81f\0icon\x1fethereumwallet"
   "0xD7a15BAEB7EA05C9660CBe03fB7999c2C2e57625\0icon\x1fethereumwallet"
   "0x687422eEA2cB73B5d3e242bA5456b782919AFc85\0icon\x1fethereumwallet"
 )

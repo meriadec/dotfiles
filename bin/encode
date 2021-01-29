@@ -1,0 +1,14 @@
+#!/bin/bash
+
+AAC_ENCODER=libfdk_aac
+# AAC_ENCODER=aac
+
+AUDIO_PARAMS="-c:a $AAC_ENCODER -profile:a aac_low -b:a 384k"
+VIDEO_PARAMS="-c:v libx264 -profile:v high -preset slow -crf 18 -g 30"
+CONTAINER_PARAMS="-movflags faststart"
+
+# You need to adjust the GOP length to fit your source video.
+# 60 fps -> -g 30
+# 23.976 (24000/1001) -> -g 24000/1001/2  (???) <- plz comment
+
+ffmpeg -i "$1" $AUDIO_PARAMS $VIDEO_PARAMS $CONTAINER_PARAMS "$2"

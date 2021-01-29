@@ -90,7 +90,6 @@ source "$HOME/.profile"
 source "$HOME/.path"
 source "$HOME/.gitprompt"
 source "$HOME/.prompt"
-
 source "$HOME/.private"
 
 # eval "$(starship init zsh)"
