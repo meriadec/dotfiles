@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "$(curl -s -X GET "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=eur" -H "accept: application/json" | jq '.ethereum.eur' | cut -d '.' -f 1 | xargs printf "%'.f") EUR"

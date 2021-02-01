@@ -31,7 +31,7 @@ font-3 = meri:pixelsize=20;4
 
 modules-left = i3
 modules-center =
-modules-right = crypto wlan xbacklight alsa battery date
+modules-right = cryptoeth crypto wlan xbacklight alsa battery date
 
 ;tray-position = center
 ;tray-detached = false
@@ -444,9 +444,18 @@ interval = 10
 type = custom/script
 interval = 3
 exec = ~/.config/polybar/get-btc-price
-
 format = <label>
 label = %{T3}%output%%{T-}
 format-prefix = "ﴑ "
+format-padding = 2
+format-background = ${colors.background-dark}
+
+[module/cryptoeth]
+type = custom/script
+interval = 3
+exec = ~/.config/polybar/get-eth-price
+format = <label>
+label = %{T3}%output%%{T-}
+format-prefix = "ﲹ "
 format-padding = 2
 format-background = ${colors.background-dark}
