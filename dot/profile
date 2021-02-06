@@ -27,7 +27,7 @@ alias dockre=docker
 
 # `ls` thoughts
 function lh () {
-  ls -1th --color=always | head -n ${1-1}
+  /bin/ls -1th | head -n ${1-1}
 }
 
 # extract files from grep like results
