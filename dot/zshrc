@@ -86,6 +86,8 @@ fi
 # => modules                                                                   #
 #    --------------------------------------------------------------------------#
 
+export COMPOSE_FILE=/home/meri/.vault/vault-integration/docker-compose.yml
+
 source "$HOME/.profile"
 source "$HOME/.path"
 source "$HOME/.gitprompt"
