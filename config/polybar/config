@@ -271,7 +271,9 @@ battery = BAT0
 adapter = AC0
 full-at = 98
 
-format-low = ${colors.alert}
+format-low-background = ${colors.alert}
+format-low-padding = 2
+format-low = <ramp-capacity> <label-low>
 format-charging = <animation-charging> <label-charging>
 format-charging-padding = 2
 ;format-charging-background = ${colors.background-dark}
