@@ -41,9 +41,12 @@ alias wv=wait-vault
 alias gg='cd ~/git'
 alias le='cd ~/ledger'
 alias dot='cd ~/dotfiles'
-alias ma="cd ~/git/mjml-app"
 alias min="cd ~/git/minus"
 alias dl='cd ~/Downloads'
+alias u='cd ~/git/udcfront'
+alias ua='cd ~/git/udcapi'
+alias ma='cd ~/git/mobileapi'
+alias va='cd ~/ledger/vaulty'
 
 # ledger env
 alias api="cd ~/ledger/ledger-node-js-api"

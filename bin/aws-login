@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 ARN=arn:aws:iam::454902641012:mfa/meriadec.pillet
 
 TOKEN=$1
 # echo -n "Enter 2FA code: "
 # read TOKEN
 
-aws sts get-session-token \
-  --serial-number $ARN \
-  --token-code $TOKEN \
-| jq -r '.Credentials |["AWS_ACCESS_KEY_ID=\(.AccessKeyId)", "AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey)", "AWS_SESSION_TOKEN=\(.SessionToken)"] | "export " + .[]'
+AWS_TOKEN=$(aws sts get-session-token --serial-number "$ARN" --token-code "$TOKEN")
+
+echo "$AWS_TOKEN" | jq -r '.Credentials |["AWS_ACCESS_KEY_ID=\(.AccessKeyId)", "AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey)", "AWS_SESSION_TOKEN=\(.SessionToken)"] | "export " + .[]'
