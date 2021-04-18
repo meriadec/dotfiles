@@ -17,7 +17,7 @@ export TERMINAL=$TERM
 export LANG=en_US.UTF-8
 
 export EDITOR=nvim
-export BROWSER=/usr/bin/chromium
+export BROWSER=/usr/bin/google-chrome-stable
 
 export LS_COLORS="ln=32:di=35;35:ex=40;31;01"
 export GPG_TTY=$(tty)
