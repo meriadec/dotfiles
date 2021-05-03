@@ -22,13 +22,14 @@ function pullIfNeeded() {
 
 cd "$VAULT_INTEGRATION_PATH"
 
-export TEST_ENV=$(
+TEST_ENV=$(
 (node <<EOF
-const gv = l => l ? \`Vault \${new RegExp("vault-([0-9]\\.[0-9])").exec(l)[1]}\` : null;
-console.log(\`$(rg '^vault-' stack.yaml | tr -d :)\`.split('\\n').reduce((acc, cur, i, arr) => (gv(cur) !== gv(arr[i + 1])) ? [...acc, \`\${gv(cur)} (\${cur})\`] : acc, []).join('\\n'));
+console.log(\`$(rg '^vault-' stack.yaml | tr -d :)\`.split('\\n').reduce((acc, cur, i, arr) => (cur !== arr[i + 1]) ? [...acc, \`\${cur}\`] : acc, []).join('\\n'));
 EOF
 ) | fzf --height 10 --reverse --tac | sed -E 's/.*\((.*)\)/\1/g'
 )
+
+export TEST_ENV
 
 if [[ "$TEST_ENV" == "" ]]; then
   echo "No chosen version, exiting"
@@ -36,7 +37,8 @@ if [[ "$TEST_ENV" == "" ]]; then
 fi
 
 STACK=$(pipenv run ./stack2env)
-echo $STACK
+echo "$STACK"
+# shellcheck disable=SC2163,SC2086
 export $STACK
 
 (
