@@ -30,6 +30,9 @@ function lh () {
   /bin/ls -1th | head -n ${1-1}
 }
 
+# remove colors
+alias no-colors='sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"'
+
 # extract files from grep like results
 alias files='cut -d : -f 1 | sort | uniq'
 alias flowfiles='rg "^Error" | cut -d " " -f 3 | cut -d : -f 1 | sort | uniq'
