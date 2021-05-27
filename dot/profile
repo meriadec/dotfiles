@@ -25,6 +25,8 @@ alias tgi=tig
 alias gti=git
 alias dockre=docker
 
+alias k=kubectl
+
 # `ls` thoughts
 function lh () {
   /bin/ls -1th | head -n ${1-1}
@@ -56,6 +58,7 @@ alias api="cd ~/ledger/ledger-node-js-api"
 alias hid="cd ~/ledger/ledger-node-js-hid"
 alias app="cd ~/ledger/ledger-live-desktop"
 alias vf="cd ~/ledger/ledger-vault-front"
+alias ops="cd ~/ledger/vault-ops"
 alias vj="cd ~/ledger/vault-js"
 alias gate="cd ~/ledger/ledger-vault-api"
 alias hsm="cd ~/ledger/ledger-vault-hsm-driver"
