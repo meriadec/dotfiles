@@ -14,6 +14,7 @@ alias sprof='source ~/.profile'
 alias pdfjoin='pdfjam --fitpaper true --suffix joined'
 
 alias rg='rg --hidden'
+alias curl='curl -s'
 
 # hehe
 alias vim=nvim
@@ -41,6 +42,7 @@ alias flowfiles='rg "^Error" | cut -d " " -f 3 | cut -d : -f 1 | sort | uniq'
 
 alias rv=reset-vault
 alias wv=wait-vault
+alias k=kubectl
 
 # folders
 alias gg='cd ~/git'
