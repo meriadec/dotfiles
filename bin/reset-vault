@@ -36,7 +36,11 @@ if [[ "$TEST_ENV" == "" ]]; then
   exit 1
 fi
 
-STACK=$(pipenv run ./stack2env)
+if [[ "$PRALINE" == "1" ]]; then
+  STACK=$(pipenv run ./stack2env --praline)
+else
+  STACK=$(pipenv run ./stack2env)
+fi
 echo "$STACK"
 # shellcheck disable=SC2163,SC2086
 export $STACK

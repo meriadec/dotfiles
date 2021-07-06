@@ -25,6 +25,7 @@ alias pd=pwd
 alias tgi=tig
 alias gti=git
 alias dockre=docker
+alias dcokre=docker
 
 alias k=kubectl
 
@@ -72,6 +73,7 @@ alias js="cd ~/ledger/ledgerjs"
 alias lib="cd ~/ledger/lib-ledger-core"
 alias build="cd ~/ledger/lib-ledger-core-build"
 alias vt="cd ~/ledger/vaulty"
+alias s="cd ~/ledger/vault-sentinel"
 
 # git
 alias gd='git diff'
