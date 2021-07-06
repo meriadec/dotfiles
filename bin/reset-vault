@@ -36,7 +36,7 @@ if [[ "$TEST_ENV" == "" ]]; then
   exit 1
 fi
 
-if [[ "$PRALINE" == "1" ]]; then
+if [[ "${PRALINE:-"0"}" == "1" ]]; then
   STACK=$(pipenv run ./stack2env --praline)
 else
   STACK=$(pipenv run ./stack2env)
