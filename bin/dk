@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -euo pipefail
+
+TARGET=$(printf "vault-api\nwallet-daemon\nvault-tx-broadcaster" | fzf --height 10 --reverse)
+
+if [[ "$TARGET" == "vault-api" ]]; then
+  LINE=$(docker ps | rg "$TARGET" | rg "/app/init_run_prod")
+else
+  LINE=$(docker ps | rg "$TARGET")
+fi
+
+IMG=$(echo "$LINE" | awk '{ print $1 }')
+
+docker exec -it "$IMG" bash
