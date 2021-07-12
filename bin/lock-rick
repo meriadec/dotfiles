@@ -12,9 +12,9 @@ revert() {
 trap revert HUP INT TERM
 
 # xset +dpms dpms 0 0 5
-time maim /tmp/screen.png
-time convert -blur 0x8 /tmp/screen.png /tmp/blur.png
-time convert -composite /tmp/blur.png "$HOME/dotfiles/assets/rick.png" -gravity South -geometry -20x1200 /tmp/lock.png
+maim /tmp/screen.png
+convert -blur 0x8 /tmp/screen.png /tmp/blur.png
+convert -composite /tmp/blur.png "$HOME/dotfiles/assets/rick.png" -gravity South -geometry -20x1200 /tmp/lock.png
 i3lock -u -i /tmp/lock.png
 
 revert
