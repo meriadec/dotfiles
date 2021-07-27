@@ -74,6 +74,7 @@ alias lib="cd ~/ledger/lib-ledger-core"
 alias build="cd ~/ledger/lib-ledger-core-build"
 alias vt="cd ~/ledger/vaulty"
 alias s="cd ~/ledger/vault-sentinel"
+alias m="cd ~/ledger/minivault"
 
 # git
 alias gd='git diff'
