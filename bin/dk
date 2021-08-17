@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-TARGET=$(printf "vault-api\nwallet-daemon\nredis\nvault-tx-broadcaster" | fzf --height 10 --reverse)
+TARGET=$(printf "vault-api\nwallet-daemon\nredis\nredis (4)\nvault-tx-broadcaster" | fzf --height 10 --reverse)
 
 if [[ "$TARGET" == "vault-api" ]]; then
   LINE=$(docker ps | rg "$TARGET" | rg "/app/init_run_prod")
@@ -14,6 +14,8 @@ IMG=$(echo "$LINE" | awk '{ print $1 }')
 
 if [[ "$TARGET" == "redis" ]]; then
   docker exec -it "$IMG" redis-cli
+elif [[ "$TARGET" == "redis (4)" ]]; then
+  docker exec -it "$IMG" redis-cli -n 4
 else
   docker exec -it "$IMG" bash
 fi
