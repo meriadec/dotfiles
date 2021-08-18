@@ -14,6 +14,18 @@ return require('packer').startup(function()
   use 'itchyny/lightline.vim'
   use 'scrooloose/nerdcommenter'
 
+  -- autopairs
+  use {
+    'windwp/nvim-autopairs',
+    config = config('autopairs')
+  }
+
+  -- completion
+  use {
+    'hrsh7th/nvim-compe',
+    config = config('compe')
+  }
+
   -- gitsigns
   use {
     'lewis6991/gitsigns.nvim',
@@ -38,24 +50,19 @@ return require('packer').startup(function()
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   use 'mfussenegger/nvim-lsp-compl'
 
+  -- treesitter
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+    config = config("treesitter"),
+  }
+
+  -- fzf
   use({
     "ibhagwan/fzf-lua",
     requires = { "vijaymarupudi/nvim-fzf" },
-    config = config('plugins/fzf'),
+    config = config('fzf'),
   })
-  --
-  -- use {
-  --   "ibhagwan/fzf-lua",
-  --   config = require('plugins/fzf')
-  -- }
-  -- use {
-  --   "ibhagwan/fzf-lua",
-  --   -- requires = { "vijaymarupudi/nvim-fzf" },
-  --   config = require('plugins/fzf'),
-  -- }
-
-  -- use 'junegunn/fzf'
-  -- use 'junegunn/fzf.vim'
 
 end)
 

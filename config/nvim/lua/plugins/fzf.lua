@@ -19,14 +19,6 @@ local bonly = function(selected)
     end
 end
 
--- open file and test file in split
-local split_test_file = function(selected)
-    vim.cmd("e " .. selected[2])
-    commands.edit_test_file("Vsplit", function()
-        vim.cmd("wincmd w")
-    end)
-end
-
 local vsplit = function(selected)
     commands.vsplit(selected[2])
 end
@@ -35,7 +27,6 @@ local file_actions = {
     ["default"] = actions.file_edit,
     ["ctrl-t"] = actions.file_tabedit,
     ["ctrl-q"] = actions.file_sel_to_qf,
-    ["ctrl-f"] = split_test_file,
     ["ctrl-x"] = bonly,
     ["ctrl-r"] = breplace,
     ["ctrl-v"] = vsplit,

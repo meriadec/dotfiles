@@ -1,7 +1,5 @@
 require("nvim-treesitter.configs").setup({
-    indent = {
-        enable = true,
-    },
+    indent = { enable = true },
     ensure_installed = {
         "javascript",
         "typescript",
@@ -13,18 +11,18 @@ require("nvim-treesitter.configs").setup({
     },
     highlight = { enable = true },
     -- plugins
-    autopairs = { enable = true },
-    context_commentstring = {
-        enable = true,
-    },
-    textsubjects = {
-        enable = true,
-        keymaps = {
-            ["."] = "textsubjects-smart",
-            [";"] = "textsubjects-container-outer",
-        },
-    },
-    matchup = {
-        enable = true,
-    },
+    -- autopairs = { enable = true },
+    -- context_commentstring = {
+    --     enable = true,
+    -- },
+    -- textsubjects = {
+    --     enable = true,
+    --     keymaps = {
+    --         ["."] = "textsubjects-smart",
+    --         [";"] = "textsubjects-container-outer",
+    --     },
+    -- },
+    -- matchup = {
+    --     enable = true,
+    -- },
 })
