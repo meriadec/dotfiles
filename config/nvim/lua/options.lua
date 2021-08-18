@@ -1,5 +1,7 @@
 vim.g.mapleader = "-"
 
+vim.opt.updatetime = 150
+
 vim.opt.encoding = "utf-8"
 
 -- full page help

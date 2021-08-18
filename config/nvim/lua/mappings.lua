@@ -2,6 +2,7 @@ local u = require("utils")
 
 u.nmap("<Leader>m", "^vg_o")
 u.nmap("<Leader><Leader>", ":LspFormatting<CR>")
+u.imap("<c-f>", "<Esc>:LspFormatting<CR>i")
 
 -- dvorak buffer navigation
 vim.cmd("nnoremap <Space> <NOP>")

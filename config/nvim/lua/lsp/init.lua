@@ -12,6 +12,11 @@ lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_pub
     virtual_text = false,
 })
 
+vim.fn.sign_define("LspDiagnosticsSignError",       { text = "", texthl = "DiffDelete" })
+vim.fn.sign_define("LspDiagnosticsSignWarning",     { text = "", texthl = "GruvboxYellow"})
+vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "", texthl = "FoldColumn"})
+vim.fn.sign_define("LspDiagnosticsSignHint",        { text = "", texthl = "FoldColumn"})
+
 local popup_opts = { border = "single", focusable = false }
 
 lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, popup_opts)
@@ -108,8 +113,8 @@ local on_attach = function(client, bufnr)
     -- bindings
     u.buf_map("n", "gi", ":LspRename<CR>", nil, bufnr)
     u.buf_map("n", "K", ":LspHover<CR>", nil, bufnr)
-    u.buf_map("n", "[a", ":LspDiagPrev<CR>", nil, bufnr)
-    u.buf_map("n", "]a", ":LspDiagNext<CR>", nil, bufnr)
+    u.buf_map("n", "<Leader>N", ":LspDiagPrev<CR>", nil, bufnr)
+    u.buf_map("n", "<Leader>n", ":LspDiagNext<CR>", nil, bufnr)
     u.buf_map("i", "<C-x><C-x>", "<cmd> LspSignatureHelp<CR>", nil, bufnr)
 
     -- fzf.lua
@@ -124,7 +129,7 @@ local on_attach = function(client, bufnr)
 
     if client.resolved_capabilities.completion then
         client.server_capabilities.completionProvider.triggerCharacters = trigger_characters
-        --require("lsp_compl").attach(client, bufnr)
+        -- require("lsp_compl").attach(client, bufnr)
 
         _G.global.lsp.completion = true
     end
