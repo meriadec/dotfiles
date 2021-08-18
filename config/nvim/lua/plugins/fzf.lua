@@ -42,7 +42,7 @@ require("fzf-lua").setup({
         "alt-p:toggle-preview",
     },
     previewers = {
-        bat = { theme = "ansi" },
+        bat = { theme = "Nord" },
     },
     files = {
         actions = file_actions,
