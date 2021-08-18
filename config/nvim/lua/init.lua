@@ -1,3 +1,5 @@
+local u = require("utils")
+
 _G.global = {}
 
 vim.cmd("colorscheme base16-material")
@@ -11,3 +13,6 @@ vim.cmd("autocmd VimResized * :wincmd =")
 require("options")
 require("plugins")
 require("lsp")
+
+u.nmap("<Leader>m", "^vg_o")
+u.nmap("<Leader><Leader>", ":LspFormatting<CR>")

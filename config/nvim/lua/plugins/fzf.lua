@@ -25,11 +25,13 @@ end
 
 local file_actions = {
     ["default"] = actions.file_edit,
+    ["ctrl-v"] = actions.file_vsplit,
+    ["ctrl-x"] = actions.file_split,
     ["ctrl-t"] = actions.file_tabedit,
     ["ctrl-q"] = actions.file_sel_to_qf,
-    ["ctrl-x"] = bonly,
-    ["ctrl-r"] = breplace,
-    ["ctrl-v"] = vsplit,
+    -- ["ctrl-x"] = bonly,
+    -- ["ctrl-r"] = breplace,
+    -- ["ctrl-v"] = vsplit,
 }
 
 require("fzf-lua").setup({
@@ -63,10 +65,13 @@ u.lua_command("LspTypeDefs", 'require("fzf-lua").lsp_typedefs({ jump_to_single_r
 
 u.command("Files", "FzfLua files")
 
-u.nmap("<Leader>ff", ":FzfLua files<CR>")
-u.nmap("<Leader>fb", ":FzfLua buffers<CR>")
-u.nmap("<Leader>fl", ":FzfLua grep_curbuf<CR>")
-u.nmap("<Leader>fg", ":FzfLua live_grep<CR>")
-u.nmap("<Leader>fo", ":FzfLua oldfiles<CR>")
-u.nmap("<Leader>fh", ":FzfLua help_tags<CR>")
-u.nmap("<Leader>fc", ":FzfLua git_bcommits<CR>")
+u.nmap("<Leader>f", ":FzfLua grep_cword<CR>")
+u.nmap("<c-f>", ":FzfLua live_grep<CR>")
+
+-- u.nmap("<Leader>ff", ":FzfLua files<CR>")
+-- u.nmap("<Leader>fb", ":FzfLua buffers<CR>")
+-- u.nmap("<Leader>fl", ":FzfLua grep_curbuf<CR>")
+-- u.nmap("<Leader>fg", ":FzfLua live_grep<CR>")
+-- u.nmap("<Leader>fo", ":FzfLua oldfiles<CR>")
+-- u.nmap("<Leader>fh", ":FzfLua help_tags<CR>")
+-- u.nmap("<Leader>fc", ":FzfLua git_bcommits<CR>")
