@@ -13,6 +13,10 @@ vim.cmd("autocmd BufNewFile,BufRead *.gyp set syntax=javascript")
 vim.cmd("autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx")
 vim.cmd("autocmd BufNewFile,BufRead tsconfig.json set filetype=jsonc")
 
+vim.cmd("let g:NERDSpaceDelims = 1")
+vim.cmd("let g:NERDTrimTrailingWhitespace = 1")
+vim.cmd("let g:NERDDefaultAlign = 'left'")
+
 require("options")
 require("plugins")
 require("lsp")
