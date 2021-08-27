@@ -39,7 +39,7 @@ vim.opt.pumheight = 10
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 
-vim.opt.showcmd = false
+-- vim.opt.showcmd = false
 
 -- behavior when splitting windows
 vim.opt.splitbelow = true

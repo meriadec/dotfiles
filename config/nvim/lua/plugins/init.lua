@@ -10,11 +10,21 @@ return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
   -- basics
-  -- use 'arcticicestudio/nord-vim'
+  use 'arcticicestudio/nord-vim'
   -- use 'chriskempson/base16-vim'
-  use 'RRethy/nvim-base16'
-  use 'itchyny/lightline.vim'
+  -- use 'RRethy/nvim-base16'
   use 'scrooloose/nerdcommenter'
+  use {
+    'norcalli/nvim-colorizer.lua',
+    config = function ()
+      require'colorizer'.setup()
+    end
+  }
+  use {
+    'hoob3rt/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    config = config('lualine'),
+  }
 
   -- autopairs
   use {

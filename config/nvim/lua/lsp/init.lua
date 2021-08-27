@@ -17,7 +17,7 @@ vim.fn.sign_define("LspDiagnosticsSignWarning",     { text = "", texthl = "Gr
 vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "", texthl = "FoldColumn"})
 vim.fn.sign_define("LspDiagnosticsSignHint",        { text = "", texthl = "FoldColumn"})
 
-local popup_opts = { border = "single", focusable = false }
+local popup_opts = { focusable = false }
 
 lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, popup_opts)
 lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, popup_opts)
@@ -123,9 +123,9 @@ local on_attach = function(client, bufnr)
     u.buf_map("n", "gy", ":LspTypeDefs<CR>", nil, bufnr)
     u.buf_map("n", "ga", ":LspActions<CR>", nil, bufnr)
 
-    if client.resolved_capabilities.document_formatting then
-        u.buf_augroup("LspFormatOnSave", "BufWritePre", "lua vim.lsp.buf.formatting_sync()")
-    end
+    -- if client.resolved_capabilities.document_formatting then
+    --     u.buf_augroup("LspFormatOnSave", "BufWritePre", "lua vim.lsp.buf.formatting_sync()")
+    -- end
 
     if client.resolved_capabilities.completion then
         client.server_capabilities.completionProvider.triggerCharacters = trigger_characters

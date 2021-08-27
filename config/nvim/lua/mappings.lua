@@ -28,9 +28,9 @@ u.nmap("<Leader>p", "p`[v`]")
 u.nmap("<Leader>P", "P`[v`]")
 
 -- indent { / [ / ( / > & put cursor on blank line when <Enter> inside
-u.imap("{<cr>", "{<cr>}<c-o>O")
-u.imap("[<cr>", "[<cr>]<c-o>O")
-u.imap("(<cr>", "(<cr>)<c-o>O")
+-- u.imap("{<cr>", "{<cr>}<c-o>O")
+-- u.imap("[<cr>", "[<cr>]<c-o>O")
+-- u.imap("(<cr>", "(<cr>)<c-o>O")
 
 -- never use Ex useless mode
 u.nmap("Q", "<ESC>")

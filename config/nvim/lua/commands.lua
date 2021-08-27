@@ -78,9 +78,6 @@ commands.bdelete = function(bufnr)
     vim.cmd("silent! bdelete " .. bufnr)
 end
 
-u.lua_command("Bdelete", "global.commands.bdelete()")
-u.map("n", "<Leader>cc", ":Bdelete<CR>")
-
 commands.vsplit = function(args)
     if not args then
         vim.cmd("vsplit")
@@ -106,9 +103,9 @@ commands.vsplit = function(args)
     vim.cmd("vsplit " .. args)
 end
 
-vim.cmd("command! -complete=file -nargs=* Vsplit lua global.commands.vsplit(<f-args>)")
-u.command("VsplitLast", "Vsplit #")
-u.map("n", "<Leader>vv", ":VsplitLast<CR>")
+-- vim.cmd("command! -complete=file -nargs=* Vsplit lua global.commands.vsplit(<f-args>)")
+-- u.command("VsplitLast", "Vsplit #")
+-- u.map("n", "<Leader>vv", ":VsplitLast<CR>")
 
 commands.save_on_cr = function()
     return vim.bo.buftype ~= "" and u.t("<CR>") or u.t(":write<CR>")

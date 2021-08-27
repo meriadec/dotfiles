@@ -1,6 +1,6 @@
 _G.global = {}
 
-vim.cmd("colorscheme base16-material")
+vim.cmd("colorscheme nord")
 
 -- remember last used position
 vim.cmd("au BufReadPost * if line(\"'\\\"\") > 1 && line(\"'\\\"\") <= line(\"$\") | exe \"normal! g'\\\"\" | endif")
