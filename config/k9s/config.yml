@@ -1,0 +1,86 @@
+k9s:
+  refreshRate: 2
+  maxConnRetry: 5
+  enableMouse: false
+  headless: false
+  logoless: true
+  crumbsless: false
+  readOnly: false
+  noIcons: true
+  logger:
+    tail: 100
+    buffer: 5000
+    sinceSeconds: 60
+    fullScreenLogs: false
+    textWrap: false
+    showTime: false
+  currentContext: arn:aws:eks:eu-west-1:364737596256:cluster/sandbox-2042-cluster
+  currentCluster: arn:aws:eks:eu-west-1:364737596256:cluster/sandbox-2042-cluster
+  clusters:
+    arn:aws:eks:eu-west-1:364737596256:cluster/sandbox-2042-cluster:
+      namespace:
+        active: ""
+        favorites:
+        - all
+        - test
+        - default
+      view:
+        active: pod
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        command: []
+        args: []
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    arn:aws:eks:eu-west-1:454902641012:cluster/shared-application-2021-cluster:
+      namespace:
+        active: 2063-vault-stg
+        favorites:
+        - 2087-vault-stg3
+        - 2063-vault-stg
+        - default
+      view:
+        active: namespace
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        command: []
+        args: []
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    k3d-local:
+      namespace:
+        active: default
+        favorites:
+        - ingress-nginx
+        - all
+        - default
+      view:
+        active: ctx
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:1.31
+        command: []
+        args: []
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+  thresholds:
+    cpu:
+      critical: 90
+      warn: 70
+    memory:
+      critical: 90
+      warn: 70
