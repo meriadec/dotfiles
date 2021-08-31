@@ -292,7 +292,7 @@ vim.cmd("au BufReadPost * if line(\"'\\\"\") > 1 && line(\"'\\\"\") <= line(\"$\
 
 u.imap("<c-c>", "<Esc>") -- remap c-c to esc
 u.imap("<c-f>", "<Esc>:Format<CR>i") -- reformat (on insert mode)
-u.imap("<c-s>", ":x<CR>") -- c-s to save (insert mode)
+u.imap("<c-s>", "<Esc>:x<CR>") -- c-s to save (normal mode)
 u.imap("AA", "<Esc>A") -- quick command in insert mode: go to line end
 u.imap("II", "<Esc>I") -- quick command in insert mode: go to line start
 u.imap("OO", "<Esc>O") -- quick command in insert mode: go to line above
@@ -305,7 +305,7 @@ u.nmap("<Leader>m", "^vg_o") -- select all line content
 u.nmap("<Leader>o", ":Bonly<CR>") -- close all buffers except the current one
 u.nmap("<Leader>p", "p`[v`]") -- paste & select pasted text (after)
 u.nmap("<c-f>", ":FzfLua live_grep<CR>") -- fzf live grep
-u.nmap("<c-s>", "<Esc>:x<CR>") -- c-s to save (normal mode)
+u.nmap("<c-s>", ":x<CR>") -- c-s to save (insert mode)
 u.nmap("Q", "<ESC>") -- never use Ex useless mode
 
 -- ultisnips
