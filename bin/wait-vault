@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-cd ~/.vault/vault-integration
+cd ~/ledger/vault-integration
 
 while true ; do
   if ! docker-compose ps | rg ': starting' &>/dev/null; then

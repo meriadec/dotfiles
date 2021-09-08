@@ -84,7 +84,7 @@ fi
 # => modules                                                                   #
 #    --------------------------------------------------------------------------#
 
-export COMPOSE_FILE=/home/meri/.vault/vault-integration/docker-compose.yml
+export COMPOSE_FILE=/home/meri/ledger/vault-integration/docker-compose.yml
 
 source "$HOME/.profile"
 source "$HOME/.path"

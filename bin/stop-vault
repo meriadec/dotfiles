@@ -3,5 +3,5 @@
 set -euxo pipefail
 
 ps aux | rg docker | rg containerd-shim | awk '{ print $2 }' | xargs -r sudo kill -9 || true
-cd /home/meri/.vault/vault-integration
+cd /home/meri/ledger/vault-integration
 docker-compose down --remove-orphans

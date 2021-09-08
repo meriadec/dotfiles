@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-VAULT_INTEGRATION_PATH=$HOME/.vault/vault-integration
+VAULT_INTEGRATION_PATH=$HOME/ledger/vault-integration
 NO_PULL=${NO_PULL:-0}
 
 function plop () {
