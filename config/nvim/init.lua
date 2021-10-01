@@ -45,6 +45,8 @@ vim.opt.wildmode = "longest,full" -- wild menu completion
 vim.opt.wrap = false -- vim.opt.mouse = "c"
 vim.opt.writebackup = false -- don't create useless files
 
+vim.cmd("autocmd BufNewFile,BufRead tsconfig.json set filetype=jsonc")
+
 require('packer').startup(function()
 
   use 'wbthomason/packer.nvim'
