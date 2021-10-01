@@ -99,6 +99,7 @@ local prettierd = {
 require('formatter').setup({
   logging = false,
   filetype = {
+    json = prettierd,
     javascript = prettierd,
     typescript = prettierd,
     typescriptreact = prettierd,
@@ -114,6 +115,7 @@ require("nvim-autopairs.completion.compe").setup({
 require("nvim-treesitter.configs").setup({
     indent = { enable = true },
     ensure_installed = {
+        "bash",
         "javascript",
         "typescript",
         "tsx",
@@ -150,7 +152,7 @@ require('compe').setup({
   source = {
     nvim_lsp = true;
     nvim_lua = true;
-    ultisnips = true;
+    ultisnips = false;
   };
 })
 
@@ -266,10 +268,18 @@ local on_attach = function(client, bufnr)
   end
 end
 
-require("lsp.sumneko").setup(on_attach)
-require('lspconfig').flow.setup({ on_attach = on_attach })
+local lspconfig = require('lspconfig')
 
-require('lspconfig').tsserver.setup({
+require("lsp.sumneko").setup(on_attach)
+
+lspconfig.bashls.setup({
+  on_attach = on_attach,
+  filetypes = { "sh" }
+})
+
+lspconfig.flow.setup({ on_attach = on_attach })
+
+lspconfig.tsserver.setup({
   on_attach = on_attach,
   filetypes = { "typescript", "typescriptreact", "typescript.tsx" }
 })
