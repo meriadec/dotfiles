@@ -62,10 +62,11 @@ bindsym $mod+Shift+h              move left
 bindsym $mod+Shift+t              move down
 bindsym $mod+Shift+n              move up
 bindsym $mod+Shift+s              move right
+bindsym $mod+m                    move workspace to output down
 
 bindsym $mod+v                    split h
 bindsym $mod+d                    split v
-bindsym $mod+m                    layout tabbed
+# bindsym $mod+m                    layout tabbed
 
 bindsym $mod+f                    fullscreen toggle
 bindsym $mod+p                    sticky toggle

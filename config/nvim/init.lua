@@ -103,8 +103,11 @@ require('formatter').setup({
   filetype = {
     json = prettierd,
     javascript = prettierd,
+    html = prettierd,
     typescript = prettierd,
     typescriptreact = prettierd,
+    yaml = prettierd,
+    markdown = prettierd,
   }
 })
 
@@ -177,7 +180,7 @@ local file_actions = {
 require("fzf-lua").setup({
   fzf_layout = "default",
   winopts = { win_height = 0.7, win_width = 0.90 },
-  fzf_binds = { "ctrl-u:clear-query", "alt-p:toggle-preview" },
+  -- fzf_binds = { "ctrl-u:clear-query", "alt-p:toggle-preview" },
   previewers = {
     bat = {
       cmd    = "bat",
