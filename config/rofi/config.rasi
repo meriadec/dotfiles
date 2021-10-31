@@ -313,11 +313,11 @@ configuration {
 #inputbar {
     spacing:    5;
     text-color: @normal-foreground;
-    padding:    5px;
+    padding:    20px 12px 12px 12px;
     border:	0 0 1;
     border-color: @separatorcolor;
     children: [entry];
-    background-color: @selected-normal-background;
+    background-color: transparent;
 }
 
 #case-indicator {
@@ -332,6 +332,7 @@ configuration {
     placeholder-color: @nord2;
     background-color: transparent;
     padding: 10px;
+    /* horizontal-align: 0.5; */
 }
 
 #prompt {
