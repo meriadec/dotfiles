@@ -51,8 +51,8 @@ bindsym $mod+minus                exec maim -d 0.5 -s "$(date +%s).png"
 bindsym $mod+Return               exec kitty
 bindsym $mod+c                    exec google-chrome-stable
 bindsym $mod+BackSpace            exec ~/bin/pick-address
+bindsym $mod+w                    exec ~/bin/rofi-vault
 bindsym $mod+r                    exec rofi -show drun
-bindsym $mod+l                    exec /usr/local/bin/spawn-chrome
 
 bindsym $mod+h                    focus left
 bindsym $mod+t                    focus down
