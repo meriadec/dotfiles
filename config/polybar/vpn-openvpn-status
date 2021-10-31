@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if pgrep -a openvpn$ &>/dev/null; then
+  echo "Infra VPN"
+else
+  echo ""
+fi
