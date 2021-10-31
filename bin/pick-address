@@ -38,22 +38,20 @@ tezos=(
 IFS=$'\n'
 
 currency=$(echo -e "\
- Bitcoin\0icon\x1fbitcoin
- Bitcoin (testnet)\0icon\x1fbitcoin
- Ethereum\0icon\x1fethereumwallet
- Ethereum (ropsten)\0icon\x1fethereumwallet
- Tezos\0icon\x1fethereumwallet
- XRP\0icon\x1fface-laugh" | rofi -i -dmenu -format i:s)
+Bitcoin\0icon\x1fbitcoin
+Bitcoin (testnet)\0icon\x1fbitcoin
+Ethereum\0icon\x1fethereumwallet
+Ethereum (ropsten)\0icon\x1fethereumwallet
+Tezos\0icon\x1fethereumwallet" | rofi -i -dmenu -format i:s)
 
 [[ "$currency" == "" ]] && exit 0
 
 list=""
-[[ "$currency" == "0: Bitcoin" ]] && list="${bitcoin[*]}"
-[[ "$currency" == "1: Bitcoin (testnet)" ]] && list="${bitcoin_testnet[*]}"
-[[ "$currency" == "2: Ethereum" ]] && list="${ethereum[*]}"
-[[ "$currency" == "3: Ethereum (ropsten)" ]] && list="${ropsten[*]}"
-[[ "$currency" == "4: Tezos" ]] && list="${tezos[*]}"
-[[ "$currency" == "5: XRP" ]] && list="${xrp[*]}"
+[[ "$currency" == "0:Bitcoin" ]] && list="${bitcoin[*]}"
+[[ "$currency" == "1:Bitcoin (testnet)" ]] && list="${bitcoin_testnet[*]}"
+[[ "$currency" == "2:Ethereum" ]] && list="${ethereum[*]}"
+[[ "$currency" == "3:Ethereum (ropsten)" ]] && list="${ropsten[*]}"
+[[ "$currency" == "4:Tezos" ]] && list="${tezos[*]}"
 
 addr=$(echo -e "$list" | rofi -i -dmenu -format i:s)
 

@@ -102,6 +102,7 @@ require('formatter').setup({
   logging = false,
   filetype = {
     json = prettierd,
+    css = prettierd,
     javascript = prettierd,
     html = prettierd,
     typescript = prettierd,

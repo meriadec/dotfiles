@@ -1,16 +1,16 @@
+//  font: "Fira Code 16";
+//  show-icons: true;
+//  icon-theme: "Papirus-Dark";
+
 configuration {
 /*	modi: "window,run,ssh";*/
-/*	width: 50;*/
-  lines: 8;
-/*	columns: 1;*/
-  font: "Fira Code 32";
-/*	bw: 1;*/
+ font: "Fira Code 16";
   location: 2;
-  yoffset: 70;
-/*	xoffset: 0;*/
+  yoffset: 32;
+  xoffset: 32;
   fixed-num-lines: false;
   show-icons: true;
-/*	terminal: "rofi-sensible-terminal";*/
+  terminal: "/usr/bin/kitty";
 /*	ssh-client: "ssh";*/
 /*	ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";*/
 /*	run-command: "{cmd}";*/
@@ -18,17 +18,22 @@ configuration {
 /*	run-shell-command: "{terminal} -e {cmd}";*/
 /*	window-command: "wmctrl -i -R {window}";*/
 /*	window-match-fields: "all";*/
-  icon-theme: "Papirus-Dark";
-/*	drun-match-fields: "name,generic,exec,categories";*/
+ icon-theme: "candy-icons";
+ /* icon-theme: "Papirus-Dark"; */
+/*	drun-match-fields: "name,generic,exec,categories,keywords";*/
+/*	drun-categories: ;*/
 /*	drun-show-actions: false;*/
-/*	drun-display-format: "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";*/
-/*	disable-history: false;*/
+  drun-display-format: "{name}";
+  /* drun-display-format: "{name} [<span weight='light' size='small'><i>({generic})</i></span>]"; */
+/*	drun-url-launcher: "xdg-open";*/
+  /* disable-history: true; */
 /*	ignored-prefixes: "";*/
 /*	sort: false;*/
-/*	sorting-method: ;*/
+/*	sorting-method: "normal";*/
 /*	case-sensitive: false;*/
 /*	cycle: true;*/
 /*	sidebar-mode: false;*/
+/*	hover-select: false;*/
 /*	eh: 1;*/
 /*	auto-select: false;*/
 /*	parse-hosts: false;*/
@@ -37,30 +42,23 @@ configuration {
 /*	matching: "normal";*/
 /*	tokenize: true;*/
 /*	m: "-5";*/
-/*	line-margin: 2;*/
-/*	line-padding: 1;*/
 /*	filter: ;*/
-/*	separator-style: "dash";*/
-/*	hide-scrollbar: false;*/
-/*	fullscreen: false;*/
-/*	fake-transparency: false;*/
 /*	dpi: -1;*/
 /*	threads: 0;*/
-/*	scrollbar-width: 8;*/
 /*	scroll-method: 0;*/
-/*	fake-background: "screenshot";*/
 /*	window-format: "{w}    {c}   {t}";*/
 /*	click-to-exit: true;*/
-/*	show-match: true;*/
 /*	theme: ;*/
-/*	color-normal: ;*/
-/*	color-urgent: ;*/
-/*	color-active: ;*/
-/*	color-window: ;*/
 /*	max-history-size: 25;*/
 /*	combi-hide-mode-prefix: false;*/
 /*	matching-negate-char: '-' /* unsupported */;*/
 /*	cache-dir: ;*/
+/*	window-thumbnail: false;*/
+/*	drun-use-desktop-cache: false;*/
+/*	drun-reload-desktop-cache: false;*/
+/*	normalize-match: false;*/
+/*	steal-focus: false;*/
+/*	application-fallback-icon: ;*/
 /*	pid: "/run/user/1000/rofi.pid";*/
 /*	display-window: ;*/
 /*	display-windowcd: ;*/
@@ -69,6 +67,7 @@ configuration {
 /*	display-drun: ;*/
 /*	display-combi: ;*/
 /*	display-keys: ;*/
+/*	display-filebrowser: ;*/
 /*	kb-primary-paste: "Control+V,Shift+Insert";*/
 /*	kb-secondary-paste: "Control+v,Insert";*/
 /*	kb-clear-line: "Control+w";*/
@@ -83,13 +82,15 @@ configuration {
 /*	kb-remove-char-forward: "Delete,Control+d";*/
 /*	kb-remove-char-back: "BackSpace,Shift+BackSpace,Control+h";*/
 /*	kb-remove-to-eol: "Control+k";*/
-/*	gb-remove-to-sol: "Control+u";*/
+/*	kb-remove-to-sol: "Control+u";*/
 /*	kb-accept-entry: "Control+j,Control+m,Return,KP_Enter";*/
 /*	kb-accept-custom: "Control+Return";*/
+/*	kb-accept-custom-alt: "Control+Shift+Return";*/
 /*	kb-accept-alt: "Shift+Return";*/
 /*	kb-delete-entry: "Shift+Delete";*/
 /*	kb-mode-next: "Shift+Right,Control+Tab";*/
 /*	kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab";*/
+/*	kb-mode-complete: "Control+l";*/
 /*	kb-row-left: "Control+Page_Up";*/
 /*	kb-row-right: "Control+Page_Down";*/
 /*	kb-row-up: "Up,Control+p,ISO_Left_Tab";*/
@@ -141,39 +142,200 @@ configuration {
 /*	me-select-entry: "MousePrimary";*/
 /*	me-accept-entry: "MouseDPrimary";*/
 /*	me-accept-custom: "Control+MouseDPrimary";*/
+  timeout {
+      action: "kb-cancel";
+      delay:  0;
+  }
+  filebrowser {
+      directories-first: true;
+      sorting-method:    "name";
+  }
 }
+
+//----------------------
+// Colors
+//----------------------
 
 * {
-  background-color: transparent;
-  color: #b2ccd6;
+    nord0:			 #2E3440;
+    nord1: 			 #3B4252;
+    nord2: 			 #434C5E;
+    nord3: 			 #4C566A;
+    nord4: 			 #D8DEE9;
+    nord5:  			 #E5E9F0;
+    nord6:  			 #ECEFF4;
+    nord7: 			 #8FBCBB;
+    nord8:   			 #88C0D0;
+    nord9:  			 #81A1C1;
+    nord10: 			 #5E81AC;
+    nord11: 			 #BF616A;
+    nord12: 			 #D08770;
+    nord13: 			 #EBCB8B;
+    nord14: 			 #A3BE8C;
+    nord15: 			 #B48EAD;
+    background:                  @nord0;
+    foreground:                  @nord4;
+    selected-normal-foreground:  @nord4;
+    normal-foreground:           @foreground;
+    alternate-normal-background: @nord0;
+    selected-urgent-foreground:  @nord4;
+    urgent-foreground:           @foreground;
+    alternate-urgent-background: @nord0;
+    active-foreground:           @foreground;
+    selected-active-foreground:  @foreground;
+    alternate-active-background: @nord0;
+    /* bordercolor:                 @nord10; */
+    alternate-normal-foreground: @foreground;
+    normal-background:           @background;
+    selected-normal-background:  #282D38;
+    border-color:                #21262e;
+    /* border-color:                @nord8; */
+    spacing:                     2;
+    separatorcolor:              transparent;
+    /* separatorcolor:              @blue; */
+    urgent-background:           @background;
+    selected-urgent-background:  @nord3;
+    alternate-urgent-foreground: @urgent-foreground;
+    background-color:            @background;
+    alternate-active-foreground: @active-foreground;
+    active-background:           @background;
+    selected-active-background:  @nord3;
 }
 
-window {
-  background-color: #1f292e;
-  padding: 100px;
-  border: 0 solid 6px solid 6px solid 6px solid;
-  border-color: #1c2429;
+//----------------------
+// Style
+//----------------------
+
+#window {
+    width: 600px;
+    background-color: @background;
+    border: 3px solid 2px solid 2px solid 2px solid;
+    padding: 0;
 }
 
-mainbox {
+#mainbox {
+    border: 0 solid 3px solid 3px solid 3px solid;
+    border-color: @nord1;
+    padding: 0;
 }
 
-prompt {
-  enabled: false;
+#message {
+    border:       2px 2px 2px ;
+    border-color: @separatorcolor;
+    padding:      10 ;
 }
 
-inputbar {
+#textbox {
+    text-color: @foreground;
 }
 
-listview {
-  margin: 48px 0 0 0;
+#scrollbar {
+  background-color: #21262e;
+  handle-color: @nord1;
 }
 
-element {
-  padding: 24px 16px;
+#listview {
+    fixed-height: 0;
+    padding:	  5 0 0;
+    spacing:      5px ;
+    layout: vertical;
+    columns: 1;
+    lines: 8;
+    scrollbar: false;
 }
 
-element selected {
-  background-color: #263238;
-  border-radius: 8px;
+#element {
+    border:  1px 0 1px 0;
+    border-color: transparent;
+    padding: 10px;
+    border-radius: 0;
+}
+
+#element-icon {
+  size: 48px;
+}
+
+#element-text {
+  padding: 10px 10px 10px 10px;
+}
+
+#element.normal.normal {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+
+#element.normal.urgent {
+    background-color: @urgent-background;
+    text-color:       @urgent-foreground;
+}
+
+#element.normal.active {
+    background-color: @active-background;
+    text-color:       @active-foreground;
+}
+
+#element.selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+    border-color: #21262e;
+}
+
+#element.selected.urgent {
+    background-color: @selected-urgent-background;
+    text-color:       @selected-urgent-foreground;
+}
+
+#element.selected.active {
+    background-color: @selected-active-background;
+    text-color:       @selected-active-foreground;
+}
+
+#element.alternate.normal {
+    background-color: @alternate-normal-background;
+    text-color:       @alternate-normal-foreground;
+}
+
+#element.alternate.urgent {
+    background-color: @alternate-urgent-background;
+    text-color:       @alternate-urgent-foreground;
+}
+
+#element.alternate.active {
+    background-color: @alternate-active-background;
+    text-color:       @alternate-active-foreground;
+}
+
+#button.selected {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+}
+
+#inputbar {
+    spacing:    5;
+    text-color: @normal-foreground;
+    padding:    5px;
+    border:	0 0 1;
+    border-color: @separatorcolor;
+    children: [entry];
+    background-color: @selected-normal-background;
+}
+
+#case-indicator {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+
+#entry {
+    spacing:    0;
+    text-color: @normal-foreground;
+    placeholder: " =>";
+    placeholder-color: @nord2;
+    background-color: transparent;
+    padding: 10px;
+}
+
+#prompt {
+    spacing:    0;
+    text-color: @normal-foreground;
+    background-color: red;
 }
