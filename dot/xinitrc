@@ -12,4 +12,6 @@ eval "$(ssh-agent)"
 
 feh --bg-scale ~/dotfiles/assets/images/bg.png
 
+exec picom &
+
 exec i3
