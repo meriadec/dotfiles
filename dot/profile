@@ -61,24 +61,12 @@ alias ma='cd ~/git/mobileapi'
 alias va='cd ~/ledger/vaulty'
 
 # ledger env
-alias api="cd ~/ledger/ledger-node-js-api"
-alias hid="cd ~/ledger/ledger-node-js-hid"
-alias app="cd ~/ledger/ledger-live-desktop"
 alias vf="cd ~/ledger/ledger-vault-front"
-alias ops="cd ~/ledger/vault-ops"
 alias vj="cd ~/ledger/vault-js"
 alias gate="cd ~/ledger/ledger-vault-api"
-alias hsm="cd ~/ledger/ledger-vault-hsm-driver"
 alias int="cd ~/ledger/vault-integration"
-alias mob="cd ~/ledger/ledger-live-mobile"
-alias com="cd ~/ledger/ledger-live-common"
-alias bind="cd ~/ledger/lib-ledger-core-node-bindings"
-alias js="cd ~/ledger/ledgerjs"
-alias lib="cd ~/ledger/lib-ledger-core"
-alias build="cd ~/ledger/lib-ledger-core-build"
-alias vt="cd ~/ledger/vaulty"
-alias s="cd ~/ledger/vault-sentinel"
 alias m="cd ~/ledger/minivault"
+alias a="cd ~/ledger/vault-automation"
 
 # git
 alias gd='git diff'

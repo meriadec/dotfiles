@@ -69,6 +69,7 @@ require('packer').startup(function()
   use "towolf/vim-helm"                      -- helm syntax highlight
   use "vijaymarupudi/nvim-fzf"               -- fzf
   use "windwp/nvim-autopairs"                -- autopairs
+  use "jparise/vim-graphql"                  -- graphql
 
   -- treesitter
   use {
@@ -109,6 +110,7 @@ require('formatter').setup({
     typescriptreact = prettierd,
     yaml = prettierd,
     markdown = prettierd,
+    graphql = prettierd,
   }
 })
 

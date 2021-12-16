@@ -24,5 +24,5 @@
 [tig "color"]
   cursor    = white default underline
 
-[init]
-  defaultBranch = master
+[advice]
+  skippedCherryPicks = false
