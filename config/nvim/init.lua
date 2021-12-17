@@ -103,6 +103,7 @@ require('formatter').setup({
   logging = false,
   filetype = {
     json = prettierd,
+    jsonc = prettierd,
     css = prettierd,
     javascript = prettierd,
     html = prettierd,
@@ -286,6 +287,7 @@ lspconfig.bashls.setup({
 })
 
 lspconfig.flow.setup({ on_attach = on_attach })
+lspconfig.tailwindcss.setup({ on_attach = on_attach })
 
 lspconfig.tsserver.setup({
   on_attach = on_attach,
