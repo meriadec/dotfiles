@@ -69,6 +69,7 @@ alias gate="cd ~/ledger/ledger-vault-api"
 alias int="cd ~/ledger/vault-integration"
 alias m="cd ~/ledger/minivault"
 alias a="cd ~/ledger/vault-automation"
+alias gu="cd ~/ledger/vault-guide"
 
 # git
 alias gd='git diff'
