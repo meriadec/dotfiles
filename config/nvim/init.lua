@@ -70,6 +70,7 @@ require('packer').startup(function()
   use "vijaymarupudi/nvim-fzf"               -- fzf
   use "windwp/nvim-autopairs"                -- autopairs
   use "jparise/vim-graphql"                  -- graphql
+  use "junegunn/goyo.vim"                    -- distraction free
 
   -- treesitter
   use {
@@ -251,7 +252,7 @@ local on_attach = function(client, bufnr)
   u.lua_command("LspRename", "vim.lsp.buf.rename()")
   u.lua_command("LspDiagPrev", "global.lsp.prev_diagnostic()")
   u.lua_command("LspDiagNext", "global.lsp.next_diagnostic()")
-  u.lua_command("LspDiagLine", "vim.lsp.diagnostic.show_line_diagnostics(global.lsp.popup_opts)")
+  u.lua_command("LspDiagLine", "vim.diagnostic.open_float(global.lsp.popup_opts)")
   u.lua_command("LspSignatureHelp", "vim.lsp.buf.signature_help()")
 
   u.buf_augroup("LspAutocommands", "CursorHold", "LspDiagLine")

@@ -6,6 +6,8 @@ export JOBS=max
 
 export VAULT_INTEGRATION_PATH=$HOME/ledger/vault-integration
 
+export AWS_PROFILE=sandbox
+
 export KUBECONFIG=$HOME/.kube/config
 
 # node-gyp build using all cores
