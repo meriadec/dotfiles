@@ -1,34 +1,15 @@
-# dotfiles
+# Salut Meriadec
 
-![](colors.png)
+Ca te dirait de retrouver la patate d'une boite early-stage ? On cherche des fullstack bien dans leurs baskets pour co-construire notre équipe tech :
 
-## Install
+* Typescript / React / Next / Prisma
+* Rémunération on-market (et on sait de quoi on parle 😎)
+* Early-stage <10 personnes
+* Grosse traction / 1.7M levés
 
-```bash
-make install
-```
+Sinon, jolie config, je suis sous [i3, polybar et rofi](https://github.com/Dam-Buty/damsfiles/tree/master/desktop) aussi :D tu as pensé à [aconfmgr](https://github.com/CyberShadow/aconfmgr) pour remplacer les scripts shell et le Makefile ?
 
-## Structure
+Cheers,
 
-```
-.
-├── assets            # static assets
-│   ├── fonts
-│   └── images
-│
-├── bin               # user-defined commands (the folder
-│                     # is added to $PATH)
-│
-├── colors            # theme colors
-│
-├── config            # bunch of configs, including awesome wm config
-│   ├── awesome
-│   └── ...etc.
-│
-└── dot               # actually dotfiles.
-    ├── gitconfig
-    ├── profile
-    ├── vimrc
-    ├── zshrc
-    └── ...etc.
-```
+Dam-Buty    
+_Tech @ [Figures](https://figures.crew.work/jobs)_
