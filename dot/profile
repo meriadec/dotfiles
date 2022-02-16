@@ -5,6 +5,7 @@ export CAVERN='91.121.143.211'
 export JOBS=max
 
 export VAULT_INTEGRATION_PATH=$HOME/ledger/vault-integration
+export VAULT_WORKSPACE_DIR=$HOME/ledger
 
 export AWS_PROFILE=sandbox
 
@@ -70,6 +71,7 @@ alias int="cd ~/ledger/vault-integration"
 alias m="cd ~/ledger/minivault"
 alias a="cd ~/ledger/vault-automation"
 alias gu="cd ~/ledger/vault-guide"
+alias re="cd ~/ledger/vault-remote"
 
 # git
 alias gd='git diff'
