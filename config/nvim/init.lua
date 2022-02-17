@@ -230,11 +230,11 @@ local go_to_diagnostic = function(pos)
 end
 
 local next_diagnostic = function()
-    go_to_diagnostic(lsp.diagnostic.get_next_pos() or lsp.diagnostic.get_prev_pos())
+    vim.diagnostic.goto_next()
 end
 
 local prev_diagnostic = function()
-    go_to_diagnostic(lsp.diagnostic.get_prev_pos() or lsp.diagnostic.get_next_pos())
+    vim.diagnostic.goto_prev()
 end
 
 _G.global.lsp = {
