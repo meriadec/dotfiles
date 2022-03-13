@@ -30,10 +30,10 @@
     height = 300
 
     # Position the notification in the top right corner
-    origin = top-right
+    origin = bottom-right
 
     # Offset from the origin
-    offset = 15x50
+    offset = 15x15
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -297,7 +297,7 @@
     timeout = 5
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
-    icon = /usr/share/icons/HighContrast/256x256/emotes/face-angel.png
+    # icon = /usr/share/icons/HighContrast/256x256/emotes/face-angel.png
 
 [urgency_normal]
     background = "#333A47"

@@ -39,11 +39,10 @@ Bake minivault\0icon\x1flutris_the-dark-mod
 fi
 
 SANDBOX_COMMANDS=""
+SANDBOX_COMMAND_DEPLOY_MINIVAULT_MERI="Deploy minivault (namespace: meri)"
 if [[ "$kubeContext" = "sandbox-2042-cluster" ]]; then
   SANDBOX_COMMANDS="
-Deploy feature/reonboarding\0icon\x1fplexmediaserver
-Deploy feature/praline\0icon\x1fplexmediaserver
-Deploy feature/sci\0icon\x1fplexmediaserver
+$SANDBOX_COMMAND_DEPLOY_MINIVAULT_MERI\0icon\x1fplexmediaserver
 "
 fi
 
@@ -230,4 +229,30 @@ elif [[ "$choice" = "Stop VPN" ]]; then
     "VPN Stopped" \
     -i $HOME/dotfiles/assets/icons/512x512/guitar.png
   kubectl config use-context k3d-local
+
+# Deploy on sandbox
+elif [[ "$choice" = "$SANDBOX_COMMAND_DEPLOY_MINIVAULT_MERI" ]]; then
+  cd $HOME/ledger/minivault
+  namespace=meri
+  cid=707
+  echo "Fetching namespaces..."
+  if kubectl get ns $namespace &>/dev/null; then
+    choice=$(echo -e "\
+Reset\0icon\x1fplexmediaserver
+Upgrade\0icon\x1fplexmediaserver
+Quit\0icon\x1fplexmediaserver
+" \
+    | awk 'NF' | rofi -i -dmenu -format s -theme-str "entry { placeholder: \" => $kubeContext\";}")
+    if [[ "$choice" == "Reset" ]]; then
+      notify-send -u low "Uninstalling current instance" "Be patient..."
+      helm uninstall minivault -n $namespace --wait || true
+    fi
+  fi
+  (
+    ./scripts/deploy-vault.sh "$namespace" "$cid" minivault.ledger-sbx.com 2>/tmp/minivault.err.log \
+      && notify-send -u critical "Sandbox deployment successful" "https://meri.minivault.ledger-sbx.com" \
+      || notify-send -u critical -i $HOME/dotfiles/assets/icons/512x512/notification.png "Sandbox deployment failed" "$(cat /tmp/minivault.err.log)"
+  ) &
+  lastPid=$!
+  notify-send -u low "Sandbox deployment started" "Should take <i>~50s</i>"
 fi
