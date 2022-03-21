@@ -25,6 +25,9 @@ require('packer').startup(function()
   use "jparise/vim-graphql"                  -- graphql
   use "junegunn/goyo.vim"                    -- distraction free
 
+  use 'jose-elias-alvarez/null-ls.nvim'      -- for eslint
+  use 'MunifTanjim/eslint.nvim'
+
   -- treesitter
   use {
     "nvim-treesitter/nvim-treesitter",

@@ -2,55 +2,22 @@
 
 set -euo pipefail
 
-VAULT_INTEGRATION_PATH=$HOME/ledger/vault-integration
-NO_PULL=${NO_PULL:-0}
+export VAULT_HSM_ENDPOINT=$(kubectl describe $(kubectl get pods --selector=app=hsm-driver --no-headers -o name) | grep ENDPOINT | awk '{ print $2 }')
 
-function plop () {
-  notify-send -u critical -i ~/dotfiles/assets/rick.png Hey\! "$1"
-}
+hsmaas init --compartment-id $VAULT_COMPARTMENT_ID --clean
 
-if ! systemctl is-active docker --quiet ; then
-  echo "Docker is not started. Starting..."
-  sudo systemctl start docker
-fi
+kubectl rollout restart deployment/postgres
+kubectl rollout status deployment/postgres
 
-function pullIfNeeded() {
-  if [[ "$NO_PULL" != "1" ]]; then
-    docker-compose pull
-  fi
-}
+kubectl rollout restart deployment/org-api
+kubectl rollout status deployment/org-api
 
-cd "$VAULT_INTEGRATION_PATH"
+kubectl rollout restart deployment/device-registry
+kubectl rollout restart deployment/gate
+kubectl rollout restart deployment/hsm-driver
+kubectl rollout restart deployment/notification-center
+kubectl rollout restart deployment/wallet-daemon
 
-TEST_ENV=$(
-(node <<EOF
-console.log(\`$(rg '^vault-' stack.yaml | tr -d :)\`.split('\\n').reduce((acc, cur, i, arr) => (cur !== arr[i + 1]) ? [...acc, \`\${cur}\`] : acc, []).join('\\n'));
-EOF
-) | fzf --height 10 --reverse --tac | sed -E 's/.*\((.*)\)/\1/g'
-)
+kubectl rollout status deployment/gate
 
-export TEST_ENV
-
-if [[ "$TEST_ENV" == "" ]]; then
-  echo "No chosen version, exiting"
-  exit 1
-fi
-
-if [[ "${PRALINE:-"0"}" == "1" ]]; then
-  STACK=$(pipenv run ./stack2env --praline)
-else
-  STACK=$(pipenv run ./stack2env)
-fi
-echo "$STACK"
-# shellcheck disable=SC2163,SC2086
-export $STACK
-
-(
-  (
-    stop-vault && \
-    pullIfNeeded && \
-    hsmaas init --compartment-id "$VAULT_COMPARTMENT_ID" --clean && \
-    docker-compose up -d
-  ) && \
-  plop "Vault has been reset"
-) || plop "Failed to reset"
+echo "Done"
