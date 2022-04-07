@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -euo pipefail
+TARGET_TAG=$1
+
+if ! [ -z "$(git status --porcelain)" ]; then 
+  echo "Uncommitted stuff"
+  exit 1
+fi
+
+sed -i -E "s/(\"version\": \")[^\"]+(\",)/\1$TARGET_TAG\2/g" package.json
+git add .
+git commit -m "Bump to $TARGET_TAG"
+git tag -a $TARGET_TAG -m $TARGET_TAG
