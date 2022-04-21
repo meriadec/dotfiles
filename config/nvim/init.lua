@@ -1,13 +1,61 @@
-require 'core.global'
+_G.global = {}
+
 require 'core.options'
 require 'core.mappings'
-require 'modules.plugins'
+
+require 'impatient'
+
+require('packer').startup(function()
+
+  use 'wbthomason/packer.nvim'
+  use 'lewis6991/impatient.nvim'             -- improve startup time
+
+  use 'arcticicestudio/nord-vim'             -- theme
+  use "SirVer/ultisnips"                     -- snippets
+  -- use "hrsh7th/vim-vsnip"                    -- snippets
+  use "hrsh7th/cmp-nvim-lsp"                 -- cmp + lsp
+  use "onsails/lspkind.nvim"                 -- icons
+  -- use "hrsh7th/nvim-compe"                   -- completion
+  use "hrsh7th/nvim-cmp"                     -- completion
+  use "ibhagwan/fzf-lua"                     -- fzf
+  use "itchyny/lightline.vim"                -- lightline
+  use "jose-elias-alvarez/nvim-lsp-ts-utils" -- typescript lsp utils
+  use "kyazdani42/nvim-web-devicons"         -- icons
+  use "lewis6991/gitsigns.nvim"              -- gitsigns
+  use "mfussenegger/nvim-lsp-compl"          -- lsp completion
+  use "mhartington/formatter.nvim"           -- formatter
+  use "neovim/nvim-lspconfig"                -- lsp configuration
+  use "norcalli/nvim-colorizer.lua"          -- colorizer
+  use "nvim-lua/plenary.nvim"                -- utils
+  use "scrooloose/nerdcommenter"             -- line comments
+  use "towolf/vim-helm"                      -- helm syntax highlight
+  use "vijaymarupudi/nvim-fzf"               -- fzf
+  use "windwp/nvim-autopairs"                -- autopairs
+  use "jparise/vim-graphql"                  -- graphql
+  use "junegunn/goyo.vim"                    -- distraction free
+
+  use 'jose-elias-alvarez/null-ls.nvim'      -- for eslint
+  use 'MunifTanjim/eslint.nvim'
+
+  -- treesitter
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate"
+  }
+
+  -- emmet
+  use {
+    "mattn/emmet-vim",
+    ft = { 'javascript', 'typescript.tsx', 'typescriptreact' }
+  }
+
+end)
 
 -- plugins
 
-require('gitsigns').setup()
 require('colorizer').setup()
 require('nvim-autopairs').setup()
+require('gitsigns').setup()
 
 local prettierd = {
    function()
@@ -35,11 +83,11 @@ require('formatter').setup({
   }
 })
 
-require("nvim-autopairs.completion.compe").setup({
-  map_cr = true, -- map <CR> on insert mode
-  map_complete = true, -- it will auto insert `(` after select function or method item
-  auto_select = true,  -- auto select first item
-})
+-- require("nvim-autopairs.completion.compe").setup({
+--   map_cr = true, -- map <CR> on insert mode
+--   map_complete = true, -- it will auto insert `(` after select function or method item
+--   auto_select = true,  -- auto select first item
+-- })
 
 require("nvim-treesitter.configs").setup({
     indent = { enable = true },
@@ -57,33 +105,33 @@ require("nvim-treesitter.configs").setup({
     autopairs = { enable = true },
 })
 
-require('compe').setup({
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  resolve_timeout = 800;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = {
-    border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-    winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-    max_width = 64,
-    min_width = 48,
-    min_height = 3,
-  };
-  auto_select = true,  -- auto select first item
-  source = {
-    nvim_lsp = true;
-    nvim_lua = true;
-    ultisnips = false;
-  };
-})
+-- require('compe').setup({
+--   enabled = true;
+--   autocomplete = true;
+--   debug = false;
+--   min_length = 1;
+--   preselect = 'enable';
+--   throttle_time = 80;
+--   source_timeout = 200;
+--   resolve_timeout = 800;
+--   incomplete_delay = 400;
+--   max_abbr_width = 100;
+--   max_kind_width = 100;
+--   max_menu_width = 100;
+--   documentation = {
+--     border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
+--     winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
+--     max_width = 64,
+--     min_width = 48,
+--     min_height = 3,
+--   };
+--   auto_select = true,  -- auto select first item
+--   source = {
+--     nvim_lsp = true;
+--     nvim_lua = true;
+--     ultisnips = false;
+--   };
+-- })
 
 local commands = require("commands")
 
@@ -124,18 +172,18 @@ require("fzf-lua").setup({
   },
 })
 
-local lsp = vim.lsp
+-- local lsp = vim.lsp
 
-lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
-    underline = true,
-    signs = true,
-    virtual_text = true,
-})
+-- lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
+--     underline = true,
+--     signs = true,
+--     virtual_text = true,
+-- })
 
-vim.fn.sign_define("LspDiagnosticsSignError",       { text = "", texthl = "ALEErrorSign" })
-vim.fn.sign_define("LspDiagnosticsSignWarning",     { text = "", texthl = "ALEWarning"})
-vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "", texthl = "FoldColumn"})
-vim.fn.sign_define("LspDiagnosticsSignHint",        { text = "", texthl = "FoldColumn"})
+-- vim.fn.sign_define("LspDiagnosticsSignError",       { text = "", texthl = "ALEErrorSign" })
+-- vim.fn.sign_define("LspDiagnosticsSignWarning",     { text = "", texthl = "ALEWarning"})
+-- vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "", texthl = "FoldColumn"})
+-- vim.fn.sign_define("LspDiagnosticsSignHint",        { text = "", texthl = "FoldColumn"})
 
 local popup_opts = {
   border = "none",
@@ -144,8 +192,8 @@ local popup_opts = {
   max_width = 64,
 }
 
-lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, popup_opts)
-lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, popup_opts)
+-- lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, popup_opts)
+-- lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, popup_opts)
 
 local next_diagnostic = function()
     vim.diagnostic.goto_next()
@@ -157,12 +205,12 @@ end
 
 _G.global.lsp = {
   popup_opts = popup_opts,
-  next_diagnostic = next_diagnostic,
-  prev_diagnostic = prev_diagnostic,
+  -- next_diagnostic = next_diagnostic,
+  -- prev_diagnostic = prev_diagnostic,
 }
 
--- trigger only on letters and .
-local trigger_characters = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "." }
+-- -- trigger only on letters and .
+-- local trigger_characters = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "." }
 
 local utils = require("utils")
 
@@ -170,8 +218,8 @@ local on_attach = function(client, bufnr)
   -- commands
   utils.lua_command("LspHover", "vim.lsp.buf.hover()")
   utils.lua_command("LspRename", "vim.lsp.buf.rename()")
-  utils.lua_command("LspDiagPrev", "global.lsp.prev_diagnostic()")
-  utils.lua_command("LspDiagNext", "global.lsp.next_diagnostic()")
+  utils.lua_command("LspDiagPrev", "vim.diagnostic.goto_prev()")
+  utils.lua_command("LspDiagNext", "vim.diagnostic.goto_next()")
   utils.lua_command("LspDiagLine", "vim.diagnostic.open_float(global.lsp.popup_opts)")
   utils.lua_command("LspSignatureHelp", "vim.lsp.buf.signature_help()")
 
@@ -190,31 +238,31 @@ local on_attach = function(client, bufnr)
   utils.buf_map("n", "gy", ":LspTypeDefs<CR>", nil, bufnr)
   utils.buf_map("n", "ga", ":LspActions<CR>", nil, bufnr)
 
-  if client.resolved_capabilities.completion then
-    client.server_capabilities.completionProvider.triggerCharacters = trigger_characters
-    _G.global.lsp.completion = true
-  end
+  -- if client.resolved_capabilities.completion then
+  --   client.server_capabilities.completionProvider.triggerCharacters = trigger_characters
+  --   _G.global.lsp.completion = true
+  -- end
 end
 
-local lspconfig = require('lspconfig')
+-- local lspconfig = require('lspconfig')
 
-require("modules.lsp.sumneko").setup(on_attach)
+-- require("modules.lsp.sumneko").setup(on_attach)
 
-lspconfig.bashls.setup({
-  on_attach = on_attach,
-  filetypes = { "sh" }
-})
+-- lspconfig.bashls.setup({
+--   on_attach = on_attach,
+--   filetypes = { "sh" }
+-- })
 
-lspconfig.flow.setup({ on_attach = on_attach })
-lspconfig.tailwindcss.setup({ on_attach = on_attach })
-lspconfig.rust_analyzer.setup({ on_attach = on_attach })
+-- lspconfig.flow.setup({ on_attach = on_attach })
+-- lspconfig.tailwindcss.setup({ on_attach = on_attach })
+-- lspconfig.rust_analyzer.setup({ on_attach = on_attach })
 
-lspconfig.tsserver.setup({
-  on_attach = on_attach,
-  filetypes = { "typescript", "typescriptreact", "typescript.tsx" }
-})
+-- lspconfig.tsserver.setup({
+--   on_attach = on_attach,
+--   filetypes = { "typescript", "typescriptreact", "typescript.tsx" }
+-- })
 
--- lsp
+-- -- lsp
 utils.lua_command("LspActions", 'require("fzf-lua").lsp_code_actions()')
 utils.lua_command("LspRefs", 'require("fzf-lua").lsp_references({ jump_to_single_result = true })')
 utils.lua_command("LspDefs", 'require("fzf-lua").lsp_definitions({ jump_to_single_result = true })')
@@ -260,3 +308,113 @@ eslint.setup({
     run_on = "type", -- or `save`
   },
 })
+
+-- nvim-cmp
+
+local cmp = require('cmp')
+
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+    end,
+  },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    -- documentation = cmp.config.window.bordered(),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'ultisnips' },
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+-- Set configuration for specific filetype.
+-- cmp.setup.filetype('gitcommit', {
+--   sources = cmp.config.sources({
+--     { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+--   }, {
+--     { name = 'buffer' },
+--   })
+-- })
+
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+
+-- Setup lspconfig.
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+local lspconfig = require('lspconfig')
+
+lspconfig.tsserver.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = {
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+  },
+})
+
+lspconfig.bashls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "sh" }
+})
+
+lspconfig.flow.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
+
+lspconfig.tailwindcss.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
+
+lspconfig.rust_analyzer.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "rust" }
+})
+
+-- lspkind
+local lspkind = require('lspkind')
+cmp.setup {
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol', -- show only symbol annotations
+      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+
+      -- The function below will be called before any actual modifications from lspkind
+      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+      before = function (entry, vim_item)
+        return vim_item
+      end
+    })
+  }
+}
