@@ -12,10 +12,8 @@ require('packer').startup(function()
 
   use 'arcticicestudio/nord-vim'             -- theme
   use "SirVer/ultisnips"                     -- snippets
-  -- use "hrsh7th/vim-vsnip"                    -- snippets
   use "hrsh7th/cmp-nvim-lsp"                 -- cmp + lsp
   use "onsails/lspkind.nvim"                 -- icons
-  -- use "hrsh7th/nvim-compe"                   -- completion
   use "hrsh7th/nvim-cmp"                     -- completion
   use "ibhagwan/fzf-lua"                     -- fzf
   use "itchyny/lightline.vim"                -- lightline
@@ -83,12 +81,6 @@ require('formatter').setup({
   }
 })
 
--- require("nvim-autopairs.completion.compe").setup({
---   map_cr = true, -- map <CR> on insert mode
---   map_complete = true, -- it will auto insert `(` after select function or method item
---   auto_select = true,  -- auto select first item
--- })
-
 require("nvim-treesitter.configs").setup({
     indent = { enable = true },
     ensure_installed = {
@@ -104,34 +96,6 @@ require("nvim-treesitter.configs").setup({
     highlight = { enable = true },
     autopairs = { enable = true },
 })
-
--- require('compe').setup({
---   enabled = true;
---   autocomplete = true;
---   debug = false;
---   min_length = 1;
---   preselect = 'enable';
---   throttle_time = 80;
---   source_timeout = 200;
---   resolve_timeout = 800;
---   incomplete_delay = 400;
---   max_abbr_width = 100;
---   max_kind_width = 100;
---   max_menu_width = 100;
---   documentation = {
---     border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
---     winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
---     max_width = 64,
---     min_width = 48,
---     min_height = 3,
---   };
---   auto_select = true,  -- auto select first item
---   source = {
---     nvim_lsp = true;
---     nvim_lua = true;
---     ultisnips = false;
---   };
--- })
 
 local commands = require("commands")
 
@@ -172,19 +136,6 @@ require("fzf-lua").setup({
   },
 })
 
--- local lsp = vim.lsp
-
--- lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
---     underline = true,
---     signs = true,
---     virtual_text = true,
--- })
-
--- vim.fn.sign_define("LspDiagnosticsSignError",       { text = "", texthl = "ALEErrorSign" })
--- vim.fn.sign_define("LspDiagnosticsSignWarning",     { text = "", texthl = "ALEWarning"})
--- vim.fn.sign_define("LspDiagnosticsSignInformation", { text = "", texthl = "FoldColumn"})
--- vim.fn.sign_define("LspDiagnosticsSignHint",        { text = "", texthl = "FoldColumn"})
-
 local popup_opts = {
   border = "none",
   focusable = false,
@@ -192,25 +143,9 @@ local popup_opts = {
   max_width = 64,
 }
 
--- lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, popup_opts)
--- lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, popup_opts)
-
-local next_diagnostic = function()
-    vim.diagnostic.goto_next()
-end
-
-local prev_diagnostic = function()
-    vim.diagnostic.goto_prev()
-end
-
 _G.global.lsp = {
   popup_opts = popup_opts,
-  -- next_diagnostic = next_diagnostic,
-  -- prev_diagnostic = prev_diagnostic,
 }
-
--- -- trigger only on letters and .
--- local trigger_characters = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "." }
 
 local utils = require("utils")
 
@@ -238,31 +173,14 @@ local on_attach = function(client, bufnr)
   utils.buf_map("n", "gy", ":LspTypeDefs<CR>", nil, bufnr)
   utils.buf_map("n", "ga", ":LspActions<CR>", nil, bufnr)
 
-  -- if client.resolved_capabilities.completion then
-  --   client.server_capabilities.completionProvider.triggerCharacters = trigger_characters
-  --   _G.global.lsp.completion = true
-  -- end
+  if client.resolved_capabilities.completion then
+    local trigger_characters = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "0", "." }
+    client.server_capabilities.completionProvider.triggerCharacters = trigger_characters
+    _G.global.lsp.completion = true
+  end
 end
 
--- local lspconfig = require('lspconfig')
-
--- require("modules.lsp.sumneko").setup(on_attach)
-
--- lspconfig.bashls.setup({
---   on_attach = on_attach,
---   filetypes = { "sh" }
--- })
-
--- lspconfig.flow.setup({ on_attach = on_attach })
--- lspconfig.tailwindcss.setup({ on_attach = on_attach })
--- lspconfig.rust_analyzer.setup({ on_attach = on_attach })
-
--- lspconfig.tsserver.setup({
---   on_attach = on_attach,
---   filetypes = { "typescript", "typescriptreact", "typescript.tsx" }
--- })
-
--- -- lsp
+-- lsp
 utils.lua_command("LspActions", 'require("fzf-lua").lsp_code_actions()')
 utils.lua_command("LspRefs", 'require("fzf-lua").lsp_references({ jump_to_single_result = true })')
 utils.lua_command("LspDefs", 'require("fzf-lua").lsp_definitions({ jump_to_single_result = true })')
@@ -309,8 +227,13 @@ eslint.setup({
   },
 })
 
--- nvim-cmp
+local signs = { Error = "", Warn = "", Hint = "", Info = "" }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
+-- nvim-cmp
 local cmp = require('cmp')
 
 cmp.setup({
@@ -338,15 +261,6 @@ cmp.setup({
   })
 })
 
--- Set configuration for specific filetype.
--- cmp.setup.filetype('gitcommit', {
---   sources = cmp.config.sources({
---     { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
---   }, {
---     { name = 'buffer' },
---   })
--- })
-
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),
@@ -365,7 +279,6 @@ cmp.setup.cmdline(':', {
   })
 })
 
--- Setup lspconfig.
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local lspconfig = require('lspconfig')
