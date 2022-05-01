@@ -13,10 +13,9 @@ utils.imap("<c-s>", "<Esc>:x<CR>") -- c-s to save (normal mode)
 utils.imap("AA", "<Esc>A") -- quick command in insert mode: go to line end
 utils.imap("II", "<Esc>I") -- quick command in insert mode: go to line start
 utils.imap("OO", "<Esc>O") -- quick command in insert mode: go to line above
-utils.map("n", "<CR>", "v:lua.global.commands.save_on_cr()", { expr = true }) -- save on press Enter
 utils.nmap("<C-p>", ":FzfLua files<CR>") -- c-p to open files
 utils.nmap("<Leader><Leader>", ":Format<CR>") -- reformat
-utils.nmap("<Leader>P", "P`[v`]")  -- paste & select pasted text (before)
+utils.nmap("<Leader>P", "P`[v`]") -- paste & select pasted text (before)
 utils.nmap("<Leader>f", ":FzfLua grep_cword<CR>") -- fzf grep the current word
 utils.nmap("<Leader>m", "^vg_o") -- select all line content
 utils.nmap("<Leader>o", ":Bonly<CR>") -- close all buffers except the current one

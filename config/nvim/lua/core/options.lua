@@ -5,7 +5,8 @@ vim.cmd("colorscheme nord")
 vim.cmd("autocmd BufNewFile,BufRead tsconfig.json set filetype=jsonc")
 
 -- remember last used position when opening file
-vim.cmd("au BufReadPost * if line(\"'\\\"\") > 1 && line(\"'\\\"\") <= line(\"$\") | exe \"normal! g'\\\"\" | endif")
+vim.cmd(
+  "au BufReadPost * if line(\"'\\\"\") > 1 && line(\"'\\\"\") <= line(\"$\") | exe \"normal! g'\\\"\" | endif")
 
 vim.g.mapleader = "-" -- leader
 
