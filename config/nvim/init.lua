@@ -1,7 +1,7 @@
 _G.global = {}
 
-require 'core.options'
-require 'core.mappings'
+require 'options'
+require 'mappings'
 
 require 'impatient'
 
@@ -10,39 +10,62 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim' -- package manager
   use 'lewis6991/impatient.nvim' -- improve startup time
 
+  use "nvim-lua/plenary.nvim" -- utils (required by some stuff)
+  use 'jose-elias-alvarez/null-ls.nvim' -- utils (required by eslint)
+
   use 'arcticicestudio/nord-vim' -- theme
+
   use "SirVer/ultisnips" -- snippets
-  use "hrsh7th/cmp-nvim-lsp" -- cmp + lsp
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"} -- treesitter
   use "onsails/lspkind.nvim" -- icons
   use "hrsh7th/nvim-cmp" -- completion
-  use "ibhagwan/fzf-lua" -- fzf
+  use "hrsh7th/cmp-nvim-lsp" -- nvim-cmp source for lsp
+  use "nvim-telescope/telescope.nvim" -- telescope
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
+  use {'nvim-telescope/telescope-ui-select.nvim'}
   use "itchyny/lightline.vim" -- lightline
   use "jose-elias-alvarez/nvim-lsp-ts-utils" -- typescript lsp utils
   use "kyazdani42/nvim-web-devicons" -- icons
   use "lewis6991/gitsigns.nvim" -- gitsigns
-  use "mfussenegger/nvim-lsp-compl" -- lsp completion
   use "mhartington/formatter.nvim" -- formatter
   use "neovim/nvim-lspconfig" -- lsp configuration
   use "norcalli/nvim-colorizer.lua" -- colorizer
-  use "nvim-lua/plenary.nvim" -- utils (required by some stuff)
-  use { "mattn/emmet-vim", ft = {'javascript', 'typescript.tsx', 'typescriptreact'} } -- emmet
+  use {
+    "mattn/emmet-vim",
+    ft = {'javascript', 'typescript.tsx', 'typescriptreact'}
+  } -- emmet
   use "scrooloose/nerdcommenter" -- line comments
   use "towolf/vim-helm" -- helm syntax highlight
-  use "vijaymarupudi/nvim-fzf" -- fzf
   use "windwp/nvim-autopairs" -- autopairs
   use "jparise/vim-graphql" -- graphql
-  use "junegunn/goyo.vim" -- distraction free
-  use 'jose-elias-alvarez/null-ls.nvim' -- (required by eslint)
   use 'MunifTanjim/eslint.nvim' -- eslint
 
 end)
+
+local utils = require("utils")
 
 -- plugins
 
 require('colorizer').setup()
 require('nvim-autopairs').setup()
 require('gitsigns').setup()
+
+local telescopeActions = require("telescope.actions")
+require('telescope').setup({
+  extensions = {["ui-select"] = {require("telescope.themes").get_cursor {}}},
+  defaults = {
+    prompt_title = false,
+    results_title = false,
+    preview_title = false,
+    prompt_prefix = "     ",
+    selection_caret = "  ",
+    entry_prefix = "  ",
+    layout_config = {horizontal = {preview_width = 0.7, results_width = 0.3}},
+    mappings = {i = {["<esc>"] = telescopeActions.close}}
+  }
+})
+require('telescope').load_extension('fzf')
+require("telescope").load_extension("ui-select")
 
 local prettierd = {
   function()
@@ -79,34 +102,6 @@ require("nvim-treesitter.configs").setup({
   autopairs = {enable = true}
 })
 
-local actions = require("fzf-lua.actions")
-
-local file_actions = {
-  ["default"] = actions.file_edit,
-  ["ctrl-v"] = actions.file_vsplit,
-  ["ctrl-x"] = actions.file_split,
-  ["ctrl-t"] = actions.file_tabedit,
-  ["ctrl-q"] = actions.file_sel_to_qf
-}
-
-require("fzf-lua").setup({
-  fzf_layout = "default",
-  winopts = {win_height = 0.7, win_width = 0.90},
-  previewers = {
-    bat = {
-      cmd = "bat",
-      args = "--style=numbers,changes --color always",
-      theme = 'Nord',
-      config = nil
-    }
-  },
-  files = {actions = file_actions},
-  grep = {
-    rg_opts = "--hidden --column --line-number --no-heading --color=always --smart-case",
-    actions = file_actions
-  }
-})
-
 local popup_opts = {
   border = "none",
   focusable = false,
@@ -116,7 +111,19 @@ local popup_opts = {
 
 _G.global.lsp = {popup_opts = popup_opts}
 
-local utils = require("utils")
+local for_each_buffer = function(cb, force)
+  utils.for_each(vim.fn.getbufinfo({buflisted = true}),
+                 function(b) if b.changed == 0 and not force then cb(b) end end)
+end
+
+_G.global.bonly = function(bufnr)
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+  for_each_buffer(function(b)
+    if b.bufnr ~= bufnr then vim.cmd("silent! bdelete " .. b.bufnr) end
+  end)
+end
+
+utils.lua_command("Bonly", "global.bonly()")
 
 local on_attach = function(client, bufnr)
   -- commands
@@ -137,7 +144,7 @@ local on_attach = function(client, bufnr)
   utils.buf_map("n", "<Leader>n", ":LspDiagNext<CR>", nil, bufnr)
   utils.buf_map("i", "<C-x><C-x>", "<cmd> LspSignatureHelp<CR>", nil, bufnr)
 
-  -- fzf.lua
+  -- lsp
   utils.buf_map("n", "gr", ":LspRefs<CR>", nil, bufnr)
   utils.buf_map("n", "gd", ":LspDefs<CR>", nil, bufnr)
   utils.buf_map("n", "gy", ":LspTypeDefs<CR>", nil, bufnr)
@@ -157,13 +164,11 @@ local on_attach = function(client, bufnr)
 end
 
 -- lsp
-utils.lua_command("LspActions", 'require("fzf-lua").lsp_code_actions()')
-utils.lua_command("LspRefs",
-                  'require("fzf-lua").lsp_references({ jump_to_single_result = true })')
-utils.lua_command("LspDefs",
-                  'require("fzf-lua").lsp_definitions({ jump_to_single_result = true })')
+utils.lua_command("LspActions", 'vim.lsp.buf.code_action()')
+utils.lua_command("LspRefs", 'require("telescope.builtin").lsp_references()')
+utils.lua_command("LspDefs", 'require("telescope.builtin").lsp_definitions()')
 utils.lua_command("LspTypeDefs",
-                  'require("fzf-lua").lsp_typedefs({ jump_to_single_result = true })')
+                  'require("telescope.builtin").lsp_type_definitions()')
 
 -- ultisnips
 vim.cmd("let g:UltiSnipsExpandTrigger=\"<tab>\"")
@@ -290,7 +295,7 @@ lspconfig.sumneko_lua.setup({
       }
     }
   },
-  flags = { debounce_text_changes = 150 }
+  flags = {debounce_text_changes = 150}
 })
 
 lspconfig.flow.setup({on_attach = on_attach, capabilities = capabilities})
