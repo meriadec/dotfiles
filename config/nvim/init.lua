@@ -267,6 +267,12 @@ lspconfig.bashls.setup({
   filetypes = {"sh"}
 })
 
+lspconfig.pyright.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = {"python"}
+})
+
 lspconfig.sumneko_lua.setup({
   on_attach = on_attach,
   cmd = {
