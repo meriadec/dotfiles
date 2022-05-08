@@ -18,6 +18,7 @@ require('packer').startup(function()
   use "SirVer/ultisnips" -- snippets
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"} -- treesitter
   use "onsails/lspkind.nvim" -- icons
+  use "machakann/vim-highlightedyank" -- highlight yank
   use "hrsh7th/nvim-cmp" -- completion
   use "hrsh7th/cmp-nvim-lsp" -- nvim-cmp source for lsp
   use "nvim-telescope/telescope.nvim" -- telescope
@@ -324,3 +325,6 @@ cmp.setup {
     })
   }
 }
+
+-- yank highlight
+vim.g["highlightedyank_highlight_duration"] = 100
