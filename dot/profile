@@ -65,7 +65,7 @@ alias va='cd ~/ledger/vaulty'
 
 # ledger env
 alias vf="cd ~/ledger/ledger-vault-front"
-alias vj="cd ~/ledger/vault-js"
+alias vj="cd ~/ledger/vault-ts"
 alias gate="cd ~/ledger/ledger-vault-api"
 alias int="cd ~/ledger/vault-integration"
 alias m="cd ~/ledger/minivault"
