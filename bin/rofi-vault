@@ -8,251 +8,71 @@ function probe () {
   echo "probing"
   while [[ "$(timeout 0.5 curl -s -o /dev/null -w "%{http_code}" "$1")" != "200" ]]; do
     if [[ $i -lt 100 ]]; then
-      notify-send "$2" "$3" -t 1000 -h int:value:$i -i $HOME/dotfiles/assets/icons/512x512/cog.png
+      notify-send "$2" "$3" -t 1000 -h int:value:$i -i "$HOME/dotfiles/assets/icons/512x512/cog.png"
       sleep 0.5
       ((i=i+4))
     else
-      notify-send -u critical "$2" "$3" -h int:value:100 -i $HOME/dotfiles/assets/icons/512x512/cog.png
+      notify-send -u critical "$2" "$3" -h int:value:100 -i "$HOME/dotfiles/assets/icons/512x512/cog.png"
       break
     fi
     if ! pgrep openvpn &>/dev/null; then
-      notify-send -t 1 "$2" "$3" -h int:value:0 -i $HOME/dotfiles/assets/icons/512x512/cog.png
+      notify-send -t 1 "$2" "$3" -h int:value:0 -i "$HOME/dotfiles/assets/icons/512x512/cog.png"
       return 1;
     fi
   done
-  notify-send -t 1 "$2" "$3" -h int:value:100 -i $HOME/dotfiles/assets/icons/512x512/cog.png
+  notify-send -t 1 "$2" "$3" -h int:value:100 -i "$HOME/dotfiles/assets/icons/512x512/cog.png"
 }
 
 
 VPN_ENABLED=$(pgrep -a 'openvpn$' &>/dev/null && echo "1" || echo "0")
 VPN_VERB=$([[ "$VPN_ENABLED" = "1" ]] && echo "Stop" || echo "Start")
 
-kubeContext=$(kubectl config current-context | cut -d '/' -f 2)
+JIRA_COMMAND="JIRA ticket\0icon\x1fplexmediamanager"
 
-LOCAL_COMMANDS=""
-if [[ "$kubeContext" = "k3d-local" ]]; then
-  LOCAL_COMMANDS="
-Install minivault\0icon\x1fplexmediaserver
-Uninstall minivault\0icon\x1fsystem-reboot
-Bake minivault\0icon\x1flutris_the-dark-mod
-"
-fi
+# kubeContext=$(kubectl config current-context | cut -d '/' -f 2)
 
-SANDBOX_COMMANDS=""
-SANDBOX_COMMAND_DEPLOY_MINIVAULT_MERI="Deploy minivault (namespace: meri)"
-if [[ "$kubeContext" = "sandbox-2042-cluster" ]]; then
-  SANDBOX_COMMANDS="
-$SANDBOX_COMMAND_DEPLOY_MINIVAULT_MERI\0icon\x1fplexmediaserver
-"
-fi
-
-SWITCH_COMMAND=""
-if [[ "$kubeContext" = "k3d-local" ]] && [[ "$VPN_ENABLED" = "1" ]]; then
-  SWITCH_COMMAND="Switch to sandbox\0icon\x1fsend-to"
-elif [[ "$kubeContext" = "sandbox-2042-cluster" ]]; then
-  SWITCH_COMMAND="Switch to local\0icon\x1fsend-to"
-fi
-
-INSPECT_COMMAND="
-Show pods\0icon\x1fview-list
-"
-[[ "$kubeContext" = "sandbox-2042-cluster" ]] && [[ "$VPN_ENABLED" = "0" ]] && INSPECT_COMMAND=""
+# SWITCH_COMMAND=""
+# if [[ "$kubeContext" = "k3d-local" ]] && [[ "$VPN_ENABLED" = "1" ]]; then
+#   SWITCH_COMMAND="Switch to sandbox\0icon\x1fsend-to"
+# elif [[ "$kubeContext" = "sandbox-2042-cluster" ]]; then
+#   SWITCH_COMMAND="Switch to local\0icon\x1fsend-to"
+# fi
 
 VPN_COMMAND="$VPN_VERB VPN\0icon\x1fpreferences-certificates"
 
- # -selected-row
-
 choice=$(echo -e "\
-$LOCAL_COMMANDS
-$SANDBOX_COMMANDS
+$JIRA_COMMAND
 $VPN_COMMAND
-$SWITCH_COMMAND
-$INSPECT_COMMAND
 " \
-  | awk 'NF' | rofi -i -dmenu -format s -theme-str "entry { placeholder: \" => $kubeContext\";}")
+  | awk 'NF' | rofi -i -dmenu -format s -theme-str "entry { placeholder: \" => \";}")
 
-if [[ "$choice" = "Install minivault" ]]; then
-
-  cd $HOME/ledger/minivault
-
-  git diff-index --quiet HEAD \
-    && HAS_UNCOMMITED_CHANGES=0 \
-    || HAS_UNCOMMITED_CHANGES=1
-
-  [[ "$HAS_UNCOMMITED_CHANGES" = "1" ]] \
-    && CURRENT_BRANCH_EDITED_INDICATOR="*" \
-    || CURRENT_BRANCH_EDITED_INDICATOR=""
-
-  currentBranch="$(git branch | rg '^\*' | awk '{ print $2 }')"
-  currentBranchDisplay="local ($currentBranch)$CURRENT_BRANCH_EDITED_INDICATOR"
-
-  mainBranch="main"
-  featureBranches="$(git branch | rg feature/ | rg -v '^\*' | awk '{ print $1 "\\0icon\\x1fplexmediaserver" }')"
-
-  targetBranch=$(echo -e "\
-$currentBranchDisplay\0icon\x1fplexmediaserver
-main\0icon\x1fplexmediaserver
-$featureBranches
-" \
-  | awk 'NF' | rofi -i -dmenu -format s -theme-str "entry { placeholder: \" => version\";}")
-
-  if [[ "$targetBranch" = "$currentBranchDisplay" ]]; then
-    targetBranch=$currentBranch
-  fi
-
-  if [[ "$targetBranch" != "$currentBranch" ]]; then
-    if [[ "$HAS_UNCOMMITED_CHANGES" = "0" ]] ; then
-      git checkout "$targetBranch";
-    else
-      notify-send \
-        "Uncommited changes on minivault" \
-        "Can't checkout the branch $targetBranch" \
-        -u critical \
-        -i $HOME/dotfiles/assets/icons/512x512/notification.png
-      exit 1
-    fi
-  fi
-
-  (
-    helm install minivault . \
-      --kube-context k3d-local \
-      --set hsm.compartmentID=$VAULT_COMPARTMENT_ID \
-      --wait 2>/tmp/minivault.err.log \
-      && notify-send \
-      -u critical \
-      "minivault install success" \
-      "version: $targetBranch" \
-      -i $HOME/dotfiles/assets/icons/512x512/guitar.png \
-      || notify-send \
-    "minivault installation failed" \
-    "$(cat /tmp/minivault.err.log)" \
-    -u critical \
-    -i $HOME/dotfiles/assets/icons/512x512/notification.png
-  ) &
-  lastPid=$!
-
-  (
-    i=0; while true; do
-      notify-send -t 600 -h int:value:$i "minivault install in progress..." "version: $targetBranch" -u low -i $HOME/dotfiles/assets/icons/512x512/cog.png
-      sleep 0.5
-      ((i=i+1))
-      if [[ $i -gt 100 ]]; then i=100; fi
-    done
-  ) &
-  progressPID=$!
-
-  wait "$lastPid"
-  kill "$progressPID"
-  notify-send -t 1 -h int:value:100 "minivault install in progress..." "version: $targetBranch" -u low -i $HOME/dotfiles/assets/icons/512x512/cog.png
-
-elif [[ "$choice" = "Uninstall minivault" ]]; then
-
-    # helm uninstall minivault --wait 2>/tmp/minivault.err.log \
-  (
-    (helm uninstall minivault --wait --kube-context k3d-local || true) 2>/tmp/minivault.err.log \
-      && (
-        while [[ "$(kubectl get pods -n default | wc -l)" != "0" ]]; do
-          sleep 1
-        done
-      ) \
-      && notify-send \
-      "minivault uninstall success" \
-      -i $HOME/dotfiles/assets/icons/512x512/guitar.png \
-      || notify-send \
-    "minivault uninstallation failed" \
-    "$(cat /tmp/minivault.err.log)" \
-    -u critical \
-    -i $HOME/dotfiles/assets/icons/512x512/notification.png
-  ) &
-  lastPid=$!
-
-  notify-send "minivault uninstall in progress..." -u low -i $HOME/dotfiles/assets/icons/512x512/cog.png
-  wait "$lastPid"
-
-elif [[ "$choice" = "Bake minivault" ]]; then
-
-  (
-    ledger-vault bake --preset beatles-legacy --minivault &>/tmp/minivault.err.log \
-      && notify-send \
-      "Successfully baked 🙌" \
-      "Have a good day i mean" \
-      -i $HOME/dotfiles/assets/icons/512x512/guitar.png \
-      || notify-send \
-    "bake failed" \
-    "$(cat /tmp/minivault.err.log)" \
-    -u critical \
-    -i $HOME/dotfiles/assets/icons/512x512/notification.png
-  ) &
-  lastPid=$!
-
-  (
-    i=0; while true; do
-      notify-send -t 600 -h int:value:$i "bake in progress..." -u low -i $HOME/dotfiles/assets/icons/512x512/cog.png
-      sleep 0.5
-      ((i=i+1))
-      if [[ $i -gt 100 ]]; then i=100; fi
-    done
-  ) &
-  progressPID=$!
-
-  wait "$lastPid"
-  kill "$progressPID"
-  notify-send -t 1 -h int:value:100 "bake in progress..." -u low -i $HOME/dotfiles/assets/icons/512x512/cog.png
-
-
-# Inspect
-elif [[ "$choice" = "Show pods" ]]; then
-  kitty k9s
-
-# Kube context
-elif [[ "$choice" = "Switch to sandbox" ]]; then
-  kubectl config use-context arn:aws:eks:eu-west-1:364737596256:cluster/sandbox-2042-cluster
-  $HOME/bin/rofi-vault
-elif [[ "$choice" = "Switch to local" ]]; then
-  kubectl config use-context k3d-local
-  $HOME/bin/rofi-vault
-
-elif [[ "$choice" = "Start VPN" ]]; then
+# Start VPN
+# =========
+if [[ "$choice" = "Start VPN" ]]; then
   kitty sudo -S openvpn --daemon --config ~/infra.ovpn --auth-user-pass ~/.gnome/rofi.conf
 
   echo "before probing"
-  if probe https://sci.minivault.ledger-sbx.com "VPN starting..." "Chill out, it usually takes ~30s" ; then
-    notify-send "VPN started" -u low -i $HOME/dotfiles/assets/icons/512x512/guitar.png
+  if probe https://remote.minivault.ledger-sbx.com "VPN starting..." "Chill out, it usually takes ~30s" ; then
+    notify-send "VPN started" -u low -i "$HOME/dotfiles/assets/icons/512x512/guitar.png"
   else
-    notify-send "VPN failed to start" "No idea for the reason, though" -u critical -i $HOME/dotfiles/assets/icons/512x512/notification.png
+    notify-send "VPN failed to start" "No idea for the reason, though" -u critical -i "$HOME/dotfiles/assets/icons/512x512/notification.png"
   fi
 
 # Stop VPN
+# ========
 elif [[ "$choice" = "Stop VPN" ]]; then
   kitty sudo killall --signal 9 openvpn
   notify-send \
     "VPN Stopped" \
-    -i $HOME/dotfiles/assets/icons/512x512/guitar.png
-  kubectl config use-context k3d-local
+    -i "$HOME/dotfiles/assets/icons/512x512/guitar.png"
 
-# Deploy on sandbox
-elif [[ "$choice" = "$SANDBOX_COMMAND_DEPLOY_MINIVAULT_MERI" ]]; then
-  cd $HOME/ledger/minivault
-  namespace=meri
-  cid=707
-  echo "Fetching namespaces..."
-  if kubectl get ns $namespace &>/dev/null; then
-    choice=$(echo -e "\
-Reset\0icon\x1fplexmediaserver
-Upgrade\0icon\x1fplexmediaserver
-Quit\0icon\x1fplexmediaserver
-" \
-    | awk 'NF' | rofi -i -dmenu -format s -theme-str "entry { placeholder: \" => $kubeContext\";}")
-    if [[ "$choice" == "Reset" ]]; then
-      notify-send -u low "Uninstalling current instance" "Be patient..."
-      helm uninstall minivault -n $namespace --wait || true
-    fi
+# JIRA ticket
+# ===========
+elif [[ "$choice" = "JIRA ticket" ]]; then
+  issueTypeStr=$(printf "Story\0icon\x1fpencil\nBug\0icon\x1fpencil" | rofi -i -dmenu -format s -theme-str "entry { placeholder: \" => Issue type \";}")
+  issueType=10001 # story
+  if [[ "$issueTypeStr" = "Bug" ]]; then
+    issueType=10004 # bug
   fi
-  (
-    ./scripts/deploy-vault.sh "$namespace" "$cid" minivault.ledger-sbx.com 2>/tmp/minivault.err.log \
-      && notify-send -u critical "Sandbox deployment successful" "https://meri.minivault.ledger-sbx.com" \
-      || notify-send -u critical -i $HOME/dotfiles/assets/icons/512x512/notification.png "Sandbox deployment failed" "$(cat /tmp/minivault.err.log)"
-  ) &
-  lastPid=$!
-  notify-send -u low "Sandbox deployment started" "Should take <i>~50s</i>"
+  google-chrome-stable "https://ledgerhq.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=10104&issuetype=${issueType}&summary=&customfield_10332=10932"
 fi

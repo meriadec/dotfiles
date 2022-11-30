@@ -50,6 +50,7 @@ bindsym $mod+Shift+Control+s      exec "i3-nagbar -t warning -m 'You pressed the
 bindsym $mod+minus                exec maim -d 0.5 -s "$(date +%s).png"
 bindsym $mod+Return               exec kitty
 bindsym $mod+c                    exec google-chrome-stable --force-device-scale-factor=1.2
+bindsym $mod+e                    exec "ksnip -e $(/bin/ls /home/meri -1th | head -n ${1-1})"
 bindsym $mod+BackSpace            exec ~/bin/pick-address
 bindsym $mod+w                    exec ~/bin/rofi-vault
 bindsym $mod+r                    exec rofi -show drun
@@ -62,7 +63,9 @@ bindsym $mod+Shift+h              move left
 bindsym $mod+Shift+t              move down
 bindsym $mod+Shift+n              move up
 bindsym $mod+Shift+s              move right
-bindsym $mod+m                    move workspace to output down
+# bindsym $mod+m                    move workspace to output down
+bindsym $mod+Shift+m move scratchpad
+bindsym $mod+m scratchpad show
 
 bindsym $mod+v                    split h
 bindsym $mod+d                    split v
@@ -151,3 +154,7 @@ mode "$mode_gaps_inner" {
   bindsym Return                  mode "$mode_gaps"
   bindsym Escape                  mode "default"
 }
+
+
+for_window [class="ksnip"] floating enable, fullscreen enable
+for_window [class="SimpleScreenRecorder"] floating enable

@@ -5,3 +5,9 @@
 /dot/Xresources
 /dot/gitconfig
 /config/k9s/config.yml
+
+/bin/aws-mfa
+/bin/ct
+/bin/helm-docs
+/bin/k9s
+/bin/kubectl

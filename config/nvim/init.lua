@@ -150,18 +150,6 @@ local on_attach = function(client, bufnr)
   utils.buf_map("n", "gd", ":LspDefs<CR>", nil, bufnr)
   utils.buf_map("n", "gy", ":LspTypeDefs<CR>", nil, bufnr)
   utils.buf_map("n", "ga", ":LspActions<CR>", nil, bufnr)
-
-  if client.resolved_capabilities.completion then
-    local trigger_characters = {
-      "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
-      "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "A", "B", "C", "D",
-      "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
-      "T", "U", "V", "W", "X", "Y", "Z", "0", "."
-    }
-    client.server_capabilities.completionProvider.triggerCharacters =
-      trigger_characters
-    _G.global.lsp.completion = true
-  end
 end
 
 -- lsp

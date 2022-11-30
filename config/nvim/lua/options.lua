@@ -43,5 +43,6 @@ vim.opt.updatetime = 300 -- refresh rate
 vim.opt.wb = false -- don't create useless files
 vim.opt.wildmenu = true -- enable wild menu
 vim.opt.wildmode = "longest,full" -- wild menu completion
-vim.opt.wrap = false -- vim.opt.mouse = "c"
+vim.opt.wrap = false
+vim.opt.mouse = "c" -- don't try to use mouse in vim lol wtf
 vim.opt.writebackup = false -- don't create useless files

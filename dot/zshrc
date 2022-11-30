@@ -84,12 +84,12 @@ fi
 # => modules                                                                   #
 #    --------------------------------------------------------------------------#
 
-export COMPOSE_FILE=/home/meri/ledger/vault-integration/docker-compose.yml
-
 source "$HOME/.profile"
 source "$HOME/.path"
 source "$HOME/.gitprompt"
 source "$HOME/.prompt"
 source "$HOME/.private"
 
-# eval "$(starship init zsh)"
+# pnpm
+export PNPM_HOME="/home/meri/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
