@@ -25,6 +25,10 @@ ropsten=(
   "0x687422eEA2cB73B5d3e242bA5456b782919AFc85\0icon\x1fethereumwallet"
 )
 
+cardano=(
+  "addr1v95sf69jcfhnmknvffwmfvlvnccatqwfjcyh0nlfc6gh5scta2yzg"
+)
+
 xrp=(
   "r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV\0icon\x1fface-laugh"
   "rupiah7aqR5k1xBaTRRFu3VrwcDftD6VV\0icon\x1fface-laugh"
@@ -42,6 +46,8 @@ Bitcoin\0icon\x1fbitcoin
 Bitcoin (testnet)\0icon\x1fbitcoin
 Ethereum\0icon\x1fethereumwallet
 Ethereum (ropsten)\0icon\x1fethereumwallet
+Ripple\0icon\x1fethereumwallet
+Cardano\0icon\x1fethereumwallet
 Tezos\0icon\x1fethereumwallet" | rofi -i -dmenu -format i:s)
 
 [[ "$currency" == "" ]] && exit 0
@@ -51,7 +57,9 @@ list=""
 [[ "$currency" == "1:Bitcoin (testnet)" ]] && list="${bitcoin_testnet[*]}"
 [[ "$currency" == "2:Ethereum" ]] && list="${ethereum[*]}"
 [[ "$currency" == "3:Ethereum (ropsten)" ]] && list="${ropsten[*]}"
-[[ "$currency" == "4:Tezos" ]] && list="${tezos[*]}"
+[[ "$currency" == "4:Ripple" ]] && list="${xrp[*]}"
+[[ "$currency" == "5:Cardano" ]] && list="${cardano[*]}"
+[[ "$currency" == "6:Tezos" ]] && list="${tezos[*]}"
 
 addr=$(echo -e "$list" | rofi -i -dmenu -format i:s)
 

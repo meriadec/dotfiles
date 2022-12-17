@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+while read f
+do
+    echo "$(git log --format="%at" --reverse "$f" | head -n1) $f"
+done | sort -n

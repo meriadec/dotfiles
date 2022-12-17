@@ -31,10 +31,7 @@ require('packer').startup(function()
   use "mhartington/formatter.nvim" -- formatter
   use "neovim/nvim-lspconfig" -- lsp configuration
   use "norcalli/nvim-colorizer.lua" -- colorizer
-  use {
-    "mattn/emmet-vim",
-    ft = {'javascript', 'typescript.tsx', 'typescriptreact'}
-  } -- emmet
+  use { "mattn/emmet-vim", ft = {'javascript', 'typescript.tsx', 'typescriptreact'} } -- emmet
   use "scrooloose/nerdcommenter" -- line comments
   use "towolf/vim-helm" -- helm syntax highlight
   use "windwp/nvim-autopairs" -- autopairs
