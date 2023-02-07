@@ -386,7 +386,11 @@ lspconfig.efm.setup {
   },
 }
 
-lspconfig.flow.setup({ on_attach = on_attach, capabilities = capabilities })
+lspconfig.flow.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = {"javascript", "javascriptreact"}
+})
 
 -- Turn on lsp status information
 require('fidget').setup()

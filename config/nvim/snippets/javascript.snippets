@@ -14,3 +14,12 @@ snippet imp "import module"
 
 snippet impp "import from module"
 	import { ${1} } from "${3}";${0}
+
+snippet rc "react component"
+	const ${1} = () => {
+		return (
+			<div>${0}</div>
+		);
+	};
+
+	export default $1;

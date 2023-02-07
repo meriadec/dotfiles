@@ -6,7 +6,7 @@ set -euo pipefail
 function probe () {
   i=0
   echo "probing"
-  while [[ "$(timeout 0.5 curl -s -o /dev/null -w "%{http_code}" "$1")" != "200" ]]; do
+  while [[ "$(timeout 0.5 curl -k -s -o /dev/null -w "%{http_code}" "$1")" != "200" ]]; do
     if [[ $i -lt 100 ]]; then
       notify-send "$2" "$3" -t 1000 -h int:value:$i -i "$HOME/dotfiles/assets/icons/512x512/cog.png"
       sleep 0.5

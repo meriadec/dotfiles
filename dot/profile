@@ -67,6 +67,7 @@ alias u='cd ~/git/udcfront'
 alias ua='cd ~/git/udcapi'
 alias ma='cd ~/git/mobileapi'
 alias va='cd ~/ledger/vault-ts/apps/vaulty'
+alias as='cd ~/git/astroquirks-front'
 
 # ledger env
 alias vf="cd ~/ledger/ledger-vault-front"

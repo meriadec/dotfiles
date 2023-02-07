@@ -2,12 +2,12 @@
 
 set -euo pipefail
 
-if ! git branch 2>/dev/null ; then
+if ! ls .git &>/dev/null ; then
   >&2 echo "Not on a git repo. u mad?"
   exit 1
 fi
 
-BRANCH=$(git branch | rg -v '\*' | sed 's/ //g' | fzf --reverse)
+BRANCH=$(git branch | cat | rg -v '\*' | sed 's/ //g' | fzf --reverse --height 15 || echo "")
 
 if [[ "$BRANCH" != "" ]]; then
   git checkout "$BRANCH"

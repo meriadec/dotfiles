@@ -31,7 +31,7 @@ font-3 = meri:pixelsize=12;4
 
 modules-left = i3
 modules-center = vpn-openvpn-status kube-context
-modules-right = cryptoeth crypto wlan xbacklight alsa battery date
+modules-right = github cryptoeth crypto wlan xbacklight alsa battery date
 
 ;tray-position = center
 ;tray-detached = false
@@ -129,6 +129,15 @@ bar-empty = •
 bar-empty-font = 2
 bar-empty-foreground = ${colors.background-alt}
 format-padding = 2
+
+[module/github]
+type = custom/script
+format-background = ${colors.background-dark}
+label-padding-left = 2
+format = <label>
+label = " %{T3}%output%%{T-}"
+exec = curl -s -u meriadec:$GH_TOKEN https://api.github.com/notifications | jq '. | length'
+interval = 10
 
 [module/backlight-acpi]
 inherit = module/xbacklight
@@ -375,17 +384,17 @@ screenchange-reload = true
 margin-top = 5
 margin-bottom = 5
 
-[module/github]
-type = internal/github
-token = ${env:GH_TOKEN}
-user = meriadec
-format =  <label>
-label = %notifications%
-; Whether empty notifications should be displayed or not
-empty-notifications = false
-interval = 10
-format-padding = 2
-format-background = #bf616a
+; [module/github]
+; type = internal/github
+; token = ${env:GH_TOKEN}
+; user = meriadec
+; format =  <label>
+; label = %notifications%
+; ; Whether empty notifications should be displayed or not
+; empty-notifications = false
+; interval = 10
+; format-padding = 2
+; format-background = #bf616a
 
 [module/vpn-openvpn-status]
 type = custom/script
