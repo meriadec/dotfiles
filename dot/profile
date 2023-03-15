@@ -23,6 +23,8 @@ alias pdfjoin='pdfjam --fitpaper true --suffix joined'
 alias rg='rg --hidden'
 alias curl='curl -s'
 
+alias pf="fzf --reverse --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+
 # hehe
 alias vim=nvim
 alias vmi=vim
@@ -67,7 +69,8 @@ alias u='cd ~/git/udcfront'
 alias ua='cd ~/git/udcapi'
 alias ma='cd ~/git/mobileapi'
 alias va='cd ~/ledger/vault-ts/apps/vaulty'
-alias as='cd ~/git/astroquirks-front'
+alias as='cd ~/astroquirks/astroquirks-front'
+alias aq='cd ~/astroquirks'
 
 # ledger env
 alias vf="cd ~/ledger/ledger-vault-front"

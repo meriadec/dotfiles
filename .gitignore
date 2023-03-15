@@ -5,6 +5,7 @@
 /dot/Xresources
 /dot/gitconfig
 /config/k9s/config.yml
+/config/nvim/lua/.luarc.json
 
 /bin/aws-mfa
 /bin/ct

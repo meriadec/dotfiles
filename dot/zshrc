@@ -93,3 +93,23 @@ source "$HOME/.private"
 # pnpm
 export PNPM_HOME="/home/meri/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
+
+#    --------------------------------------------------------------------------#
+# => bindings                                                                  #
+#    --------------------------------------------------------------------------#
+
+wrap() {
+  BUFFER=" \$($BUFFER)";
+  zle beginning-of-line;
+}
+
+wrapProcess() {
+  BUFFER=" <($BUFFER)";
+  zle beginning-of-line;
+}
+
+zle -N wrap
+zle -N wrapProcess
+
+bindkey "^X$" wrap
+bindkey "^X\<" wrapProcess

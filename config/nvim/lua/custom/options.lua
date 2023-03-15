@@ -6,7 +6,7 @@ vim.o.mouse = 'c' -- Enable mouse mode
 vim.o.smartcase = true -- sensitive search as soon as a different case is used
 vim.o.termguicolors = true -- term colors 
 -- vim.o.undofile = true -- Save undo history
-vim.o.updatetime = 50 -- Decrease update time
+vim.o.updatetime = 5 -- Decrease update time
 vim.opt.autoread = true -- auto reload files when changed
 vim.opt.colorcolumn = "100" -- show the 100 chars column
 vim.opt.cursorline = true -- show cursor line
@@ -40,3 +40,6 @@ vim.wo.signcolumn = 'yes' -- Always show sign column
 
 -- retrieve last edited line
 vim.cmd("au BufReadPost * if line(\"'\\\"\") > 1 && line(\"'\\\"\") <= line(\"$\") | exe \"normal! g'\\\"\" | endif")
+
+-- properly highlight json5 files
+vim.cmd("autocmd BufNewFile,BufRead tsconfig.json set filetype=jsonc")

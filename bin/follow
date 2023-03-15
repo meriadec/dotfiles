@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -euo pipefail
+
+JOB_URL=$1
+
+RUN_URL=$(echo "$JOB_URL" | sed -E 's/github.com/api.github.com\/repos/g')
+
+PREVIOUS_STATUS=""
+
+while true ; do
+  JOB_STATUS=$(curl -L \
+    -s \
+    -H "Accept: application/vnd.github+json" \
+    -H "Authorization: Bearer $GH_TOKEN"\
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    "$RUN_URL" | jq -r '.status')
+
+  echo $JOB_STATUS
+
+  if [[ "$JOB_STATUS" != "$PREVIOUS_STATUS" ]]; then
+    PREVIOUS_STATUS=$JOB_STATUS
+    notify-send -u critical "Job status changed to $JOB_STATUS"
+  fi
+  sleep 5
+done
