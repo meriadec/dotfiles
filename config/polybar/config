@@ -137,6 +137,7 @@ label-padding-left = 2
 format = <label>
 label = " %{T3}%output%%{T-}"
 exec = curl -s -u meriadec:$GH_TOKEN https://api.github.com/notifications | jq '. | length'
+click-left = /usr/bin/google-chrome-stable https://github.com/notifications
 interval = 10
 
 [module/backlight-acpi]
