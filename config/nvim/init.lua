@@ -215,14 +215,19 @@ require("lazy").setup({
   {
     "jose-elias-alvarez/null-ls.nvim",
     config = function()
-      require('null-ls').setup()
+      local null_ls = require('null-ls')
+      null_ls.setup({
+        sources = {
+          null_ls.builtins.diagnostics.shellcheck,
+        },
+      })
     end
   },
   {
     "MunifTanjim/eslint.nvim",
     config = function()
       require("eslint").setup({
-        bin = 'eslint_d', -- or `eslint_d`
+        bin = 'eslint_d', -- `eslint` or `eslint_d`
         code_actions = {
           enable = true,
           apply_on_save = {
