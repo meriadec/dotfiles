@@ -20,7 +20,7 @@ alias sprof='source ~/.profile'
 
 alias pdfjoin='pdfjam --fitpaper true --suffix joined'
 
-alias rg='rg --hidden'
+alias rg='rg --hidden --line-number --column'
 alias curl='curl -s'
 
 alias pf="fzf --reverse --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"

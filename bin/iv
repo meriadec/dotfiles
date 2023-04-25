@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# credits to @flocks, alias big brain
+
+set -euo pipefail
+
+TMP_FILE=$(mktemp)
+while read -r line; do
+  filename=$(echo "$line" | cut -d ':' -f 1)
+  line_number=$(echo "$line" | cut -d ':' -f 2)
+  col=$(echo "$line" | cut -d ':' -f 3)
+  match=$(echo "$line" | cut -d ':' -f 4-)
+  echo "${filename}:${line_number}:${col}:${match}" >> "$TMP_FILE"
+done < <(cat)
+
+nvim -c "cfile $TMP_FILE" -c "copen"
+rm "$TMP_FILE"
