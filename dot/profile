@@ -20,7 +20,7 @@ alias sprof='source ~/.profile'
 
 alias pdfjoin='pdfjam --fitpaper true --suffix joined'
 
-alias rg='rg --hidden --line-number --column'
+alias rg='rg --hidden'
 alias curl='curl -s'
 
 alias pf="fzf --reverse --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
@@ -41,6 +41,15 @@ alias k=kubectl
 # `ls` thoughts
 function lh () {
   /bin/ls -1th | head -n ${1-1}
+}
+
+countdown() {
+  start="$(( $(date '+%s') + $1))"
+  while [ $start -ge $(date +%s) ]; do
+    time="$(( $start - $(date +%s) ))"
+    printf '%s\r' "$(date -u -d "@$time" +%H:%M:%S)"
+    sleep 0.1
+  done
 }
 
 # tree the git files

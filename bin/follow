@@ -17,6 +17,9 @@ while true ; do
     "$RUN_URL" | jq -r '.status')
 
   echo $JOB_STATUS
+  if [[ "$JOB_STATUS" == "completed" ]]; then
+    exit 0;
+  fi
 
   if [[ "$JOB_STATUS" != "$PREVIOUS_STATUS" ]]; then
     PREVIOUS_STATUS=$JOB_STATUS
