@@ -18,6 +18,7 @@ while true ; do
 
   echo $JOB_STATUS
   if [[ "$JOB_STATUS" == "completed" ]]; then
+    notify-send -u critical "JOB IS FINISHED DUDE"
     exit 0;
   fi
 
