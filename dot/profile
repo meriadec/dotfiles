@@ -78,6 +78,7 @@ alias u='cd ~/git/udcfront'
 alias ua='cd ~/git/udcapi'
 alias ma='cd ~/git/mobileapi'
 alias va='cd ~/ledger/vault-ts/apps/vaulty'
+alias rr='cd ~/ledger/revault'
 alias as='cd ~/astroquirks/astroquirks-front'
 alias aq='cd ~/astroquirks'
 

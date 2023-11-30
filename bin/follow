@@ -3,6 +3,7 @@
 set -euo pipefail
 
 JOB_URL=$1
+JOB_NAME=${2:-Job}
 
 RUN_URL=$(echo "$JOB_URL" | sed -E 's/github.com/api.github.com\/repos/g')
 
@@ -16,15 +17,15 @@ while true ; do
     -H "X-GitHub-Api-Version: 2022-11-28" \
     "$RUN_URL" | jq -r '.status')
 
-  echo $JOB_STATUS
+  echo "$JOB_STATUS"
   if [[ "$JOB_STATUS" == "completed" ]]; then
-    notify-send -u critical "JOB IS FINISHED DUDE"
+    notify-send -u critical "Finished job: $JOB_NAME"
     exit 0;
   fi
 
   if [[ "$JOB_STATUS" != "$PREVIOUS_STATUS" ]]; then
     PREVIOUS_STATUS=$JOB_STATUS
-    notify-send -u critical "Job status changed to $JOB_STATUS"
+    notify-send -u critical "Job $JOB_NAME status changed to $JOB_STATUS"
   fi
   sleep 5
 done

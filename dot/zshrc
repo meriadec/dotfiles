@@ -113,3 +113,6 @@ zle -N wrapProcess
 
 bindkey "^X$" wrap
 bindkey "^X\<" wrapProcess
+
+# bun completions
+[ -s "/home/meri/.bun/_bun" ] && source "/home/meri/.bun/_bun"

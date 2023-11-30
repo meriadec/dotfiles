@@ -128,7 +128,6 @@ local lsp_servers = {
   'bashls',
   'efm',
   'rust_analyzer',
-  'pyright',
   'tsserver',
   'gopls',
   'tailwindcss',
@@ -358,6 +357,11 @@ require("lazy").setup({
     end,
   },
 
+  -- PlantUML
+  { "tyru/open-browser.vim" },
+  { "weirongxu/plantuml-previewer.vim" },
+  { "aklt/plantuml-syntax" },
+
   -- LSP
   {
     "lukas-reineke/lsp-format.nvim",
@@ -377,6 +381,7 @@ require("lazy").setup({
   },
   {
     "j-hui/fidget.nvim",
+    tag = "legacy",
     priority = 10,
     config = function()
       require('fidget').setup({})
@@ -388,7 +393,6 @@ require("lazy").setup({
       local lspconfig = require('lspconfig')
       local servers = {
         'rust_analyzer',
-        'pyright',
         'tsserver',
         'gopls',
         'tailwindcss',
@@ -423,6 +427,8 @@ require("lazy").setup({
         settings = {
           languages = {
             json = { prettier },
+            conf = { prettier },
+            prisma = { prettier },
             typescript = { prettier },
             typescriptreact = { prettier },
             javascript = { prettier },
@@ -531,4 +537,7 @@ require("lazy").setup({
       })
     end
   },
+
+  -- prisma coloration
+  { "prisma/vim-prisma" }
 }, opts)

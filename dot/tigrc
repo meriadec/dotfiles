@@ -1,4 +1,5 @@
 set vertical-split = yes
+set line-graphics = utf-8
 
 bind main R !git rebase -i %(commit)^
 bind diff R !git rebase -i %(commit)^

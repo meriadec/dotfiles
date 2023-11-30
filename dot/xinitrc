@@ -5,7 +5,6 @@ setxkbmap -option compose:ralt
 
 xset r rate 150 200
 xset -b
-xbindkeys
 
 xrdb merge ~/.Xresources
 eval "$(ssh-agent)"

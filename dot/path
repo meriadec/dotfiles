@@ -21,6 +21,9 @@ PATH=$PATH:$GEM_HOME/bin
 # Go dev
 PATH=$PATH:$GOPATH/bin
 
+# bun
+PATH=$PATH:$HOME/.bun/bin
+
 # ...
 PATH=$PATH:./node_modules/.bin
 
