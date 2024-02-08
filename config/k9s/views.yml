@@ -4,6 +4,7 @@ k9s:
       columns:
         - NAMESPACE
         - NAME
+        - PF
         # - IP
         # - NODE
         - STATUS
