@@ -14,6 +14,8 @@ export KUBECONFIG=$HOME/.kube/config
 # node-gyp build using all cores
 export JOBS=max
 
+alias pbpaste='xsel -ob'
+
 # let .profile manage .profile
 alias prof='vim ~/.profile && sprof'
 alias sprof='source ~/.profile'
