@@ -62,6 +62,9 @@ function gtree () {
 # remove colors
 alias no-colors='sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"'
 
+# pick image in fzf with preview and output its name
+alias pick-image='fd -d 1 -e png | tac | fzf --preview='"'"'kitty icat --clear --transfer-mode=memory --stdin=no --place=${FZF_PREVIEW_COLUMNS}x${FZF_PREVIEW_LINES}@0x0 {}'"'"''
+
 # extract files from grep like results
 alias files='cut -d : -f 1 | sort | uniq'
 alias flowfiles='rg "^Error" | cut -d " " -f 3 | cut -d : -f 1 | sort | uniq'
@@ -76,15 +79,12 @@ alias le='cd ~/ledger'
 alias dot='cd ~/dotfiles'
 alias min="cd ~/git/minus"
 alias dl='cd ~/Downloads'
-alias u='cd ~/git/udcfront'
-alias ua='cd ~/git/udcapi'
-alias ma='cd ~/git/mobileapi'
-alias va='cd ~/ledger/vault-ts/apps/vaulty'
 alias rr='cd ~/ledger/revault'
 alias rra='cd ~/ledger/revault/packages/api'
 alias rrf='cd ~/ledger/revault/packages/front'
 alias as='cd ~/astroquirks/astroquirks-front'
 alias aq='cd ~/astroquirks'
+alias ggg='cd ~/git/gambit-genius'
 
 # ledger env
 alias vf="cd ~/ledger/ledger-vault-front"
@@ -114,7 +114,7 @@ alias unscaffold='git config --local user.name meriadec && git config --local us
 
 # misc
 alias vimup="vim +'PlugUpgrade|PlugInstall|PlugUpdate|qa!'"
-alias plop="notify-send -u critical -i ~/dotfiles/assets/rick.png Hey"
+alias plop="notify-send -u critical -t 999999999 --hint string:image-path:/home/meri/dotfiles/assets/rick-square.png Heeeeeey"
 alias sss="killall slack ; (slack >/dev/null 2>/dev/null &)"
 
 # random

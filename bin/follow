@@ -19,13 +19,13 @@ while true ; do
 
   echo "$JOB_STATUS"
   if [[ "$JOB_STATUS" == "completed" ]]; then
-    notify-send -u critical "Finished job: $JOB_NAME"
+    notify-send --hint string:image-path:/home/meri/dotfiles/assets/rick-square.png -u critical -t 9999999 "Finished job: $JOB_NAME"
     exit 0;
   fi
 
   if [[ "$JOB_STATUS" != "$PREVIOUS_STATUS" ]]; then
     PREVIOUS_STATUS=$JOB_STATUS
-    notify-send -u critical "Job $JOB_NAME status changed to $JOB_STATUS"
+    notify-send -u low "Job $JOB_NAME status changed to $JOB_STATUS"
   fi
   sleep 5
 done

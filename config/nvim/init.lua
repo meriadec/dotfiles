@@ -15,7 +15,7 @@ vim.o.ignorecase = true -- case insentitive search
 vim.o.mouse = 'c' -- enable mouse mode
 vim.o.smartcase = true -- sensitive search as soon as a different case is used
 vim.o.termguicolors = true -- term colors 
-vim.o.updatetime = 5 -- decrease update time
+vim.o.updatetime = 1 -- decrease update time
 vim.opt.autoread = true -- auto reload files when changed
 vim.opt.colorcolumn = "100" -- show the 100 chars column
 vim.opt.cursorline = true -- show cursor line
@@ -55,6 +55,14 @@ end
 
 vim.cmd("au BufReadPost * if line(\"'\\\"\") > 1 && line(\"'\\\"\") <= line(\"$\") | exe \"normal! g'\\\"\" | endif") -- retrieve last edited line
 vim.cmd("autocmd BufNewFile,BufRead tsconfig.json set filetype=jsonc") -- properly highlight json5 files
+
+-- disable diagnostic on .env files
+vim.cmd([[
+  augroup _env
+   autocmd!
+   autocmd BufEnter .env lua vim.diagnostic.disable(0)
+  augroup end
+]])
 
 vim.keymap.set({ 'n', 'v' }, '-', '<Nop>', { silent = true }) -- disable default behavior of '-' (because leader)
 

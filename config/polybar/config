@@ -31,7 +31,7 @@ font-3 = meri:pixelsize=12;4
 
 modules-left = i3
 modules-center = vpn-openvpn-status kube-context
-modules-right = github cryptoeth crypto wlan xbacklight alsa battery date
+modules-right = github cryptoeth crypto wlan xbacklight pulseaudio battery date
 
 ;tray-position = center
 ;tray-detached = false
@@ -107,10 +107,10 @@ label-urgent-padding = 2
 ; label-song-maxlen = 25
 ; label-song-ellipsis = true
 
-; [module/backlight]
-; type = internal/backlight
-; card = intel_backlight
-; enable-scroll = true
+[module/backlight]
+type = internal/backlight
+card = intel_backlight
+enable-scroll = true
 
 [module/xbacklight]
 type = internal/xbacklight
@@ -144,6 +144,7 @@ interval = 10
 inherit = module/xbacklight
 type = internal/backlight
 card = intel_backlight
+enable-scroll = true
 
 [module/cpu]
 type = internal/cpu
@@ -163,7 +164,7 @@ label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
-interface = wlp1s0
+interface = wlan0
 interval = 3.0
 
 format-connected = <ramp-signal>
@@ -221,11 +222,16 @@ label-padding = 2
 type = internal/pulseaudio
 
 format-volume = <label-volume> <bar-volume>
-label-volume = VOL %percentage%%
+format-volume-padding = 1
+label-volume =  %percentage%%
 label-volume-foreground = ${root.foreground}
 
-label-muted = m muted
-label-muted-foreground = #666
+; label-muted = m muted
+label-muted = 
+; label-muted-foreground = #666
+format-muted-foreground = #f0949d
+format-muted-padding = 2
+format-muted-background = #bf616a
 
 bar-volume-width = 10
 bar-volume-foreground-0 = #55aa55
@@ -236,13 +242,17 @@ bar-volume-foreground-4 = #55aa55
 bar-volume-foreground-5 = #f5a70a
 bar-volume-foreground-6 = #ff5555
 bar-volume-gradient = false
-bar-volume-indicator = |
+bar-volume-indicator =
+; bar-volume-indicator = |
 bar-volume-indicator-font = 2
-bar-volume-fill = ─
+; bar-volume-fill = ─
+bar-volume-fill = •
 bar-volume-fill-font = 2
-bar-volume-empty = ─
+; bar-volume-empty = ─
+bar-volume-empty = •
 bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground}
+; bar-volume-empty-foreground = ${colors.foreground}
+bar-volume-empty-foreground = ${colors.background-alt}
 
 [module/alsa]
 type = internal/alsa

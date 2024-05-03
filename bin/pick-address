@@ -7,13 +7,13 @@ bitcoin=(
 )
 
 bitcoin_testnet=(
+  "mmizX66rU546AD6A5BBd7qKoyBKBwJWD4h\0icon\x1fbitcoin"
   "n4VQ5YdHf7hLQ2gWQYYrcxoE5B7nWuDFNF\0icon\x1fbitcoin"
   "2N2K39Qp2BqezHBqzvCRNoQzMGK3XMnYrXU\0icon\x1fbitcoin"
   "tb1qvtykjg2warrgh2ala5qxvpenkt4k6kkssjgpdg\0icon\x1fbitcoin"
 )
 
 ethereum=(
-  "0xe5e428cbb93a218dad2c908f2f3e2f46575d91a5\0icon\x1fethereumwallet"
   "0x4F10eb44cC069e8052832a7A841b0e3B758Ff8cF\0icon\x1fethereumwallet"
   "0x5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f\0icon\x1fethereumwallet"
   "0x1f6f76467c4379121ca73d1abada452e7b94aa71\0icon\x1fethereumwallet"
@@ -26,7 +26,7 @@ ropsten=(
 )
 
 cardano=(
-  "addr1v95sf69jcfhnmknvffwmfvlvnccatqwfjcyh0nlfc6gh5scta2yzg"
+  "addr1v95sf69jcfhnmknvffwmfvlvnccatqwfjcyh0nlfc6gh5scta2yzg\0icon\x1fmoneydance"
 )
 
 xrp=(
@@ -36,7 +36,7 @@ xrp=(
 )
 
 tezos=(
-  "tz1aiA3JtWw1hPTmmc9uyXK4boY2EjbRCPQ6"
+  "tz1aiA3JtWw1hPTmmc9uyXK4boY2EjbRCPQ6\0icon\x1fmoneydance"
 )
 
 IFS=$'\n'
@@ -46,9 +46,9 @@ Bitcoin\0icon\x1fbitcoin
 Bitcoin (testnet)\0icon\x1fbitcoin
 Ethereum\0icon\x1fethereumwallet
 Ethereum (ropsten)\0icon\x1fethereumwallet
-Ripple\0icon\x1fethereumwallet
-Cardano\0icon\x1fethereumwallet
-Tezos\0icon\x1fethereumwallet" | rofi -i -dmenu -format i:s)
+Ripple\0icon\x1fmoneydance
+Cardano\0icon\x1fmoneydance
+Tezos\0icon\x1fmoneydance" | rofi -icon-theme "Papirus" -i -dmenu -format i:s)
 
 [[ "$currency" == "" ]] && exit 0
 
@@ -61,7 +61,7 @@ list=""
 [[ "$currency" == "5:Cardano" ]] && list="${cardano[*]}"
 [[ "$currency" == "6:Tezos" ]] && list="${tezos[*]}"
 
-addr=$(echo -e "$list" | rofi -i -dmenu -format i:s)
+addr=$(echo -e "$list" | rofi -icon-theme "Papirus" -i -dmenu -format i:s)
 
 [[ "$addr" == "" ]] && exit 0
 
