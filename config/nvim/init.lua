@@ -191,6 +191,15 @@ require("lazy").setup({
     },
   },
 
+  -- show async jobs
+  {
+    "j-hui/fidget.nvim",
+    tag = "legacy",
+    config = function()
+      require('fidget').setup({})
+    end
+  },
+
   -- git signs in gutter
   { "lewis6991/gitsigns.nvim", opts = {} },
 
@@ -223,17 +232,6 @@ require("lazy").setup({
   },
 
   -- lint
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-      local null_ls = require('null-ls')
-      null_ls.setup({
-        sources = {
-          null_ls.builtins.diagnostics.shellcheck,
-        },
-      })
-    end
-  },
   {
     "MunifTanjim/eslint.nvim",
     config = function()
@@ -269,7 +267,13 @@ require("lazy").setup({
     config = function()
       local ts_configs = require('nvim-treesitter.configs')
       ts_configs.setup({
-        ensure_installed = { 'lua', 'python', 'rust', 'typescript', 'help' },
+        ensure_installed = {
+          'lua',
+          'python',
+          'rust',
+          'typescript',
+          'help',
+        },
         highlight = { enable = true },
         indent = { enable = false },
         incremental_selection = {
@@ -375,15 +379,11 @@ require("lazy").setup({
   { "aklt/plantuml-syntax" },
 
   -- LSP
-  {
-    "lukas-reineke/lsp-format.nvim",
-    config = function()
-      require("lsp-format").setup()
-    end
-  },
-  { "williamboman/mason.nvim" },
+  { "lukas-reineke/lsp-format.nvim", priority = 100 },
+  { "williamboman/mason.nvim", priority = 100 },
   {
     "williamboman/mason-lspconfig.nvim",
+    priority = 100,
     config = function()
       require('mason').setup()
       require('mason-lspconfig').setup({
@@ -392,15 +392,8 @@ require("lazy").setup({
     end
   },
   {
-    "j-hui/fidget.nvim",
-    tag = "legacy",
-    priority = 10,
-    config = function()
-      require('fidget').setup({})
-    end
-  },
-  {
     "neovim/nvim-lspconfig",
+    priority = 50,
     config = function()
       local lspconfig = require('lspconfig')
       local servers = {
@@ -516,35 +509,6 @@ require("lazy").setup({
         sources = {
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
-        },
-      })
-    end
-  },
-
-  -- distraction-free mode
-  {
-    "folke/zen-mode.nvim",
-    config = function()
-      require('zen-mode').setup({
-        window = {
-          backdrop = 0.95, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
-          -- height and width can be:
-          -- * an absolute number of cells when > 1
-          -- * a percentage of the width / height of the editor when <= 1
-          -- * a function that returns the width or the height
-          width = 80, -- width of the Zen window
-          -- height = 1, -- height of the Zen window
-          -- by default, no options are changed for the Zen window
-          -- uncomment any of the options below, or add other vim.wo options you want to apply
-          options = {
-            signcolumn = "no", -- disable signcolumn
-            number = false, -- disable number column
-            relativenumber = false, -- disable relative numbers
-            -- cursorline = false, -- disable cursorline
-            -- cursorcolumn = false, -- disable cursor column
-            -- foldcolumn = "0", -- disable fold column
-            -- list = false, -- disable whitespace characters
-          },
         },
       })
     end
