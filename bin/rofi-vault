@@ -27,8 +27,6 @@ function probe () {
 VPN_ENABLED=$(pgrep -a 'openvpn$' &>/dev/null && echo "1" || echo "0")
 VPN_VERB=$([[ "$VPN_ENABLED" = "1" ]] && echo "Stop" || echo "Start")
 
-JIRA_COMMAND="JIRA ticket\0icon\x1fplexmediamanager"
-
 # kubeContext=$(kubectl config current-context | cut -d '/' -f 2)
 
 # SWITCH_COMMAND=""
@@ -41,7 +39,6 @@ JIRA_COMMAND="JIRA ticket\0icon\x1fplexmediamanager"
 VPN_COMMAND="$VPN_VERB VPN\0icon\x1fpreferences-certificates"
 
 choice=$(echo -e "\
-$JIRA_COMMAND
 $VPN_COMMAND
 " \
   | awk 'NF' | rofi -i -dmenu -format s -theme-str "entry { placeholder: \" => \";}")
@@ -66,13 +63,4 @@ elif [[ "$choice" = "Stop VPN" ]]; then
     "VPN Stopped" \
     -i "$HOME/dotfiles/assets/icons/512x512/guitar.png"
 
-# JIRA ticket
-# ===========
-elif [[ "$choice" = "JIRA ticket" ]]; then
-  issueTypeStr=$(printf "Story\0icon\x1fpencil\nBug\0icon\x1fpencil" | rofi -i -dmenu -format s -theme-str "entry { placeholder: \" => Issue type \";}")
-  issueType=10001 # story
-  if [[ "$issueTypeStr" = "Bug" ]]; then
-    issueType=10004 # bug
-  fi
-  google-chrome-stable "https://ledgerhq.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=10104&issuetype=${issueType}&summary=&customfield_10332=10932"
 fi
