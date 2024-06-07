@@ -1,5 +1,14 @@
 [
   {
+    "name": "Ethereum",
+    "icon": "ethereumwallet",
+    "addresses": [
+      "0x4F10eb44cC069e8052832a7A841b0e3B758Ff8cF",
+      "0x5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f",
+      "0x1f6f76467c4379121ca73d1abada452e7b94aa71"
+    ]
+  },
+  {
     "name": "Bitcoin",
     "icon": "bitcoin",
     "addresses": [
@@ -19,27 +28,9 @@
     ]
   },
   {
-    "name": "Ethereum",
-    "icon": "ethereumwallet",
-    "addresses": [
-      "0x4F10eb44cC069e8052832a7A841b0e3B758Ff8cF",
-      "0x5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f",
-      "0x1f6f76467c4379121ca73d1abada452e7b94aa71"
-    ]
-  },
-  {
     "name": "Cardano",
     "icon": "moneydance",
     "addresses": ["addr1v95sf69jcfhnmknvffwmfvlvnccatqwfjcyh0nlfc6gh5scta2yzg"]
-  },
-  {
-    "name": "Ripple",
-    "icon": "face-laugh",
-    "addresses": [
-      "r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV",
-      "rupiah7aqR5k1xBaTRRFu3VrwcDftD6VV",
-      "rEWoXTmxwqqnPdYqtVEuoRgJXARXxf21Sn"
-    ]
   },
   {
     "name": "Tezos",
@@ -50,5 +41,14 @@
     "name": "Solana",
     "icon": "moneydance",
     "addresses": ["CMNyyCXkAQ5cfFS2zQEg6YPzd8fpHvMFbbbmUfjoPp1s"]
+  },
+  {
+    "name": "Ripple",
+    "icon": "face-laugh",
+    "addresses": [
+      "r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV",
+      "rupiah7aqR5k1xBaTRRFu3VrwcDftD6VV",
+      "rEWoXTmxwqqnPdYqtVEuoRgJXARXxf21Sn"
+    ]
   }
 ]
