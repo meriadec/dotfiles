@@ -4,9 +4,9 @@
 
 configuration {
 /*	modi: "window,run,ssh";*/
- font: "Fira Code 16";
+ font: "Berkeley Mono 16";
   location: 2;
-  yoffset: 33;
+  yoffset: 32;
   xoffset: 32;
   fixed-num-lines: false;
   show-icons: true;
@@ -209,12 +209,12 @@ configuration {
 #window {
     width: 600px;
     background-color: @background;
-    border: 4px solid 2px solid 2px solid 2px solid;
+    border: 5px solid 3px solid 3px solid 3px solid;
     padding: 0;
 }
 
 #mainbox {
-    border: 0 solid 3px solid 3px solid 3px solid;
+    border: 0 solid 2px solid 2px solid 2px solid;
     border-color: @nord1;
     padding: 0;
 }
@@ -236,7 +236,7 @@ configuration {
 
 #listview {
     fixed-height: 0;
-    padding:	  5 0 0;
+    padding: 0 2px 2px 2px;
     spacing:      5px ;
     layout: vertical;
     columns: 1;
@@ -245,10 +245,10 @@ configuration {
 }
 
 #element {
-    border:  1px 0 1px 0;
+    border:  2px 2px 2px 2px;
     border-color: transparent;
     padding: 10px;
-    border-radius: 0;
+    border-radius: 3px;
 }
 
 #element-icon {

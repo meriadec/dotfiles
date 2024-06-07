@@ -1,74 +1,21 @@
 #!/bin/bash
 
-bitcoin=(
-  "1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX\0icon\x1fbitcoin"
-  "3DB5T1FbE86UHWvCQjZmHR7zFw7mBMFtVL\0icon\x1fbitcoin"
-  "1JUToCyRL5UwgeucjnFAagKs4v1YqhjT1d\0icon\x1fbitcoin"
-)
+set -euo pipefail
 
-bitcoin_testnet=(
-  "mmizX66rU546AD6A5BBd7qKoyBKBwJWD4h\0icon\x1fbitcoin"
-  "n4VQ5YdHf7hLQ2gWQYYrcxoE5B7nWuDFNF\0icon\x1fbitcoin"
-  "2N2K39Qp2BqezHBqzvCRNoQzMGK3XMnYrXU\0icon\x1fbitcoin"
-  "tb1qvtykjg2warrgh2ala5qxvpenkt4k6kkssjgpdg\0icon\x1fbitcoin"
-)
+# grab currency
+currencyChoice=$(echo -e "$(cat ~/bin/addresses.json | jq -r 'map(.name + "\\0icon\\x1f" + .icon) | join("\n")')" \
+  | rofi -icon-theme "Papirus" -i -dmenu -format i:s)
+[[ "$currencyChoice" == "" ]] && exit 0
 
-ethereum=(
-  "0x4F10eb44cC069e8052832a7A841b0e3B758Ff8cF\0icon\x1fethereumwallet"
-  "0x5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f\0icon\x1fethereumwallet"
-  "0x1f6f76467c4379121ca73d1abada452e7b94aa71\0icon\x1fethereumwallet"
-)
+# grab address
+currencyIndex=$(echo "$currencyChoice" | cut -d : -f 1)
+icon=$(cat ~/bin/addresses.json |jq -r '.['"$currencyIndex"'].icon')
+addresses=$(cat ~/bin/addresses.json |jq -r '.['"$currencyIndex"'].addresses | map(. + "\\0icon\\x1f" + "'"$icon"'") | join("\n")')
+addressChoice=$(echo -e "$addresses" | rofi -icon-theme "Papirus" -i -dmenu -format i:s)
+[[ "$addressChoice" == "" ]] && exit 0
 
-ropsten=(
-  "0x7B724C24A2e76f6b7156F77F1753293987A8b81f\0icon\x1fethereumwallet"
-  "0xD7a15BAEB7EA05C9660CBe03fB7999c2C2e57625\0icon\x1fethereumwallet"
-  "0x687422eEA2cB73B5d3e242bA5456b782919AFc85\0icon\x1fethereumwallet"
-)
-
-cardano=(
-  "addr1v95sf69jcfhnmknvffwmfvlvnccatqwfjcyh0nlfc6gh5scta2yzg\0icon\x1fmoneydance"
-)
-
-xrp=(
-  "r3kmLJN5D28dHuH8vZNUZpMC43pEHpaocV\0icon\x1fface-laugh"
-  "rupiah7aqR5k1xBaTRRFu3VrwcDftD6VV\0icon\x1fface-laugh"
-  "rEWoXTmxwqqnPdYqtVEuoRgJXARXxf21Sn\0icon\x1fface-laugh"
-)
-
-tezos=(
-  "tz1aiA3JtWw1hPTmmc9uyXK4boY2EjbRCPQ6\0icon\x1fmoneydance"
-)
-
-solana=(
-  "CMNyyCXkAQ5cfFS2zQEg6YPzd8fpHvMFbbbmUfjoPp1s\0icon\x1fmoneydance"
-)
-
-IFS=$'\n'
-
-currency=$(echo -e "\
-Bitcoin\0icon\x1fbitcoin
-Bitcoin (testnet)\0icon\x1fbitcoin
-Ethereum\0icon\x1fethereumwallet
-Ethereum (ropsten)\0icon\x1fethereumwallet
-Ripple\0icon\x1fmoneydance
-Cardano\0icon\x1fmoneydance
-Solana\0icon\x1fmoneydance
-Tezos\0icon\x1fmoneydance" | rofi -icon-theme "Papirus" -i -dmenu -format i:s)
-
-[[ "$currency" == "" ]] && exit 0
-
-list=""
-[[ "$currency" == "0:Bitcoin" ]] && list="${bitcoin[*]}"
-[[ "$currency" == "1:Bitcoin (testnet)" ]] && list="${bitcoin_testnet[*]}"
-[[ "$currency" == "2:Ethereum" ]] && list="${ethereum[*]}"
-[[ "$currency" == "3:Ethereum (ropsten)" ]] && list="${ropsten[*]}"
-[[ "$currency" == "4:Ripple" ]] && list="${xrp[*]}"
-[[ "$currency" == "5:Cardano" ]] && list="${cardano[*]}"
-[[ "$currency" == "6:Solana" ]] && list="${solana[*]}"
-[[ "$currency" == "7:Tezos" ]] && list="${tezos[*]}"
-
-addr=$(echo -e "$list" | rofi -icon-theme "Papirus" -i -dmenu -format i:s)
-
-[[ "$addr" == "" ]] && exit 0
-
-echo "$addr" | cut -d : -f 2 | tr -d '\n' | xclip -selection clipboard
+# collect value and put it in clipboard
+echo $addressChoice \
+  | cut -d : -f 2 \
+  | tr -d '\n' \
+  | xclip -selection clipboard
