@@ -114,7 +114,8 @@ alias unscaffold='git config --local user.name meriadec && git config --local us
 
 # misc
 alias vimup="vim +'PlugUpgrade|PlugInstall|PlugUpdate|qa!'"
-alias plop="notify-send -u critical -t 999999999 --hint string:image-path:/home/meri/dotfiles/assets/rick-square.png Heeeeeey"
+alias plop="notify-send -u critical -t 999999999 Heeeeeey"
+# alias plop="notify-send -u critical -t 999999999 --hint string:image-path:/home/meri/dotfiles/assets/icons/lightbulb.png Heeeeeey"
 alias sss="killall slack ; (slack >/dev/null 2>/dev/null &)"
 
 # random

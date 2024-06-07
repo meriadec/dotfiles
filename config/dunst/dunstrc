@@ -30,10 +30,10 @@
     height = 300
 
     # Position the notification in the top right corner
-    origin = bottom-right
+    origin = top-right
 
     # Offset from the origin
-    offset = 15x15
+    offset = 15x50
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -73,20 +73,20 @@
     # Draw a line of "separator_height" pixel height between two
     # notifications.
     # Set to 0 to disable.
-    separator_height = 3
+    separator_height = 1
 
     # Padding between text and separator.
-    padding = 24
+    padding = 16
 
     # Horizontal padding.
-    horizontal_padding = 24
+    horizontal_padding = 16
 
     # Padding between text and icon.
     text_icon_padding = 0
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 1
+    frame_width = 2
 
     # Defines color of the frame around the notification window.
     frame_color = "#21262e"
@@ -111,11 +111,12 @@
 
     ### Text ###
 
-    font = Fira Code Retina 12
+    font = Berkeley Mono 11
+    # font = Fira Code Retina 12
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
-    line_height = 10
+    line_height = 5
 
     # Possible values are:
     # full: Allow a small subset of html markup in notifications:
@@ -294,27 +295,29 @@
     # Otherwise the "#" and following would be interpreted as a comment.
     background = "#333A47"
     foreground = "#ffffff"
+    frame_color = "#3b4251"
     timeout = 5
     # Icon for notifications with low urgency, uncomment to enable
-    #icon = /path/to/icon
-    # icon = /usr/share/icons/HighContrast/256x256/emotes/face-angel.png
+    icon = /home/meri/dotfiles/assets/icons/computer-2.png
 
 [urgency_normal]
-    background = "#333A47"
+    background = "#4C566A"
     foreground = "#ffffff"
+    frame_color = "#69778e"
     progress_bar = true
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
-    icon = ~/knotify.png
+    icon = /home/meri/dotfiles/assets/icons/computer-3.png
 
 [urgency_critical]
-    background = "#374351"
+    background = "#b8644a"
     foreground = "#ffffff"
-    frame_color = "#3E3038"
-    frame_color = "#21262e"
+    frame_color = "#d08770"
+    # frame_color = "#3E3038"
+    # frame_color = "#21262e"
     timeout = 0
     # Icon for notifications with critical urgency, uncomment to enable
-    icon = /usr/share/icons/HighContrast/256x256/emotes/face-angel.png
+    icon = /home/meri/dotfiles/assets/icons/computer.png
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.

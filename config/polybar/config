@@ -24,10 +24,13 @@ line-size = 0
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = Fira Code:pixelsize=12;4
-font-1 = Hurmit Nerd Font Mono:pixelsize=18;6
-font-2 = Fira Code:pixelsize=10;4
+font-0 = Berkeley Mono:pixelsize=9;4
+; font-0 = Fira Code:pixelsize=12;4
+font-1 = Hurmit Nerd Font Mono:pixelsize=15;6
+; font-2 = Fira Code:pixelsize=10;4
+font-2 = Berkeley Mono:pixelsize=9;4
 font-3 = meri:pixelsize=12;4
+font-4 = Symbol Nerd Font:pixelsize=18;6
 
 modules-left = i3
 modules-center = vpn-openvpn-status kube-context
@@ -115,7 +118,7 @@ enable-scroll = true
 [module/xbacklight]
 type = internal/xbacklight
 
-format = <label>  <bar>
+format = <label> <bar>
 label = 
 
 bar-width = 5
@@ -164,11 +167,12 @@ label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
-interface = wlan0
+interface = wlan2
+; interface = wlan0
 interval = 3.0
 
 format-connected = <ramp-signal>
-format-connected-padding = 2
+format-connected-padding = 1
 format-connected-underline = #9f78e1
 ; label-connected = %essid%
 
@@ -223,24 +227,27 @@ type = internal/pulseaudio
 
 format-volume = <label-volume> <bar-volume>
 format-volume-padding = 1
-label-volume =  %percentage%%
+label-volume = 
+; label-volume =  %percentage%%
 label-volume-foreground = ${root.foreground}
 
 ; label-muted = m muted
 label-muted = 
 ; label-muted-foreground = #666
 format-muted-foreground = #f0949d
-format-muted-padding = 2
+format-muted-padding = 0
 format-muted-background = #bf616a
 
-bar-volume-width = 10
+bar-volume-width = 5
 bar-volume-foreground-0 = #55aa55
 bar-volume-foreground-1 = #55aa55
 bar-volume-foreground-2 = #55aa55
 bar-volume-foreground-3 = #55aa55
 bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
+; bar-volume-foreground-5 = #55aa55
+; bar-volume-foreground-6 = #55aa55
+; bar-volume-foreground-5 = #f5a70a
+; bar-volume-foreground-6 = #ff5555
 bar-volume-gradient = false
 bar-volume-indicator =
 ; bar-volume-indicator = |

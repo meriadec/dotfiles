@@ -39,6 +39,10 @@ tezos=(
   "tz1aiA3JtWw1hPTmmc9uyXK4boY2EjbRCPQ6\0icon\x1fmoneydance"
 )
 
+solana=(
+  "CMNyyCXkAQ5cfFS2zQEg6YPzd8fpHvMFbbbmUfjoPp1s\0icon\x1fmoneydance"
+)
+
 IFS=$'\n'
 
 currency=$(echo -e "\
@@ -48,6 +52,7 @@ Ethereum\0icon\x1fethereumwallet
 Ethereum (ropsten)\0icon\x1fethereumwallet
 Ripple\0icon\x1fmoneydance
 Cardano\0icon\x1fmoneydance
+Solana\0icon\x1fmoneydance
 Tezos\0icon\x1fmoneydance" | rofi -icon-theme "Papirus" -i -dmenu -format i:s)
 
 [[ "$currency" == "" ]] && exit 0
@@ -59,7 +64,8 @@ list=""
 [[ "$currency" == "3:Ethereum (ropsten)" ]] && list="${ropsten[*]}"
 [[ "$currency" == "4:Ripple" ]] && list="${xrp[*]}"
 [[ "$currency" == "5:Cardano" ]] && list="${cardano[*]}"
-[[ "$currency" == "6:Tezos" ]] && list="${tezos[*]}"
+[[ "$currency" == "6:Solana" ]] && list="${solana[*]}"
+[[ "$currency" == "7:Tezos" ]] && list="${tezos[*]}"
 
 addr=$(echo -e "$list" | rofi -icon-theme "Papirus" -i -dmenu -format i:s)
 

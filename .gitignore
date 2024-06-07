@@ -12,3 +12,5 @@
 /bin/helm-docs
 /bin/k9s
 /bin/kubectl
+
+/assets/fonts/berkeley-mono/
