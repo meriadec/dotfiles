@@ -296,18 +296,25 @@
     background = "#333A47"
     foreground = "#ffffff"
     frame_color = "#3b4251"
+
     timeout = 5
     # Icon for notifications with low urgency, uncomment to enable
-    icon = /home/meri/dotfiles/assets/icons/computer-2.png
+    icon = /home/meri/dotfiles/assets/icons/computer-3.png
 
 [urgency_normal]
-    background = "#4C566A"
+    # this is a bit too visible
+    # background = "#4C566A"
+    # foreground = "#ffffff"
+    # frame_color = "#69778e"
+
+    background = "#333A47"
     foreground = "#ffffff"
-    frame_color = "#69778e"
+    frame_color = "#3b4251"
+
     progress_bar = true
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
-    icon = /home/meri/dotfiles/assets/icons/computer-3.png
+    icon = /home/meri/dotfiles/assets/icons/computer-2.png
 
 [urgency_critical]
     background = "#b8644a"
