@@ -85,6 +85,7 @@ alias rrf='cd ~/ledger/revault/packages/front'
 alias as='cd ~/astroquirks/astroquirks-front'
 alias aq='cd ~/astroquirks'
 alias ggg='cd ~/git/gambit-genius'
+alias b='cd ~/git/blog'
 
 # ledger env
 alias vf="cd ~/ledger/ledger-vault-front"
