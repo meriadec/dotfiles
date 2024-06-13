@@ -1,0 +1,31 @@
+#!/bin/env bash
+
+set -euo pipefail
+
+# extract the output file name and remove it from args
+OUTPUT_FILE="${@: -1}"
+set -- "${@:1:$(($#-1))}"
+
+# eventually get options
+ORIENTATION="+append"
+for option in "$@"; do
+  if [[ "$option" == "-v" ]]; then
+    ORIENTATION="-append"
+    shift;
+  fi
+done
+
+ALL_IMAGES=""
+
+# add shadows to each image
+for img in "$@"; do
+  TMP_NAME="/tmp/$img-shadow.png"
+  ALL_IMAGES="$ALL_IMAGES $TMP_NAME"
+  magick "$img" \( +clone -background '#000' -shadow 60x10+0+0 \) -background '#fff' +swap -layers merge "$TMP_NAME"
+done
+
+magick $ALL_IMAGES $ORIENTATION -bordercolor '#fff' -border 20x20 "$OUTPUT_FILE"
+
+bold=$(tput bold)
+normal=$(tput sgr0)
+echo "✅ Result saved in ${bold}${OUTPUT_FILE}${normal}"

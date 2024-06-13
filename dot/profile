@@ -9,6 +9,8 @@ export VAULT_WORKSPACE_DIR=$HOME/ledger
 
 export AWS_PROFILE=sandbox
 
+export GTK_THEME=Adwaita-dark
+
 export KUBECONFIG=$HOME/.kube/config
 
 # node-gyp build using all cores

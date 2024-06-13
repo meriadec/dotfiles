@@ -432,6 +432,7 @@ require("lazy").setup({
         settings = {
           languages = {
             json = { prettier },
+            mdx = { prettier },
             conf = { prettier },
             prisma = { prettier },
             typescript = { prettier },

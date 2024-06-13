@@ -53,6 +53,7 @@ bindsym $mod+c                    exec google-chrome-stable
 bindsym $mod+e                    exec "ksnip -e $(/bin/ls /home/meri -1th | head -n ${1-1})"
 bindsym $mod+BackSpace            exec ~/bin/pick-address
 bindsym $mod+w                    exec ~/bin/rofi-vault
+bindsym $mod+l                    exec rofi -modi emoji -show emoji
 bindsym $mod+r                    exec rofi -show drun
 
 bindsym $mod+h                    focus left
