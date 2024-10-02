@@ -2,8 +2,9 @@
 
 set -euo pipefail
 
-ARN=arn:aws:iam::737219370090:mfa/stuff
+# ARN=arn:aws:iam::737219370090:mfa/stuff
 # ARN=arn:aws:iam::454902641012:mfa/meriadec.pillet
+ARN=arn:aws:iam::364737596256:mfa/meriadec.pillet
 
 TOKEN=$1
 PROFILE=$2

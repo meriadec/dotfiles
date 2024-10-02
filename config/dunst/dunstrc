@@ -60,6 +60,8 @@
     # Set the maximum width for the progress bar
     progress_bar_max_width = 500
 
+    progress_bar_corner_radius = 4
+
 
     # Show how many messages are currently hidden (because of
     # notification_limit).
@@ -296,6 +298,7 @@
     background = "#333A47"
     foreground = "#ffffff"
     frame_color = "#3b4251"
+    highlight = "#ebcb8b"
 
     timeout = 5
     # Icon for notifications with low urgency, uncomment to enable
@@ -310,6 +313,7 @@
     background = "#333A47"
     foreground = "#ffffff"
     frame_color = "#3b4251"
+    highlight = "#ebcb8b"
 
     progress_bar = true
     timeout = 10
@@ -320,6 +324,7 @@
     background = "#b8644a"
     foreground = "#ffffff"
     frame_color = "#d08770"
+    highlight = "#ebcb8b"
     # frame_color = "#3E3038"
     # frame_color = "#21262e"
     timeout = 0

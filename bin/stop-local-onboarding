@@ -1,0 +1,12 @@
+#!/bin/env bash
+
+currentContext=$(kubectl config current-context)
+if [[ "$currentContext" != "k3d-local" ]]; then
+  notify-send -u critical "Nope!" "Need to be on k3d-local cluster"
+  exit 0
+fi
+
+killall kubectl || true
+helm uninstall minivault
+
+notify-send "Stop local onboarding" "Done!"

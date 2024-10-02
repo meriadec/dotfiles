@@ -83,10 +83,15 @@ alias min="cd ~/git/minus"
 alias dl='cd ~/Downloads'
 alias rr='cd ~/ledger/revault'
 alias rra='cd ~/ledger/revault/packages/api'
+alias rru='cd ~/ledger/revault/packages/ui'
+alias rrd='cd ~/ledger/revault/packages/docs'
+alias rro='cd ~/ledger/revault/packages/onboarding'
+alias rrb='cd ~/ledger/revault/packages/backoffice'
 alias rrf='cd ~/ledger/revault/packages/front'
 alias as='cd ~/astroquirks/astroquirks-front'
 alias aq='cd ~/astroquirks'
 alias ggg='cd ~/git/gambit-genius'
+alias sp='cd ~/git/split'
 alias b='cd ~/git/blog'
 
 # ledger env
@@ -99,6 +104,7 @@ alias m="cd ~/ledger/minivault"
 alias a="cd ~/ledger/vault-automation"
 alias gu="cd ~/ledger/vault-guide"
 alias re="cd ~/ledger/vault-remote"
+alias sa="cd ~/ledger/sre-argocd"
 
 # git
 alias gd='git diff'

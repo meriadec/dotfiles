@@ -1,0 +1,13 @@
+#!/bin/env bash
+
+set -euo pipefail
+
+cd ~/ledger/ledger-venv
+source ./bin/activate
+
+python -m ledgerblue.hostOnboard \
+  --id 0 \
+  --pin 5555 \
+  --words "$1" \
+  --prefix "" \
+  --passphrase ""

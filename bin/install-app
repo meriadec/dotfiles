@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+TMP_FOLDER=$(mktemp -d)
+cp $1 $TMP_FOLDER
+cd $TMP_FOLDER
+tar -xzf *
+source /home/meri/ledger/ledger-venv/bin/activate
+python3 -m ledgerblue.loadApp --targetId 0x33200004 \
+  --targetVersion="" \
+  --apiLevel 21 \
+  --fileName $(pwd)/bin/app.hex \
+  --appName "Vault App" \
+  --appFlags 0x200 \
+  --delete \
+  --tlv \
+  --dataSize $((0x`cat $(pwd)/debug/app.map | grep _envram_data | tr -s ' ' | cut -f2 -d' ' |cut -f2 -d'x' ` - 0x`cat $(pwd)/debug/app.map | grep _nvram_data | tr -s ' ' | cut -f2 -d' ' | cut -f2 -d'x'`)) \
+  --installparamsSize $((0x`cat $(pwd)/debug/app.map | grep _einstall_parameters | tr -s ' ' | cut -f2 -d' ' |cut -f2 -d'x'` - 0x`cat $(pwd)/debug/app.map | grep _install_parameters | tr -s ' ' | cut -f2 -d' ' |cut -f2 -d'x'`))

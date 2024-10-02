@@ -37,9 +37,13 @@ VPN_VERB=$([[ "$VPN_ENABLED" = "1" ]] && echo "Stop" || echo "Start")
 # fi
 
 VPN_COMMAND="$VPN_VERB VPN\0icon\x1fpreferences-certificates"
+START_ONBOARDING_COMMAND="Start local onboarding\0icon\x1fcom.gexperts.Terminix"
+STOP_ONBOARDING_COMMAND="Stop local onboarding\0icon\x1fcom.gexperts.Terminix"
 
 choice=$(echo -e "\
 $VPN_COMMAND
+$START_ONBOARDING_COMMAND
+$STOP_ONBOARDING_COMMAND
 " \
   | awk 'NF' | rofi -i -dmenu -format s -theme-str "entry { placeholder: \" => \";}")
 
@@ -63,4 +67,13 @@ elif [[ "$choice" = "Stop VPN" ]]; then
     "VPN Stopped" \
     -i "$HOME/dotfiles/assets/icons/512x512/guitar.png"
 
+# Start local onboarding
+# ======================
+elif [[ "$choice" = "Start local onboarding" ]]; then
+  ~/bin/start-local-onboarding
+
+# Stop local onboarding
+# =====================
+elif [[ "$choice" = "Stop local onboarding" ]]; then
+  ~/bin/stop-local-onboarding
 fi

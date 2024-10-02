@@ -1,0 +1,22 @@
+#!/bin/env bash
+
+VAULT_HSM_ENDPOINT=$1
+
+if [[ "$VAULT_HSM_ENDPOINT" == "" ]]; then
+  echo "Usage: get-elfs-versions <hsm-endpoint>"
+  exit 1
+fi
+
+docker run \
+  -e VAULT_HSM_ENDPOINT="$VAULT_HSM_ENDPOINT" \
+  -v $VAULT_HSM_CLIENT_CERT_PATH:/cert.p12 \
+  -e VAULT_HSM_CLIENT_CERT_PATH=/cert.p12 \
+  -e VAULT_HSM_CLIENT_CERT_PWD=$VAULT_HSM_CLIENT_CERT_PWD \
+  ghcr.io/ledgerhq/vault-scripts/vault-scripts:1.2.4 \
+  elfs \
+  | rg filename \
+  | rg dave \
+  | rg -v variant \
+  | sed -E 's/.*_([^"]+)".*/\1/g' \
+  | sort -n \
+  | uniq

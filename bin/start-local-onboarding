@@ -1,0 +1,41 @@
+#!/bin/env bash
+
+set -euxo pipefail
+
+currentContext=$(kubectl config current-context)
+if [[ "$currentContext" != "k3d-local" ]]; then
+  notify-send -u critical "Nope!" "Need to be on k3d-local cluster"
+  exit 0
+fi
+
+NID=$(notify-send -t 60000 -p -h int:value:0 "Deploy local onboarding" "Starting...")
+killall kubectl || true
+cd ~/ledger/minivault
+
+notify-send -t 60000 -r $NID -h int:value:20 "Deploy local onboarding" "Installing minivault..."
+helm uninstall minivault || true
+helm install minivault . -f values-revault-onboarding.yaml --set hsm.compartmentID=$VAULT_COMPARTMENT_ID --wait
+
+notify-send -t 60000 -r $NID -h int:value:40 "Deploy local onboarding" "Launching port forward..."
+(kubectl port-forward deployments/hsm-driver 9100:9100 &) \
+  && (kubectl port-forward deployments/device-api 5001:5001 &) \
+  && (kubectl port-forward deployments/postgres 5432:5432 &)
+wait
+sleep 3
+
+notify-send -t 60000 -r $NID -h int:value:60 "Deploy local onboarding" "Initializing database..."
+cd ~/ledger/revault/packages/api
+pnpm prisma db push
+
+notify-send -t 60000 -r $NID -h int:value:80 "Deploy local onboarding" "Initializing onboarding..."
+onboardingId=$(curl -X POST \
+  -H 'x-revault-root-token: foo' \
+  -H 'Content-Type: application/json' http://localhost:3000/rest/onboarding \
+  --data '{
+     "workspaceName": "minivault",
+     "compartmentId": 706,
+     "hsmScriptsVersion": "14.1.0-dave+59494f87"
+   }' | jq -r '.id')
+
+notify-send -r $NID "Deploy local onboarding" "Done!"
+google-chrome-stable "http://localhost:5173/$onboardingId"
