@@ -106,6 +106,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- grep command with quicklist
+vim.api.nvim_command("set grepprg=rg\\ --vimgrep\\ --no-heading\\ --smart-case") -- use rg for :grep/lgrep
+vim.keymap.set('n', "<M-p>", ":cprev<CR>") -- previous in quickfix list
+vim.keymap.set('n', "<M-n>", ":cnext<CR>") -- next in quickfix list
+
 -- LSP attach handler
 local on_attach = function(_, bufnr)
   local nmap = function(keys, func, desc)
