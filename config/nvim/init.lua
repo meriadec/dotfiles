@@ -343,6 +343,11 @@ require("lazy").setup({
             },
           },
         },
+        pickers = {
+          find_files = {
+            previewer = false,  -- Disable the file previewer for find_files picker (usually bound to <C-p>)
+          },
+        },
       })
 
       vim.keymap.set('n', '<C-p>', ts_builtin.find_files, { desc = '[S]earch [F]iles' })

@@ -24,6 +24,8 @@ export GPG_TTY=$(tty)
 
 # dev
 
+export SAML2AWS_KEYRING_BACKEND=pass
+
 export GOPATH=$HOME/dev/go
 export BOLOS_ENV=$HOME/bolos
 export BOLOS_SDK=$HOME/git/nanos-secure-sdk

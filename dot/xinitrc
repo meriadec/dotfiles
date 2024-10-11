@@ -6,6 +6,9 @@ setxkbmap -option compose:ralt
 xset r rate 150 200
 xset -b
 
+xrandr --output HDMI2 --mode 1920x1080
+xinput set-prop 'Lenovo Bluetooth Mouse' 'libinput Accel Speed' -0.5
+
 xrdb merge ~/.Xresources
 eval "$(ssh-agent)"
 
