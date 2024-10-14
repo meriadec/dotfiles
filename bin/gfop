@@ -7,5 +7,5 @@ BRANCHES=$(git fetch origin --prune 2>&1 | rg '\[deleted\]' | awk '{ print $5 }'
 if [[ "$BRANCHES" == "" ]]; then
   echo "No branches to delete"
 else
-  git branch -D $BRANCHES 2>&1
+  git branch -D $BRANCHES 2>&1 | rg -v '^error: ' || true
 fi
