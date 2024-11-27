@@ -145,7 +145,7 @@ local lsp_servers = {
   'bashls',
   'efm',
   'rust_analyzer',
-  'tsserver',
+  'ts_ls',
   'gopls',
   'tailwindcss',
 }
@@ -382,7 +382,7 @@ require("lazy").setup({
       local lspconfig = require('lspconfig')
       local servers = {
         'rust_analyzer',
-        'tsserver',
+        'ts_ls',
         'eslint',
         'gopls',
         'tailwindcss',
@@ -398,7 +398,7 @@ require("lazy").setup({
       }
 
       for _, lsp in ipairs(servers) do
-        if lsp == 'tsserver' then
+        if lsp == 'ts_ls' then
           lspconfig[lsp].setup {
             on_attach = on_attach,
             capabilities = capabilities,

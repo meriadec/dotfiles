@@ -5,3 +5,5 @@ bind main R !git rebase -i %(commit)^
 bind diff R !git rebase -i %(commit)^
 
 set ignore-case = smart-case
+set main-view-author-display = full
+set main-view-date-display = custom

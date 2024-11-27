@@ -14,7 +14,7 @@ cd ~/ledger/minivault
 
 notify-send -t 60000 -r $NID -h int:value:20 "Deploy local onboarding" "Installing minivault..."
 helm uninstall minivault || true
-helm install minivault . -f values-revault-onboarding.yaml --set hsm.compartmentID=$VAULT_COMPARTMENT_ID --wait
+helm install minivault . -f values-revault-onboarding-minimal.yaml --set hsm.compartmentID=$VAULT_COMPARTMENT_ID --wait
 
 notify-send -t 60000 -r $NID -h int:value:40 "Deploy local onboarding" "Launching port forward..."
 (kubectl port-forward deployments/hsm-driver 9100:9100 &) \
@@ -34,7 +34,7 @@ onboardingId=$(curl -X POST \
   --data '{
      "workspaceName": "minivault",
      "compartmentId": 706,
-     "hsmScriptsVersion": "14.1.0-dave+59494f87"
+     "hsmScriptsVersion": "16.0.2-dave+31c88414"
    }' | jq -r '.id')
 
 notify-send -r $NID "Deploy local onboarding" "Done!"
