@@ -96,6 +96,7 @@ source "$HOME/.path"
 source "$HOME/.gitprompt"
 source "$HOME/.prompt"
 source "$HOME/.private"
+source "$HOME/.env"
 
 # pnpm
 export PNPM_HOME="/home/meri/.local/share/pnpm"

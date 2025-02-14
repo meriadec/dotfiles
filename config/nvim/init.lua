@@ -131,7 +131,12 @@ local on_attach = function(_, bufnr)
 
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     if vim.lsp.buf.format then
-      vim.lsp.buf.format()
+      -- vim.lsp.buf.format()
+      vim.lsp.buf.format({
+        filter = function(client)
+          return client.name ~= "eslint"
+        end,
+      })
     elseif vim.lsp.buf.formatting then
       vim.lsp.buf.formatting()
     end
@@ -418,6 +423,7 @@ require("lazy").setup({
         settings = {
           languages = {
             json = { prettier },
+            jsonc = { prettier },
             markdown = { prettier },
             mdx = { prettier },
             conf = { prettier },
@@ -496,7 +502,7 @@ require("lazy").setup({
         },
         sources = {
           { name = 'nvim_lsp' },
-          { name = 'luasnip' },
+          -- { name = 'luasnip' },
         },
       })
     end

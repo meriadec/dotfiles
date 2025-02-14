@@ -2,15 +2,4 @@
 
 set -euo pipefail
 
-# ARN=arn:aws:iam::737219370090:mfa/stuff
-# ARN=arn:aws:iam::454902641012:mfa/meriadec.pillet
-ARN=arn:aws:iam::364737596256:mfa/meriadec.pillet
-
-TOKEN=$1
-PROFILE=$2
-# echo -n "Enter 2FA code: "
-# read TOKEN
-
-AWS_TOKEN=$(aws sts get-session-token --serial-number "$ARN" --token-code "$TOKEN" --profile "$PROFILE")
-
-echo "$AWS_TOKEN" | jq -r '.Credentials |["AWS_ACCESS_KEY_ID=\(.AccessKeyId)", "AWS_SECRET_ACCESS_KEY=\(.SecretAccessKey)", "AWS_SESSION_TOKEN=\(.SessionToken)"] | "export " + .[]'
+saml2aws login --cache-saml --skip-prompt -a "ledger$1"
