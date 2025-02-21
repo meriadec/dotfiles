@@ -34,8 +34,7 @@ font-4 = Symbol Nerd Font:pixelsize=18;6
 
 modules-left = i3
 modules-center = vpn-openvpn-status kube-context
-modules-right = github wlan xbacklight pulseaudio battery date
-; modules-right = github cryptoeth crypto wlan xbacklight pulseaudio battery date
+modules-right = github cryptoeth crypto wlan xbacklight pulseaudio battery date
 
 ;tray-position = center
 ;tray-detached = false
@@ -138,7 +137,7 @@ format-padding = 2
 type = custom/script
 format-background = ${colors.background-dark}
 label-padding-left = 2
-label-padding-right = 2
+label-padding-right = 0
 format = <label>
 label = " %{T3}%output%%{T-}"
 exec = curl -s -u meriadec:$GH_TOKEN https://api.github.com/notifications | jq '. | length'

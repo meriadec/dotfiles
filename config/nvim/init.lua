@@ -436,12 +436,6 @@ require("lazy").setup({
           },
         },
       })
-
-      lspconfig.flow.setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-        filetypes = {"javascript", "javascriptreact"}
-      })
     end
   },
 

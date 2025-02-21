@@ -1,10 +1,4 @@
 #!/bin/bash
 
-echo "$(
-  curl --silent https://api.coindesk.com/v1/bpi/currentprice.json \
-    | jq '.bpi.EUR.rate' \
-    | tr -d '"' \
-    | tr -d ',' \
-    | cut -d '.' -f 1 \
-    | xargs printf "%'.f"
-) EUR"
+PRICE=$(curl -s 'https://countervalues.live.ledger.com/v3/spot/simple?froms=bitcoin&to=EUR' | jq '.bitcoin|round')
+printf "%'.0f EUR\n" "$PRICE"
