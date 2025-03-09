@@ -213,6 +213,9 @@ require("lazy").setup({
   -- git signs in gutter
   { "lewis6991/gitsigns.nvim", opts = {} },
 
+  -- git stuff
+  { "tpope/vim-fugitive" },
+
   -- emmet
   {
     "mattn/emmet-vim",
