@@ -88,6 +88,7 @@ alias min="cd ~/git/minus"
 alias dl='cd ~/Downloads'
 alias rr='cd ~/ledger/revault'
 alias rra='cd ~/ledger/revault/packages/api'
+alias rre='cd ~/ledger/revault/packages/e2e'
 alias rrs='cd ~/ledger/revault/packages/sdk'
 alias rrc='cd ~/ledger/revault/packages/cli'
 alias rru='cd ~/ledger/revault/packages/ui'
