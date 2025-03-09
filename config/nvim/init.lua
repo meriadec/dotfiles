@@ -412,6 +412,21 @@ require("lazy").setup({
             capabilities = capabilities,
             filetypes = {"typescript", "typescriptreact", "typescript.tsx", "javascript"}
           }
+        elseif lsp == 'tailwindcss' then
+          lspconfig[lsp].setup {
+            on_attach = on_attach,
+            capabilities = capabilities,
+            settings = {
+              tailwindCSS = {
+                experimental = {
+                  classRegex = {
+                    { "cva\\(((?:[^()]|\\([^()]*\\))*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+                    { "cn\\(((?:[^()]|\\([^()]*\\))*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" }
+                  },
+                },
+              },
+            },
+          }
         else
           lspconfig[lsp].setup {
             on_attach = on_attach,
