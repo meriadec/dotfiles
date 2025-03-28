@@ -400,7 +400,7 @@ require("lazy").setup({
       capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
       local prettier = {
-        -- formatCommand = 'biome format --stdin-file-path=${INPUT}',
+        -- formatCommand = 'biome format --stdin-file-path=${INPUT} && biome check --fix --unsafe --stdin-file-path=${INPUT}',
         formatCommand = 'prettierd "${INPUT}"',
         formatStdin = true,
       }
