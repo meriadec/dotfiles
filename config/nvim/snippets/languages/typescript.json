@@ -1,0 +1,41 @@
+{
+  "log": {
+    "prefix": "log",
+    "body": ["console.log($1);$0"]
+  },
+  "af": {
+    "prefix": "af",
+    "body": ["($1) => {", "  $0", "}"]
+  },
+  "imp": {
+    "prefix": "imp",
+    "body": ["import $1 from \"$2\";$0"]
+  },
+  "rc": {
+    "prefix": "rc",
+    "body": [
+      "const $1 = () => {",
+      "  return (",
+      "    <div>$0</div>",
+      "  );",
+      "}",
+      "",
+      "export default $1;"
+    ]
+  },
+  "rcc": {
+    "prefix": "rcc",
+    "body": [
+      "type Props = {",
+      "};",
+      "",
+      "const $1 = (props: Props) => {",
+      "  return (",
+      "    <div>$0</div>",
+      "  );",
+      "}",
+      "",
+      "export default $1;"
+    ]
+  }
+}
