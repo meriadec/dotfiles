@@ -100,7 +100,6 @@ source "$HOME/.env"
 
 # pnpm
 export PNPM_HOME="/home/meri/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
 
 #    --------------------------------------------------------------------------#
 # => bindings                                                                  #

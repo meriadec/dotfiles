@@ -3,6 +3,10 @@
     "prefix": "log",
     "body": ["console.log($1);$0"]
   },
+  "destructure": {
+    "prefix": "d",
+    "body": ["const { $1 } = ${2:props};$0"]
+  },
   "af": {
     "prefix": "af",
     "body": ["($1) => {", "  $0", "}"]

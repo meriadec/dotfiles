@@ -3,10 +3,15 @@ vim.keymap.set({ 'n', 'v' }, '-', '<Nop>', { silent = true })
 
 -- Dvorak buffer navigation
 vim.keymap.set('n', '<Space>', '<NOP>')
-vim.keymap.set('n', '<Space>h', ':wincmd h<CR>')
-vim.keymap.set('n', '<Space>t', ':wincmd j<CR>')
-vim.keymap.set('n', '<Space>n', ':wincmd k<CR>')
-vim.keymap.set('n', '<Space>s', ':wincmd l<CR>')
+vim.keymap.set('n', '<Space>h', '<C-w>h')
+vim.keymap.set('n', '<Space>t', '<C-w>j')
+vim.keymap.set('n', '<Space>s', '<C-w>l')
+vim.keymap.set('n', '<Space>n', '<C-w>k')
+
+-- vim.keymap.set('n', '<Space>h', ':wincmd h<CR>')
+-- vim.keymap.set('n', '<Space>t', ':wincmd j<CR>')
+-- vim.keymap.set('n', '<Space>n', ':wincmd k<CR>')
+-- vim.keymap.set('n', '<Space>s', ':wincmd l<CR>')
 
 -- Diagnostic navigation
 vim.keymap.set('n', '<leader>N', function()

@@ -14,9 +14,6 @@ docker run \
   -e VAULT_HSM_CLIENT_CERT_PWD=$VAULT_HSM_CLIENT_CERT_PWD \
   ghcr.io/ledgerhq/vault-scripts/vault-scripts:1.2.4 \
   elfs \
-  | rg filename \
-  | rg dave \
-  | rg -v variant \
-  | sed -E 's/.*_([^"]+)".*/\1/g' \
-  | sort -n \
+  | jq -r 'map("\(.manifest.version.major).\(.manifest.version.minor).\(.manifest.version.patch)-\(.manifest.version.prerelease)+\(.manifest.version.build)") | join("\n")' \
+  | sort \
   | uniq
