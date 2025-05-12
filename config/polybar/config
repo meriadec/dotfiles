@@ -168,7 +168,7 @@ label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
-interface = wlan2
+interface = wlan0
 ; interface = wlan0
 interval = 3.0
 

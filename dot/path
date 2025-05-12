@@ -28,8 +28,8 @@ PATH=$PATH:$HOME/.bun/bin
 PATH=$PATH:$HOME/.proto/bin
 
 # ...
-# PATH=$PATH:./node_modules/.bin
-# PATH=$PATH:../../node_modules/.bin
+PATH=$PATH:./node_modules/.bin
+PATH=$PATH:../../node_modules/.bin
 
 # pnpm
 PATH=$PATH:$PNPM_HOME
