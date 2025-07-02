@@ -1,6 +1,6 @@
 systemctl --user import-environment DISPLAY
 
-setxkbmap dvp
+setxkbmap -layout us -variant dvp
 setxkbmap -option compose:ralt
 
 xset r rate 150 200
