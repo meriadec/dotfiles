@@ -31,10 +31,10 @@ return {
             return
           end
           if vim.tbl_contains({ 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }, vim.bo.filetype) then
-            if should_use_eslint() then
-              lint.try_lint 'eslint_d'
-            elseif should_use_biome() then
+            if should_use_biome() then
               lint.try_lint 'biomejs'
+            elseif should_use_eslint() then
+              lint.try_lint 'eslint_d'
             end
           else
             lint.try_lint()
