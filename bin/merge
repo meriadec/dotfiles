@@ -8,11 +8,12 @@ set -- "${@:1:$(($#-1))}"
 
 # eventually get options
 ORIENTATION="+append"
+USE_BORDER_ONLY=false
 for option in "$@"; do
-  if [[ "$option" == "-v" ]]; then
-    ORIENTATION="-append"
-    shift;
-  fi
+  case "$option" in
+    -v) ORIENTATION="-append"; shift;;
+    -b) USE_BORDER_ONLY=true; shift;;
+  esac
 done
 
 ALL_IMAGES=""
@@ -21,7 +22,12 @@ ALL_IMAGES=""
 for img in "$@"; do
   TMP_NAME="/tmp/$img-shadow.png"
   ALL_IMAGES="$ALL_IMAGES $TMP_NAME"
-  magick "$img" \( +clone -background '#000' -shadow 60x10+0+0 \) -background '#fff' +swap -layers merge "$TMP_NAME"
+  if $USE_BORDER_ONLY; then
+    magick "$img" -bordercolor '#ccc' -border 1 -bordercolor '#fff' -border 20 "$TMP_NAME"
+  else
+    magick "$img" \( +clone -background '#000' -shadow 60x10+0+0 \) \
+      -background '#fff' +swap -layers merge "$TMP_NAME"
+  fi
 done
 
 magick $ALL_IMAGES $ORIENTATION -bordercolor '#fff' -border 20x20 "$OUTPUT_FILE"
