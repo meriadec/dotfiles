@@ -7,19 +7,46 @@ return {
       local lint = require 'lint'
       lint.linters_by_ft = {}
 
+      local function project_has_file(names)
+        local buf = vim.api.nvim_buf_get_name(0)
+        local dir = buf ~= '' and vim.fs.dirname(buf) or vim.fn.getcwd()
+        if not dir or dir == '' then
+          return false
+        end
+
+        local uv = vim.uv or vim.loop
+        local visited = {}
+
+        while dir and dir ~= '' and not visited[dir] do
+          visited[dir] = true
+          for _, name in ipairs(names) do
+            if uv.fs_stat(dir .. '/' .. name) then
+              return true
+            end
+          end
+          local parent = vim.fs.dirname(dir)
+          if not parent or parent == dir then
+            break
+          end
+          dir = parent
+        end
+
+        return false
+      end
+
       local function should_use_eslint()
-        local cwd = vim.fn.getcwd()
-        return vim.fn.filereadable(cwd .. '/.eslintrc') == 1
-          or vim.fn.filereadable(cwd .. '/.eslintrc.js') == 1
-          or vim.fn.filereadable(cwd .. '/.eslintrc.cjs') == 1
-          or vim.fn.filereadable(cwd .. '/eslint.config.js') == 1
-          or vim.fn.filereadable(cwd .. '/eslint.config.mjs') == 1
-          or vim.fn.filereadable(cwd .. '/eslint.config.cjs') == 1
+        return project_has_file {
+          '.eslintrc',
+          '.eslintrc.js',
+          '.eslintrc.cjs',
+          'eslint.config.js',
+          'eslint.config.mjs',
+          'eslint.config.cjs',
+        }
       end
 
       local function should_use_biome()
-        local cwd = vim.fn.getcwd()
-        return vim.fn.filereadable(cwd .. '/biome.json') == 1
+        return project_has_file { 'biome.json' }
       end
 
       -- Create autocommand which carries out the actual linting on the specified events.

@@ -43,8 +43,14 @@ return {
     local luasnip = require 'luasnip'
     local lspkind = require 'lspkind'
     luasnip.config.setup {}
+    vim.api.nvim_set_hl(0, 'MyWinBg', { bg = '#22262f' })
 
     cmp.setup {
+      window = {
+        documentation = {
+          winhighlight = 'Normal:MyWinBg',
+        },
+      },
       formatting = {
         format = lspkind.cmp_format {
           mode = 'symbol', -- options: 'text', 'symbol', 'symbol_text'

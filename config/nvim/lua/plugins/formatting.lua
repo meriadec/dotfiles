@@ -73,8 +73,11 @@ return {
         -- javascriptreact = { 'biome', 'prettierd', stop_after_first = true },
         -- typescript = { 'biome', 'prettierd', stop_after_first = true },
         -- typescriptreact = { 'biome', 'prettierd', stop_after_first = true },
+
+        -- AWESOME AUTO FORMAT
         typescript = { 'biome_check_write_unsafe', 'biome_format_write' },
         typescriptreact = { 'biome_check_write_unsafe', 'biome_format_write' },
+
         json = { 'biome', 'prettierd', stop_after_first = true },
         markdown = { 'prettierd', stop_after_first = true },
       },
