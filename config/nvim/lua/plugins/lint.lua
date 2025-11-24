@@ -46,7 +46,7 @@ return {
       end
 
       local function should_use_biome()
-        return project_has_file { 'biome.json' }
+        return project_has_file { 'biome.json', 'biome.jsonc' }
       end
 
       -- Create autocommand which carries out the actual linting on the specified events.

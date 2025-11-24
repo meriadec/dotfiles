@@ -11,6 +11,10 @@
     "prefix": "af",
     "body": ["($1) => {", "  $0", "}"]
   },
+  "aff": {
+    "prefix": "aff",
+    "body": ["($1) => {", "  $0", "}, []"]
+  },
   "imp": {
     "prefix": "imp",
     "body": ["import $1 from \"$2\";$0"]

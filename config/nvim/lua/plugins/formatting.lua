@@ -69,8 +69,9 @@ return {
         -- You can use 'stop_after_first' to run the first available formatter from the list
         prisma = { 'prettierd', stop_after_first = true },
         css = { 'biome', 'prettierd', stop_after_first = true },
-        -- javascript = { 'biome', 'prettierd', stop_after_first = true },
-        -- javascriptreact = { 'biome', 'prettierd', stop_after_first = true },
+        jsonc = { 'biome', 'prettierd', stop_after_first = true },
+
+        -- SOFT AUTO FORMAT
         -- typescript = { 'biome', 'prettierd', stop_after_first = true },
         -- typescriptreact = { 'biome', 'prettierd', stop_after_first = true },
 
