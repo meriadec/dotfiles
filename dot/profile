@@ -22,12 +22,17 @@ alias pbpaste='xsel -ob'
 alias prof='vim ~/.profile && sprof'
 alias sprof='source ~/.profile'
 
+alias tree='tree --gitignore'
+
 alias pdfjoin='pdfjam --fitpaper true --suffix joined'
 
 alias rg='rg --hidden'
 alias curl='curl -s'
 
 alias pf="fzf --reverse --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+
+# always use bun runtime
+alias bun='bun --bun'
 
 # hehe
 alias vim=nvim
@@ -98,6 +103,7 @@ alias rrdo='cd ~/ledger/revault/packages/docs'
 alias rro='cd ~/ledger/revault/packages/onboarding'
 alias rrb='cd ~/ledger/revault/packages/backoffice'
 alias rrm='cd ~/ledger/revault/packages/mobile'
+alias rrmi='cd ~/ledger/revault/packages/minibake'
 alias rrw='cd ~/ledger/revault/packages/web'
 alias rep='cd ~/ledger/vault-test-reports'
 alias mm='cd ~/ledger/les-multisig'
@@ -107,6 +113,7 @@ alias mme='cd ~/ledger/les-multisig/packages/e2e'
 alias mmc='cd ~/ledger/les-multisig/packages/core'
 alias ggg='cd ~/git/gambit-genius'
 alias sp='cd ~/git/split'
+alias spp='cd ~/git/split-refined'
 alias b='cd ~/git/blog'
 
 # ledger env

@@ -71,9 +71,9 @@ return {
         css = { 'biome', 'prettierd', stop_after_first = true },
         jsonc = { 'biome', 'prettierd', stop_after_first = true },
 
-        -- SOFT AUTO FORMAT
-        -- typescript = { 'biome', 'prettierd', stop_after_first = true },
-        -- typescriptreact = { 'biome', 'prettierd', stop_after_first = true },
+        -- PRETTIER AUTO FORMAT
+        -- typescript = { 'prettierd', stop_after_first = true },
+        -- typescriptreact = { 'prettierd', stop_after_first = true },
 
         -- AWESOME AUTO FORMAT
         typescript = { 'biome_check_write_unsafe', 'biome_format_write' },
