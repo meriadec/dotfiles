@@ -25,7 +25,7 @@ PATH=$PATH:$GOPATH/bin
 PATH=$PATH:$HOME/.bun/bin
 
 # proto
-PATH=$PATH:$HOME/.proto/bin
+# PATH=$PATH:$HOME/.proto/bin
 
 # ...
 PATH=$PATH:./node_modules/.bin

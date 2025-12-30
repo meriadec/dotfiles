@@ -15,3 +15,6 @@ XF86MonBrightnessDown
 
 "VAL=`cat /sys/class/backlight/intel_backlight/brightness` ; NEW_VAL=$(($VAL + 100)) ; echo $NEW_VAL > /sys/class/backlight/intel_backlight/brightness"
 XF86MonBrightnessUp
+
+"sh -lc 'bash /home/meri/bin/screenshot'"
+  b:10

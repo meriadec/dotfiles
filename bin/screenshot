@@ -1,0 +1,3 @@
+#!/bin/env bash
+
+maim -d 0.5 -s "$HOME/$(date +%s).png"

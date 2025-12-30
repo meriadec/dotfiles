@@ -36,6 +36,7 @@ alias bun='bun --bun'
 
 # hehe
 alias vim=nvim
+alias novim="vim -u NONE"
 alias vmi=vim
 alias ivm=vim
 alias vi=vim
