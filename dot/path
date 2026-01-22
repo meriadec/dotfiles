@@ -37,6 +37,9 @@ PATH=$PATH:$PNPM_HOME
 # lol..
 PATH=$PATH:$HOME/endorsement/bin
 
+# opencode
+PATH=$PATH:$HOME/.opencode/bin
+
 PATH=$PATH:$HOME/bin
 PATH=$PATH:$HOME/.local/bin
 PATH=$PATH:$HOME/.yarn/bin

@@ -16,6 +16,12 @@ addressChoice=$(echo -e "$addresses" | rofi -icon-theme "Papirus" -i -dmenu -for
 
 # collect value and put it in clipboard
 echo $addressChoice \
-  | cut -d : -f 2 \
+  | sed -E 's/^[^:]+://g' \
   | tr -d '\n' \
   | xclip -selection clipboard
+#
+# # collect value and put it in clipboard
+# echo $addressChoice \
+#   | cut -d : -f 2 \
+#   | tr -d '\n' \
+#   | xclip -selection clipboard

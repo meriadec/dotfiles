@@ -57,5 +57,20 @@
       "rupiah7aqR5k1xBaTRRFu3VrwcDftD6VV",
       "rEWoXTmxwqqnPdYqtVEuoRgJXARXxf21Sn"
     ]
+  },
+  {
+    "name": "SUI",
+    "icon": "face-laugh",
+    "addresses": [
+      "0x766ff1061aaad7241d1a8ebeadced7b3f7bd3c5f12dfd7a0e49bb1684855eb11",
+      "0xb03cf01c05be3abe2e6cf2599b9505b2cd1373777557b1b93eef18ffb8482864"
+    ]
+  },
+  {
+    "name": "Canton",
+    "icon": "face-laugh",
+    "addresses": [
+      "ldg::1220a3bff2efe79a3df1e6764bc4c9283cf212db43a0b6fd9216dc8ef85052fbc924"
+    ]
   }
 ]
