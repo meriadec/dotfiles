@@ -1,0 +1,1 @@
+- When asked for PR summary, **always** output escaped markdown so that I can copy and paste it directly.
