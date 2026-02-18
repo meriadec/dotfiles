@@ -100,7 +100,7 @@ return {
         settings = {
           Lua = {
             completion = {
-              callSnippet = 'Replace',
+              callSnippet = 'Disable',
             },
             diagnostics = {
               disable = { 'missing-fields' },

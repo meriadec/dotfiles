@@ -48,6 +48,7 @@ alias dockre=docker
 alias dcokre=docker
 
 alias k=kubectl
+alias oc=opencode
 
 # `ls` thoughts
 function lh () {
