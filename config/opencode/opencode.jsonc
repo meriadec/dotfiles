@@ -1,6 +1,4 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  // Theme configuration
-  "theme": "nord",
   "autoupdate": true
 }
