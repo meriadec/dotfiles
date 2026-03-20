@@ -12,6 +12,9 @@ PATH=''
 # Shitty Python thing
 PATH=$PATH:$HOME/.pyenv/shims
 
+# devcontainers
+PATH=$PATH:$HOME/.devcontainers/bin
+
 # gif generation
 PATH=$PATH:$HOME/git/gifgen
 
