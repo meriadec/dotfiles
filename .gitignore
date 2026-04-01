@@ -12,6 +12,7 @@
 /bin/helm-docs
 /bin/k9s
 /bin/kubectl
+/bin/daytona
 
 /assets/fonts/berkeley-mono/
 .uuid
