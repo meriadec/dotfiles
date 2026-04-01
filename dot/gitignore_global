@@ -5,3 +5,4 @@ local-ci.log
 yarn-error.log
 .yalc
 yalc.lock
+.claude/settings.local.json

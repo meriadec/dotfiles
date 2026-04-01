@@ -12,6 +12,9 @@ PATH=''
 # Shitty Python thing
 PATH=$PATH:$HOME/.pyenv/shims
 
+# Temporal
+PATH="$PATH:$HOME/.temporalio/bin"
+
 # devcontainers
 PATH=$PATH:$HOME/.devcontainers/bin
 
