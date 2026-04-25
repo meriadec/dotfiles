@@ -2,20 +2,21 @@
 
 return {
   'nvim-treesitter/nvim-treesitter',
+  branch = 'main',
+  lazy = false,
+  build = ':TSUpdate',
   dependencies = {
     'neoclide/jsonc.vim',
   },
-  build = ':TSUpdate',
-  main = 'nvim-treesitter.configs', -- Sets main module to use for opts
-  -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-  opts = {
-    ensure_installed = {
+  config = function()
+    require('nvim-treesitter').install({
       'bash',
       'c',
       'diff',
       'html',
       'javascript',
       'jsonc',
+      'latex',
       'lua',
       'luadoc',
       'markdown',
@@ -25,10 +26,14 @@ return {
       'typescript',
       'vim',
       'vimdoc',
-    },
-    -- Autoinstall languages that are not installed
-    auto_install = true,
-    highlight = { enable = true },
-    indent = { enable = true, disable = {} },
-  },
+    })
+
+    vim.api.nvim_create_autocmd('FileType', {
+      callback = function(args)
+        if pcall(vim.treesitter.start) then
+          vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
+      end,
+    })
+  end,
 }
