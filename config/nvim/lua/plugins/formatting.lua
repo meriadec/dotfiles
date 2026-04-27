@@ -16,6 +16,13 @@ return {
   },
   opts = function()
     local util = require 'conform.util'
+
+    local function has_oxlint_config(bufnr)
+      local fname = vim.api.nvim_buf_get_name(bufnr or 0)
+      local start = fname ~= '' and vim.fs.dirname(fname) or vim.fn.getcwd()
+      return vim.fs.find('oxlint.config.ts', { upward = true, path = start })[1] ~= nil
+    end
+
     return {
       notify_on_error = false,
       format_on_save = function(bufnr)
@@ -76,8 +83,18 @@ return {
         -- typescriptreact = { 'prettierd', stop_after_first = true },
 
         -- AWESOME AUTO FORMAT
-        typescript = { 'biome_check_write_unsafe', 'biome_format_write' },
-        typescriptreact = { 'biome_check_write_unsafe', 'biome_format_write' },
+        typescript = function(bufnr)
+          if has_oxlint_config(bufnr) then
+            return { 'oxfmt' }
+          end
+          return { 'biome_check_write_unsafe', 'biome_format_write' }
+        end,
+        typescriptreact = function(bufnr)
+          if has_oxlint_config(bufnr) then
+            return { 'oxfmt' }
+          end
+          return { 'biome_check_write_unsafe', 'biome_format_write' }
+        end,
 
         json = { 'biome', 'prettierd', stop_after_first = true },
         markdown = { 'prettierd', stop_after_first = true },

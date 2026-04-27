@@ -9,13 +9,12 @@ return {
     'neoclide/jsonc.vim',
   },
   config = function()
-    require('nvim-treesitter').install({
+    require('nvim-treesitter').install {
       'bash',
       'c',
       'diff',
       'html',
       'javascript',
-      'jsonc',
       'latex',
       'lua',
       'luadoc',
@@ -26,7 +25,7 @@ return {
       'typescript',
       'vim',
       'vimdoc',
-    })
+    }
 
     vim.api.nvim_create_autocmd('FileType', {
       callback = function(args)

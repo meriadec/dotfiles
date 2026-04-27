@@ -58,6 +58,10 @@ return {
             return
           end
           if vim.tbl_contains({ 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' }, vim.bo.filetype) then
+            -- In oxlint projects, the oxlint LSP server provides diagnostics — skip nvim-lint.
+            if project_has_file { 'oxlint.config.ts' } then
+              return
+            end
             if should_use_biome() then
               lint.try_lint 'biomejs'
             elseif should_use_eslint() then

@@ -86,6 +86,16 @@ return {
     --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
     --  - settings (table): Override the default settings passed when initializing the server.
 
+    -- Attach oxlint LSP only when project has oxlint.config.ts at (or above) the buffer.
+    local function oxlint_root_dir(bufnr, on_dir)
+      local fname = vim.api.nvim_buf_get_name(bufnr)
+      local start = fname ~= '' and vim.fs.dirname(fname) or vim.fn.getcwd()
+      local found = vim.fs.find('oxlint.config.ts', { upward = true, path = start })[1]
+      if found then
+        on_dir(vim.fs.dirname(found))
+      end
+    end
+
     local servers = {
       tsgo = {
         settings = {
@@ -95,6 +105,9 @@ return {
             },
           },
         },
+      },
+      oxlint = {
+        root_dir = oxlint_root_dir,
       },
       lua_ls = {
         settings = {
