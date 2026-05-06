@@ -98,6 +98,13 @@ return {
 
     local servers = {
       tsgo = {
+        -- Keep TypeScript navigation/completion/code actions, but let oxlint own diagnostics.
+        handlers = {
+          ['textDocument/publishDiagnostics'] = function() end,
+        },
+        on_attach = function(client)
+          client.server_capabilities.diagnosticProvider = nil
+        end,
         settings = {
           typescript = {
             preferences = {
