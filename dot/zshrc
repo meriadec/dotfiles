@@ -130,4 +130,7 @@ bindkey "^X$" wrap
 bindkey "^X\<" wrapProcess
 
 # bun completions
-[ -s "/home/meri/.bun/_bun" ] && source "/home/meri/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# wt completion
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
