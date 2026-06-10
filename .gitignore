@@ -13,6 +13,7 @@
 /bin/k9s
 /bin/kubectl
 /bin/daytona
+/bin/cloudflared
 
 /assets/fonts/berkeley-mono/
 .uuid
