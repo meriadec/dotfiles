@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ $# -ne 0 ]]; then
+  echo "Usage: clone" >&2
+  exit 2
+fi
+
+if ! command -v kitty >/dev/null 2>&1; then
+  echo "clone: kitty not found in PATH" >&2
+  exit 127
+fi
+
+exec kitty --detach --working-directory "$PWD"
