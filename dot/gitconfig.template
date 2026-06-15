@@ -26,3 +26,11 @@
 
 [advice]
   skippedCherryPicks = false
+
+[init]
+  defaultBranch = main
+[rerere]
+  enabled = true
+  autoUpdate = true
+[rebase]
+  updateRefs = true

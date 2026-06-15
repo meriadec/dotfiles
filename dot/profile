@@ -18,6 +18,8 @@ export JOBS=max
 
 alias pbpaste='xsel -ob'
 
+alias s='wt switch'
+
 # let .profile manage .profile
 alias prof='vim ~/.profile && sprof'
 alias sprof='source ~/.profile'
@@ -109,6 +111,7 @@ alias rrmi='cd ~/ledger/revault/packages/minibake'
 alias rrw='cd ~/ledger/revault/packages/web'
 alias rep='cd ~/ledger/vault-test-reports'
 alias mm='cd ~/ledger/les-multisig'
+alias mmm='cd ~/ledger/minibar'
 alias pe='cd ~/ledger/perps-live-app'
 alias pri='cd ~/ledger/prism'
 alias mb='cd ~/ledger/minibar'
