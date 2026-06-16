@@ -1,5 +1,6 @@
 return {
   'github/copilot.vim',
+  enabled = false,
   config = function()
     -- remap accept completion to <C-J> because <tab> is used for normal completion (e.g LSP)
     vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
