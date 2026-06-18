@@ -64,13 +64,21 @@ source "$ZSH/oh-my-zsh.sh"
 source "$HOME/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 #    --------------------------------------------------------------------------#
+# => mise                                                                      #
+#    --------------------------------------------------------------------------#
+
+if [ -x "$HOME/.local/bin/mise" ]; then
+  eval "$("$HOME/.local/bin/mise" activate zsh)"
+fi
+
+#    --------------------------------------------------------------------------#
 # => fzf                                                                       #
 #    --------------------------------------------------------------------------#
 
-FZF_HOME=/usr/share/fzf
-
-source "$FZF_HOME/completion.zsh"
-source "$FZF_HOME/key-bindings.zsh"
+# fzf installed via mise provides shell integration through `fzf --zsh`
+if command -v fzf >/dev/null 2>&1; then
+  eval "$(fzf --zsh)" 2>/dev/null
+fi
 
 export FZF_DEFAULT_COMMAND='rg -g !.git/ --hidden --files --follow'
 export FZF_CTRL_T_COMMAND='rg --files --follow 2>/dev/null'
