@@ -1,4 +1,22 @@
-systemctl --user import-environment DISPLAY
+#!/bin/sh
+
+# Make X11/i3 session details visible to DBus-activated user services.
+# Electron apps such as Slack query xdg-desktop-portal during startup; if
+# xdg-desktop-portal-gtk is started without DISPLAY/XAUTHORITY, it hangs until
+# DBus times out, adding ~25s to app startup.
+export DISPLAY="${DISPLAY:-:0}"
+export XAUTHORITY="${XAUTHORITY:-$HOME/.Xauthority}"
+export XDG_CURRENT_DESKTOP=i3
+export XDG_SESSION_DESKTOP=i3
+export XDG_SESSION_TYPE=x11
+
+if command -v systemctl >/dev/null 2>&1; then
+  systemctl --user import-environment DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE
+fi
+
+if command -v dbus-update-activation-environment >/dev/null 2>&1; then
+  dbus-update-activation-environment --systemd DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP XDG_SESSION_TYPE
+fi
 
 setxkbmap -layout us -variant dvp
 setxkbmap -option compose:ralt
@@ -6,16 +24,22 @@ setxkbmap -option compose:ralt
 xset r rate 150 200
 xset -b
 
-xrandr --output HDMI2 --mode 2048x1152
-xinput set-button-map 6 1 2 3 4 5 6 7 10 11 12 13 14 15 16 17 18 19 20
-xinput set-prop "6" "libinput Accel Profile Enabled" 0 1 0
+# xrandr --output HDMI2 --mode 2048x1152
+# xinput set-button-map 6 1 2 3 4 5 6 7 10 11 12 13 14 15 16 17 18 19 20
+# xinput set-prop "6" "libinput Accel Profile Enabled" 0 1 0
 xbindkeys
 
 xrdb merge ~/.Xresources
-eval "$(ssh-agent)"
+# eval "$(ssh-agent)"
 
 feh --bg-scale ~/dotfiles/assets/images/bg.png
 
 exec picom &
+
+# Migration-safe default: laptop panel only.
+# Prevent terminals/windows from appearing on an external output during early i3 testing.
+if command -v xrandr >/dev/null 2>&1; then
+  xrandr --output eDP --auto --primary --output DisplayPort-1 --off
+fi
 
 exec i3

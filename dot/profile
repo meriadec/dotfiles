@@ -1,32 +1,16 @@
 #!/bin/zsh
 
-export ZAVATTA='192.99.2.67'
-export CAVERN='91.121.143.211'
-export JOBS=max
-
-export VAULT_INTEGRATION_PATH=$HOME/ledger/vault-integration
-export VAULT_WORKSPACE_DIR=$HOME/ledger
-
-export AWS_PROFILE=sandbox
-
 export GTK_THEME=Adwaita-dark
 
 export KUBECONFIG=$HOME/.kube/config
 
-# node-gyp build using all cores
-export JOBS=max
-
-alias pbpaste='xsel -ob'
-
 alias s='wt switch'
 
 # let .profile manage .profile
-alias prof='vim ~/.profile && sprof'
 alias sprof='source ~/.profile'
+alias prof='vim ~/.profile && sprof'
 
 alias tree='tree --gitignore'
-
-alias pdfjoin='pdfjam --fitpaper true --suffix joined'
 
 alias rg='rg --hidden'
 alias curl='curl -s'
@@ -156,23 +140,12 @@ alias scaffold='git config --local user.name TheScaffolder && git config --local
 alias unscaffold='git config --local user.name meriadec && git config --local user.email meriadec.pillet@gmail.com && git commit --amend --author "meriadec <meriadec.pillet@gmail.com>" && git config --local --unset user.email && git config --local --unset user.name'
 
 # misc
-alias vimup="vim +'PlugUpgrade|PlugInstall|PlugUpdate|qa!'"
 alias plop="notify-send -u critical -t 999999999 Heeeeeey"
-# alias plop="notify-send -u critical -t 999999999 --hint string:image-path:/home/meri/dotfiles/assets/icons/lightbulb.png Heeeeeey"
-alias sss="killall slack ; (slack >/dev/null 2>/dev/null &)"
 
 # random
-alias public-ip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias dump='xsel -o | less'
 alias g=$BROWSER
-alias hdcast='ffcast -s ffmpeg -f x11grab -framerate 60 -s %s -i %D+%c -c:v libx264rgb -crf 0 -preset ultrafast'
 alias bye='shutdown now'
-alias upd='trizen -Syu'
-alias i='trizen -S'
 
 alias purge='sync; echo 3 | sudo tee /proc/sys/vm/drop_caches'
 alias open=xdg-open
-
-say () {
-   espeak -a 200 $1 2>/dev/null
-}
