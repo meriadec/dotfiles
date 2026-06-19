@@ -1,4 +1,22 @@
 #!/bin/bash
+set -euo pipefail
 
-sudo chgrp brightness /sys/class/backlight/intel_backlight/brightness
-sudo chmod 664 /sys/class/backlight/intel_backlight/brightness
+backlight_dir="${1:-}"
+
+if [ -z "$backlight_dir" ]; then
+  backlight_dir=$(find /sys/class/backlight -mindepth 1 -maxdepth 1 \( -type l -o -type d \) | head -n 1)
+fi
+
+if [ -z "$backlight_dir" ] || [ ! -e "$backlight_dir/brightness" ]; then
+  echo "No backlight brightness file found" >&2
+  exit 1
+fi
+
+brightness_file="$backlight_dir/brightness"
+target_user="${SUDO_USER:-$USER}"
+group_name=$(id -gn "$target_user")
+
+sudo chgrp "$group_name" "$brightness_file"
+sudo chmod 664 "$brightness_file"
+
+echo "Enabled brightness writes for group '$group_name' on $brightness_file"
