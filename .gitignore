@@ -7,8 +7,7 @@
 /config/k9s/config.yml
 /config/nvim/lua/.luarc.json
 
-/bin/aws-mfa
-/bin/ct
+/bin/gifgen
 /bin/helm-docs
 /bin/k9s
 /bin/kubectl

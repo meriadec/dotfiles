@@ -1,6 +1,6 @@
 # OPENSPEC:START
 # OpenSpec shell completions configuration
-fpath=("/home/meri/.oh-my-zsh/custom/completions" $fpath)
+fpath=("$HOME/.oh-my-zsh/custom/completions" $fpath)
 autoload -Uz compinit
 compinit
 # OPENSPEC:END
@@ -108,14 +108,21 @@ fi
 #    --------------------------------------------------------------------------#
 
 source "$HOME/.profile"
+
+# pnpm
+export PNPM_HOME="$HOME/.local/share/pnpm"
+
 source "$HOME/.path"
 source "$HOME/.gitprompt"
 source "$HOME/.prompt"
 source "$HOME/.private"
 source "$HOME/.env"
 
-# pnpm
-export PNPM_HOME="/home/meri/.local/share/pnpm"
+# Re-apply mise after local PATH customizations so mise-managed tools
+# (node/corepack/pnpm, fzf, etc.) stay available and take precedence.
+if [ -x "$HOME/.local/bin/mise" ]; then
+  eval "$("$HOME/.local/bin/mise" activate zsh)"
+fi
 
 #    --------------------------------------------------------------------------#
 # => bindings                                                                  #
