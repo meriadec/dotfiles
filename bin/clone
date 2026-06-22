@@ -12,4 +12,4 @@ if ! command -v kitty >/dev/null 2>&1; then
   exit 127
 fi
 
-exec kitty --detach --working-directory "$PWD"
+exec kitty --single-instance --instance-group i3 --working-directory "$PWD"

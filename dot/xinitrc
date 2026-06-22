@@ -34,7 +34,9 @@ xrdb merge ~/.Xresources
 
 feh --bg-scale ~/dotfiles/assets/images/bg.png
 
-exec picom &
+# Disabled while diagnosing random stale/blank kitty contents on workspace switches.
+# # Disabled while diagnosing random stale/blank kitty contents on workspace switches.
+# exec picom &
 
 # Migration-safe default: laptop panel only.
 # Prevent terminals/windows from appearing on an external output during early i3 testing.

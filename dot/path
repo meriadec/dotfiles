@@ -38,6 +38,7 @@ PATH=$PATH:./node_modules/.bin
 PATH=$PATH:../../node_modules/.bin
 
 # pnpm
+PATH=$PATH:$PNPM_HOME
 PATH=$PATH:$PNPM_HOME/bin
 
 # lol..
