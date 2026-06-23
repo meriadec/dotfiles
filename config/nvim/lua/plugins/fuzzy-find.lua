@@ -17,6 +17,21 @@ return {
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
   config = function()
+    local find_files_options = {
+      hidden = true,
+      follow = true,
+      find_command = {
+        'fd',
+        '--type',
+        'f',
+        '--hidden',
+        '--follow',
+        '--exclude',
+        '.git',
+      },
+      previewer = false,
+    }
+
     require('telescope').setup {
       extensions = {
         ['ui-select'] = {
@@ -24,9 +39,7 @@ return {
         },
       },
       pickers = {
-        find_files = {
-          previewer = false,
-        },
+        find_files = find_files_options,
       },
     }
 
@@ -38,7 +51,9 @@ return {
     local actions = require 'telescope.actions'
     local action_state = require 'telescope.actions.state'
 
-    vim.keymap.set('n', '<C-p>', builtin.find_files)
+    vim.keymap.set('n', '<C-p>', function()
+      builtin.find_files(find_files_options)
+    end)
     vim.keymap.set('n', '<C-f>', builtin.live_grep)
     vim.keymap.set('n', '<leader>f', builtin.grep_string)
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics)
@@ -73,22 +88,13 @@ return {
     end
 
     vim.keymap.set('i', '<C-p>', function()
-      require('telescope.builtin').find_files {
-        hidden = true,
-        follow = true,
-        find_command = {
-          'fd',
-          '--type',
-          'f',
-          '--exclude',
-          '.git',
-        },
+      builtin.find_files(vim.tbl_extend('force', find_files_options, {
         attach_mappings = function(_, map)
           map('i', '<CR>', telescope_insert_path)
           map('n', '<CR>', telescope_insert_path)
           return true
         end,
-      }
+      }))
     end, { desc = 'Telescope find_files -> insert path' })
   end,
 }
