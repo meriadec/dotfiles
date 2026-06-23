@@ -81,7 +81,7 @@ if command -v fzf >/dev/null 2>&1; then
 fi
 
 export FZF_DEFAULT_COMMAND='rg -g !.git/ --hidden --files --follow'
-export FZF_CTRL_T_COMMAND='rg --files --follow 2>/dev/null'
+export FZF_CTRL_T_COMMAND='rg -g !.git/ --hidden --files --follow 2>/dev/null'
 
 # nord theme
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
