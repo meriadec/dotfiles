@@ -12,7 +12,7 @@ alias prof='vim ~/.profile && sprof'
 
 alias tree='tree --gitignore'
 
-alias rg='rg --hidden'
+alias rg='rg --hidden -g "!**/.git/**"'
 alias curl='curl -s'
 
 alias pf="fzf --reverse --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
@@ -75,6 +75,7 @@ alias k=kubectl
 
 # folders
 alias gg='cd ~/git'
+alias pp='cd ~/.pi'
 alias le='cd ~/ledger'
 alias dot='cd ~/dotfiles'
 alias min="cd ~/git/minus"

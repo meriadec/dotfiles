@@ -1,3 +1,0 @@
-#!/bin/env bash
-
-docker exec -it $(docker ps | rg postgres | awk '{ print $1 }') psql

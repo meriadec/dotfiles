@@ -1,0 +1,36 @@
+views:
+  v1/pods:
+    columns:
+      - NAMESPACE
+      - NAME
+      - PF
+      - READY
+      - STATUS
+      - RESTARTS
+      - AGE
+      - VS|W
+      - 'LAST RESTART|W'
+      - CPU|W
+      - CPU/RL|W
+      - '%CPU/R|W'
+      - '%CPU/L|W'
+      - MEM|W
+      - MEM/RL|W
+      - '%MEM/R|W'
+      - '%MEM/L|W'
+      - GPU/RL|W
+      - IP|W
+      - NODE|W
+      - SERVICE-ACCOUNT|W
+      - 'NOMINATED NODE|W'
+      - 'READINESS GATES|W'
+      - QOS|W
+      - LABELS|W
+      - VALID|W
+  v1/services:
+    columns:
+      - NAMESPACE
+      - NAME
+      - TYPE
+      - PORTS
+      - AGE
