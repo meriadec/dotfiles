@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+PATTERN='nx/dist/src/daemon/server/start.js'
+CURRENT_USER=$(id -un)
+
+export CURRENT_USER PATTERN
+
+mapfile -t PIDS < <(
+  ps auxww | awk '
+    $1 == ENVIRON["CURRENT_USER"] && index($0, ENVIRON["PATTERN"]) { print $2 }
+  '
+)
+
+if (( ${#PIDS[@]} == 0 )); then
+  echo "No nx daemon processes found."
+  exit 0
+fi
+
+for pid in "${PIDS[@]}"; do
+  kill "$pid" 2>/dev/null || true
+done
+
+sleep 1
+
+cleaned=0
+for pid in "${PIDS[@]}"; do
+  if kill -0 "$pid" 2>/dev/null; then
+    kill -9 "$pid" 2>/dev/null || true
+  fi
+
+  if ! kill -0 "$pid" 2>/dev/null; then
+    echo "[✓] killed nx daemon pid $pid"
+    ((cleaned += 1))
+  fi
+done
+
+echo "Cleaned up $cleaned nx daemon process(es)."
