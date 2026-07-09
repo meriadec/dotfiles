@@ -36,6 +36,35 @@ alias dcokre=docker
 alias k=kubectl
 alias oc=opencode
 
+# Make k9s follow the namespace selected by kubens/kubectl by default.
+# k9s persists its own per-context namespace under ~/.local/share/k9s, which can
+# otherwise override the namespace stored in kubeconfig by kubens.
+function k9s () {
+  local has_namespace=0
+  local arg
+
+  for arg in "$@"; do
+    case "$arg" in
+      -n|--namespace|--namespace=*|-A|--all-namespaces)
+        has_namespace=1
+        break
+        ;;
+    esac
+  done
+
+  if [ "$has_namespace" -eq 1 ]; then
+    command k9s "$@"
+    return $?
+  fi
+
+  local namespace
+  namespace="$(kubens -c 2>/dev/null)"
+  namespace="${namespace:-$(kubectl config view --minify --output 'jsonpath={..namespace}' 2>/dev/null)}"
+  namespace="${namespace:-default}"
+
+  command k9s -n "$namespace" "$@"
+}
+
 # `ls` thoughts
 function lh () {
   /bin/ls -1th | head -n ${1-1}

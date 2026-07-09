@@ -49,7 +49,7 @@ bindsym $mod+Shift+c              kill
 bindsym $mod+Shift+Control+s      exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 bindsym $mod+minus                exec maim -d 0.5 -s "$(date +%s).png"
 bindsym $mod+Return               exec --no-startup-id kitty --single-instance --instance-group i3
-bindsym $mod+c                    exec google-chrome-stable
+bindsym $mod+c                    exec google-chrome-beta
 bindsym $mod+e                    exec "ksnip -e $(/bin/ls /home/mpillet -1th | head -n ${1-1})"
 bindsym $mod+BackSpace            exec ~/bin/pick-address
 bindsym $mod+w                    exec ~/bin/rofi-vault
@@ -162,6 +162,7 @@ for_window [class="Com.github.phase1geo.annotator"] floating enable
 for_window [class="SimpleScreenRecorder"] floating enable
 for_window [class="kronometer"] floating enable
 for_window [class="Google-chrome" window_role="pop-up"] floating enable
+for_window [class="Google-chrome-beta" window_role="pop-up"] floating enable
 for_window [class="Chromium-browser" window_role="pop-up"] floating enable
 # for_window [class="zoom" title="Meeting Chat"] floating enable
 # for_window [class="zoom" title="Zoom - Free Account"] floating enable
