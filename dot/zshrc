@@ -1,8 +1,8 @@
 # OPENSPEC:START
 # OpenSpec shell completions configuration
+# NOTE: only extend fpath here. oh-my-zsh runs compinit itself later, so do
+# NOT call compinit in this block (it made compinit run twice, ~330ms).
 fpath=("$HOME/.oh-my-zsh/custom/completions" $fpath)
-autoload -Uz compinit
-compinit
 # OPENSPEC:END
 
 #!/bin/bash
@@ -52,6 +52,8 @@ export PATH="$PROTO_HOME/shims:$PROTO_HOME/bin:$PATH";
 #    --------------------------------------------------------------------------#
 
 export ZSH=$HOME/.oh-my-zsh
+# Skip the compaudit/compfix security scan on every startup (faster compinit).
+export ZSH_DISABLE_COMPFIX="true"
 # shellcheck disable=SC2034
 CASE_SENSITIVE="true"
 # shellcheck disable=SC2034
@@ -68,18 +70,17 @@ source "$HOME/git/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 # => mise                                                                      #
 #    --------------------------------------------------------------------------#
 
-if [ -x "$HOME/.local/bin/mise" ]; then
-  eval "$("$HOME/.local/bin/mise" activate zsh)"
-fi
+# NOTE: mise is activated ONCE, later in the file, AFTER the modules section
+# ("$HOME/.path" does `PATH=''` and rebuilds it, which would wipe mise-managed
+# paths). Activating here as well cost ~100ms extra per shell and registered
+# the mise precmd hook twice.
 
 #    --------------------------------------------------------------------------#
-# => fzf                                                                       #
+# => fzf                                                                        #
 #    --------------------------------------------------------------------------#
 
-# fzf installed via mise provides shell integration through `fzf --zsh`
-if command -v fzf >/dev/null 2>&1; then
-  eval "$(fzf --zsh)" 2>/dev/null
-fi
+# fzf shell integration is set up below, after mise activation (fzf is a
+# mise-managed shim, so it is only on PATH once mise is active).
 
 export FZF_DEFAULT_COMMAND='rg -g !.git/ --hidden --files --follow'
 export FZF_CTRL_T_COMMAND='rg -g !.git/ --hidden --files --follow 2>/dev/null'
@@ -100,8 +101,14 @@ if [ -z "$SSH_AUTH_SOCK" ] ; then
   eval "$(ssh-agent -s)"
 fi
 
-if [ -n "$DISPLAY" ] && ! ssh-add -l >/dev/null; then
-  ssh-add
+# Only in an interactive login shell, and never block startup: feeding stdin
+# from /dev/null stops ssh-add from prompting for a passphrase on the tty (a
+# passphrase key is added on first use via `AddKeysToAgent`). Backgrounded with
+# `&!` so shell startup does not wait on it.
+if [[ -o login && -o interactive && -n "$DISPLAY" ]]; then
+  if ! ssh-add -l >/dev/null 2>&1; then
+    ssh-add </dev/null >/dev/null 2>&1 &!
+  fi
 fi
 
 #    --------------------------------------------------------------------------#
@@ -121,8 +128,21 @@ source "$HOME/.env"
 
 # Re-apply mise after local PATH customizations so mise-managed tools
 # (node/corepack/pnpm, fzf, etc.) stay available and take precedence.
+# `mise activate` spawns the mise binary (~140ms) to emit a static script, so we
+# cache that script and only regenerate it when the mise binary is newer.
 if [ -x "$HOME/.local/bin/mise" ]; then
-  eval "$("$HOME/.local/bin/mise" activate zsh)"
+  _mise_cache="$HOME/.cache/zsh/mise-activate.zsh"
+  if [[ ! -s "$_mise_cache" || "$HOME/.local/bin/mise" -nt "$_mise_cache" ]]; then
+    mkdir -p "${_mise_cache:h}"
+    "$HOME/.local/bin/mise" activate zsh > "$_mise_cache"
+  fi
+  source "$_mise_cache"
+  unset _mise_cache
+fi
+
+# fzf shell integration (needs the mise-managed fzf shim on PATH, hence here).
+if command -v fzf >/dev/null 2>&1; then
+  eval "$(fzf --zsh)" 2>/dev/null
 fi
 
 #    --------------------------------------------------------------------------#
@@ -148,5 +168,15 @@ bindkey "^X\<" wrapProcess
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-# wt completion
-if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+# wt completion (cached: `wt config shell init` spawns wt (~50ms) for a static
+# script; regenerate only when the wt binary changes).
+if command -v wt >/dev/null 2>&1; then
+  _wt_cache="$HOME/.cache/zsh/wt-init.zsh"
+  _wt_bin="$(command -v wt)"
+  if [[ ! -s "$_wt_cache" || "$_wt_bin" -nt "$_wt_cache" ]]; then
+    mkdir -p "${_wt_cache:h}"
+    command wt config shell init zsh > "$_wt_cache" 2>/dev/null
+  fi
+  source "$_wt_cache"
+  unset _wt_cache _wt_bin
+fi

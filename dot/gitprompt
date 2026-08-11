@@ -23,30 +23,53 @@ parse_git_state() {
 
   local GIT_STATE=""
 
-  local NUM_AHEAD="$(git log --oneline @{u}.. 2> /dev/null | wc -l | tr -d ' ')"
-  if [ "$NUM_AHEAD" -gt 0 ]; then
-    GIT_STATE=$GIT_STATE${GIT_PROMPT_AHEAD//NUM/$NUM_AHEAD}
+  # A single `git status --porcelain=v2 --branch` call replaces the previous
+  # 6-7 git subprocesses (log x2, rev-parse, ls-files, diff x2). We parse its
+  # output in-shell to derive ahead/behind, unmerged, untracked, modified and
+  # staged state.
+  local git_status
+  git_status="$(git status --porcelain=v2 --branch --untracked-files=normal 2> /dev/null)" || return
+
+  local ahead=0 behind=0 unmerged=0 untracked=0 modified=0 staged=0
+  local line ab xy
+  while IFS= read -r line; do
+    case "$line" in
+      '# branch.ab '*)
+        ab="${line#\# branch.ab }"      # e.g. "+2 -3"
+        ahead="${ab%% *}"; ahead="${ahead#+}"
+        behind="${ab##* }"; behind="${behind#-}"
+        ;;
+      '1 '*|'2 '*)
+        xy="${line#? }"; xy="${xy%% *}"   # 2-char <XY> field
+        [[ "${xy[1]}" != '.' ]] && staged=1
+        [[ "${xy[2]}" != '.' ]] && modified=1
+        ;;
+      'u '*) unmerged=1 ;;
+      '?'*)  untracked=1 ;;
+    esac
+  done <<< "$git_status"
+
+  if [ "$ahead" -gt 0 ]; then
+    GIT_STATE=$GIT_STATE${GIT_PROMPT_AHEAD//NUM/$ahead}
   fi
 
-  local NUM_BEHIND="$(git log --oneline ..@{u} 2> /dev/null | wc -l | tr -d ' ')"
-  if [ "$NUM_BEHIND" -gt 0 ]; then
-    GIT_STATE=$GIT_STATE${GIT_PROMPT_BEHIND//NUM/$NUM_BEHIND}
+  if [ "$behind" -gt 0 ]; then
+    GIT_STATE=$GIT_STATE${GIT_PROMPT_BEHIND//NUM/$behind}
   fi
 
-  local GIT_DIR="$(git rev-parse --git-dir 2> /dev/null)"
-  if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
+  if [ "$unmerged" -eq 1 ]; then
     GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
   fi
 
-  if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+  if [ "$untracked" -eq 1 ]; then
     GIT_STATE=$GIT_STATE$GIT_PROMPT_UNTRACKED
   fi
 
-  if ! git diff --quiet 2> /dev/null; then
+  if [ "$modified" -eq 1 ]; then
     GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
   fi
 
-  if ! git diff --cached --quiet 2> /dev/null; then
+  if [ "$staged" -eq 1 ]; then
     GIT_STATE=$GIT_STATE$GIT_PROMPT_STAGED
   fi
 
