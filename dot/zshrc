@@ -101,13 +101,13 @@ if [ -z "$SSH_AUTH_SOCK" ] ; then
   eval "$(ssh-agent -s)"
 fi
 
-# Only in an interactive login shell, and never block startup: feeding stdin
-# from /dev/null stops ssh-add from prompting for a passphrase on the tty (a
-# passphrase key is added on first use via `AddKeysToAgent`). Backgrounded with
-# `&!` so shell startup does not wait on it.
-if [[ -o login && -o interactive && -n "$DISPLAY" ]]; then
+# In an interactive shell, load the key into the agent. This may prompt once
+# for the passphrase; after that the agent keeps the key so git etc. do not
+# ask again. Do not redirect stdin from /dev/null here, or ssh-add can never
+# read the passphrase and the key is never added.
+if [[ -o interactive && -n "$DISPLAY" ]]; then
   if ! ssh-add -l >/dev/null 2>&1; then
-    ssh-add </dev/null >/dev/null 2>&1 &!
+    ssh-add
   fi
 fi
 
