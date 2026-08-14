@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'USAGE' >&2
+Usage: encode-video INPUT OUTPUT
+
+Makes an extremely standard and compatible MP4 file.
+
+Example:
+  encode-video my-video.mkv toto.mp4
+USAGE
+}
+
+if [[ $# -ne 2 ]]; then
+  usage
+  exit 2
+fi
+
+input=$1
+output=$2
+
+if ! command -v ffmpeg >/dev/null 2>&1; then
+  echo "Error: ffmpeg is required but was not found in PATH." >&2
+  exit 1
+fi
+
+if [[ ! -f "$input" ]]; then
+  echo "Error: input file does not exist: $input" >&2
+  exit 1
+fi
+
+# Maximum compatibility target:
+#   - Video: H.264 (libx264), High profile, level 4.0, yuv420p pixel format.
+#            yuv420p and even dimensions are necessary for phones, TVs and browsers.
+#   - Audio: AAC-LC (native aac encoder, always available), 48 kHz stereo.
+#   - Container: MP4 with faststart, so playback can start before the full
+#            download is complete.
+VIDEO_PARAMS=(
+  -c:v libx264
+  -profile:v high
+  -level 4.0
+  -preset slow
+  -crf 20
+  -pix_fmt yuv420p
+  # Make width and height even numbers (mandatory for yuv420p).
+  -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2"
+)
+
+AUDIO_PARAMS=(
+  -c:a aac
+  -b:a 192k
+  -ar 48000
+  -ac 2
+)
+
+ffmpeg -i "$input" \
+  "${VIDEO_PARAMS[@]}" \
+  "${AUDIO_PARAMS[@]}" \
+  -movflags +faststart \
+  -map_metadata -1 \
+  "$output"

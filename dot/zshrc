@@ -128,16 +128,9 @@ source "$HOME/.env"
 
 # Re-apply mise after local PATH customizations so mise-managed tools
 # (node/corepack/pnpm, fzf, etc.) stay available and take precedence.
-# `mise activate` spawns the mise binary (~140ms) to emit a static script, so we
-# cache that script and only regenerate it when the mise binary is newer.
+# Do not cache this output: it contains a snapshot of the current PATH.
 if [ -x "$HOME/.local/bin/mise" ]; then
-  _mise_cache="$HOME/.cache/zsh/mise-activate.zsh"
-  if [[ ! -s "$_mise_cache" || "$HOME/.local/bin/mise" -nt "$_mise_cache" ]]; then
-    mkdir -p "${_mise_cache:h}"
-    "$HOME/.local/bin/mise" activate zsh > "$_mise_cache"
-  fi
-  source "$_mise_cache"
-  unset _mise_cache
+  eval "$("$HOME/.local/bin/mise" activate zsh)"
 fi
 
 # fzf shell integration (needs the mise-managed fzf shim on PATH, hence here).
