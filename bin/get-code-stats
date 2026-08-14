@@ -1,0 +1,576 @@
+#!/usr/bin/env node
+// get-code-stats — repo-agnostic "lines of code over time" HTML report.
+//
+// Walks a git repo's committed history, buckets commits by interval
+// (day/week/month), runs `cloc` on the last commit of each bucket, and
+// renders a self-contained HTML report with a hand-rolled inline SVG chart.
+//
+// Usage:
+//   get-code-stats [repo-path] [--interval week] [--out <file>] [--open]
+//                  [--branch <ref>] [--no-cache] [--help]
+//
+// Requires: git, cloc.
+
+import { execFile, execFileSync } from "node:child_process";
+import { promisify } from "node:util";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { basename, join, resolve } from "node:path";
+import { homedir, cpus } from "node:os";
+import { createHash } from "node:crypto";
+
+const execFileAsync = promisify(execFile);
+
+// ---------------------------------------------------------------------------
+// CLI parsing
+// ---------------------------------------------------------------------------
+
+const HELP = `get-code-stats — lines of code over time, as a self-contained HTML report.
+
+Usage:
+  get-code-stats [repo-path] [options]
+
+Arguments:
+  repo-path              Path to the target git repo (default: current dir).
+
+Options:
+  --interval <unit>      Sampling bucket: day | week | month (default: week).
+  --branch <ref>         Commit-ish to analyze (default: HEAD).
+  --out <file>           Output HTML path (default: ./code-stats-<repo>-<ts>.html).
+  --open                 Open the report in the browser when done.
+  --no-cache             Ignore and do not write the per-commit cloc cache.
+  -h, --help             Show this help.
+`;
+
+function parseArgs(argv) {
+  const opts = {
+    repoPath: ".",
+    interval: "week",
+    branch: "HEAD",
+    out: null,
+    open: false,
+    cache: true,
+  };
+  let sawRepo = false;
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    switch (a) {
+      case "-h":
+      case "--help":
+        process.stdout.write(HELP);
+        process.exit(0);
+        break;
+      case "--interval":
+        opts.interval = argv[++i];
+        break;
+      case "--branch":
+        opts.branch = argv[++i];
+        break;
+      case "--out":
+        opts.out = argv[++i];
+        break;
+      case "--open":
+        opts.open = true;
+        break;
+      case "--no-cache":
+        opts.cache = false;
+        break;
+      default:
+        if (a.startsWith("-")) fail(`Unknown option: ${a}`);
+        if (sawRepo) fail(`Unexpected argument: ${a}`);
+        opts.repoPath = a;
+        sawRepo = true;
+    }
+  }
+  if (!["day", "week", "month"].includes(opts.interval)) {
+    fail(`--interval must be day, week, or month (got: ${opts.interval})`);
+  }
+  return opts;
+}
+
+function fail(msg) {
+  process.stderr.write(`error: ${msg}\n`);
+  process.exit(1);
+}
+
+// ---------------------------------------------------------------------------
+// Environment checks
+// ---------------------------------------------------------------------------
+
+function requireTool(tool) {
+  try {
+    execFileSync(tool, ["--version"], { stdio: "ignore" });
+  } catch {
+    fail(`\`${tool}\` is required but was not found on PATH.`);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Git helpers
+// ---------------------------------------------------------------------------
+
+function git(repo, args) {
+  return execFileSync("git", ["-C", repo, ...args], {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+    maxBuffer: 256 * 1024 * 1024,
+  }).trim();
+}
+
+function resolveRepo(repoPath) {
+  const abs = resolve(repoPath);
+  if (!existsSync(abs)) fail(`Path does not exist: ${abs}`);
+  try {
+    const top = git(abs, ["rev-parse", "--show-toplevel"]);
+    return top;
+  } catch {
+    fail(`Not a git repository: ${abs}`);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Bucketing
+// ---------------------------------------------------------------------------
+
+// ISO-8601 week key, e.g. "2024-W07", computed from a Date in local time.
+function isoWeekKey(d) {
+  const date = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  // Thursday of the current week decides the ISO year.
+  const day = (date.getDay() + 6) % 7; // Mon=0 .. Sun=6
+  date.setDate(date.getDate() - day + 3);
+  const isoYear = date.getFullYear();
+  const firstThursday = new Date(isoYear, 0, 4);
+  const firstDay = (firstThursday.getDay() + 6) % 7;
+  firstThursday.setDate(firstThursday.getDate() - firstDay + 3);
+  const week =
+    1 + Math.round((date - firstThursday) / (7 * 24 * 3600 * 1000));
+  return `${isoYear}-W${String(week).padStart(2, "0")}`;
+}
+
+function bucketKey(date, interval) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  if (interval === "day") return `${y}-${m}-${d}`;
+  if (interval === "month") return `${y}-${m}`;
+  return isoWeekKey(date);
+}
+
+// Return the last commit per bucket, in chronological order.
+function selectBuckets(repo, ref, interval) {
+  const raw = git(repo, [
+    "log",
+    "--reverse",
+    "--format=%H%x09%cI",
+    ref,
+  ]);
+  if (!raw) return [];
+  const byBucket = new Map();
+  for (const line of raw.split("\n")) {
+    const [sha, iso] = line.split("\t");
+    if (!sha) continue;
+    const date = new Date(iso);
+    const key = bucketKey(date, interval);
+    // chronological order => last write wins => last commit of the bucket.
+    byBucket.set(key, { sha, iso, date, bucket: key });
+  }
+  return [...byBucket.values()].sort((a, b) => a.date - b.date);
+}
+
+// ---------------------------------------------------------------------------
+// cloc + cache
+// ---------------------------------------------------------------------------
+
+function cacheDir(repo) {
+  const base =
+    process.env.XDG_CACHE_HOME || join(homedir(), ".cache");
+  const repoKey =
+    basename(repo) + "-" + createHash("sha1").update(repo).digest("hex").slice(0, 8);
+  return join(base, "get-code-stats", repoKey);
+}
+
+function normalizeCloc(clocJson) {
+  const byLanguage = {};
+  let totals = { code: 0, comment: 0, blank: 0, nFiles: 0 };
+  for (const [lang, v] of Object.entries(clocJson)) {
+    if (lang === "header" || lang === "SUM") continue;
+    byLanguage[lang] = {
+      code: v.code || 0,
+      comment: v.comment || 0,
+      blank: v.blank || 0,
+      nFiles: v.nFiles || 0,
+    };
+  }
+  const sum = clocJson.SUM;
+  if (sum) {
+    totals = {
+      code: sum.code || 0,
+      comment: sum.comment || 0,
+      blank: sum.blank || 0,
+      nFiles: sum.nFiles || 0,
+    };
+  } else {
+    for (const v of Object.values(byLanguage)) {
+      totals.code += v.code;
+      totals.comment += v.comment;
+      totals.blank += v.blank;
+      totals.nFiles += v.nFiles;
+    }
+  }
+  return { totals, byLanguage };
+}
+
+async function clocForCommit(repo, sha, useCache) {
+  const dir = cacheDir(repo);
+  const cacheFile = join(dir, `${sha}.json`);
+  if (useCache && existsSync(cacheFile)) {
+    try {
+      return JSON.parse(readFileSync(cacheFile, "utf8"));
+    } catch {
+      /* fall through and recompute */
+    }
+  }
+  const { stdout } = await execFileAsync(
+    "cloc",
+    ["--quiet", "--json", "--timeout", "0", sha],
+    { cwd: repo, maxBuffer: 256 * 1024 * 1024 },
+  );
+  // cloc emits nothing when a tree has no countable code.
+  const parsed = stdout.trim() ? JSON.parse(stdout) : {};
+  const model = normalizeCloc(parsed);
+  if (useCache) {
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(cacheFile, JSON.stringify(model));
+  }
+  return model;
+}
+
+// Bounded-concurrency map with a live progress counter.
+async function mapPool(items, concurrency, fn) {
+  const results = new Array(items.length);
+  let next = 0;
+  let done = 0;
+  const total = items.length;
+  const tick = () => {
+    process.stderr.write(`\r  analyzing ${++done}/${total} commits…`);
+  };
+  async function worker() {
+    while (true) {
+      const i = next++;
+      if (i >= total) return;
+      results[i] = await fn(items[i], i);
+      tick();
+    }
+  }
+  const n = Math.min(concurrency, total);
+  await Promise.all(Array.from({ length: n }, worker));
+  if (total) process.stderr.write("\n");
+  return results;
+}
+
+// ---------------------------------------------------------------------------
+// HTML report
+// ---------------------------------------------------------------------------
+
+function esc(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function renderChart(samples) {
+  // Layout.
+  const W = 960, H = 420;
+  const M = { top: 24, right: 24, bottom: 48, left: 72 };
+  const iw = W - M.left - M.right;
+  const ih = H - M.top - M.bottom;
+
+  const xs = samples.map((s) => s.date.getTime());
+  const ys = samples.map((s) => s.totals.code);
+  const xMin = Math.min(...xs), xMax = Math.max(...xs);
+  const yMax = Math.max(...ys, 1);
+  const xSpan = xMax - xMin || 1;
+
+  const px = (t) => M.left + ((t - xMin) / xSpan) * iw;
+  const py = (v) => M.top + ih - (v / yMax) * ih;
+
+  const pts = samples.map((s) => [px(s.date.getTime()), py(s.totals.code)]);
+  const line = pts.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
+  const area =
+    `${M.left},${M.top + ih} ` +
+    line +
+    ` ${M.left + iw},${M.top + ih}`;
+
+  // Y ticks (5 divisions, "nice" rounded).
+  const yTicks = [];
+  const step = niceStep(yMax / 5);
+  for (let v = 0; v <= yMax; v += step) {
+    yTicks.push(`
+      <line x1="${M.left}" y1="${py(v).toFixed(1)}" x2="${M.left + iw}" y2="${py(v).toFixed(1)}" class="grid"/>
+      <text x="${M.left - 10}" y="${(py(v) + 4).toFixed(1)}" class="ytick">${fmt(v)}</text>`);
+  }
+
+  // X ticks (~6 evenly spaced by index).
+  const xTicks = [];
+  const nX = Math.min(6, samples.length);
+  for (let i = 0; i < nX; i++) {
+    const idx = Math.round((i / Math.max(1, nX - 1)) * (samples.length - 1));
+    const s = samples[idx];
+    const x = px(s.date.getTime());
+    xTicks.push(`
+      <text x="${x.toFixed(1)}" y="${M.top + ih + 22}" class="xtick">${esc(s.bucket)}</text>`);
+  }
+
+  const dots = samples
+    .map((s, i) => {
+      const [x, y] = pts[i];
+      return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5" class="dot"
+        data-label="${esc(s.bucket)} · ${fmt(s.totals.code)} LOC · ${esc(s.sha.slice(0, 8))}"
+        data-x="${x.toFixed(1)}" data-y="${y.toFixed(1)}"/>`;
+    })
+    .join("\n");
+
+  return `
+  <svg viewBox="0 0 ${W} ${H}" class="chart" role="img" aria-label="Lines of code over time">
+    <polygon points="${area}" class="area"/>
+    <polyline points="${line}" class="line"/>
+    ${yTicks.join("")}
+    ${xTicks.join("")}
+    <line x1="${M.left}" y1="${M.top}" x2="${M.left}" y2="${M.top + ih}" class="axis"/>
+    <line x1="${M.left}" y1="${M.top + ih}" x2="${M.left + iw}" y2="${M.top + ih}" class="axis"/>
+    ${dots}
+    <g id="tip" style="display:none">
+      <rect id="tipbg" rx="4" class="tipbg"/>
+      <text id="tiptext" class="tiptext"></text>
+    </g>
+  </svg>`;
+}
+
+function niceStep(raw) {
+  const pow = Math.pow(10, Math.floor(Math.log10(raw)));
+  const n = raw / pow;
+  const nice = n >= 5 ? 5 : n >= 2 ? 2 : 1;
+  return nice * pow;
+}
+
+function fmt(n) {
+  return Math.round(n).toLocaleString("en-US");
+}
+
+// Aggregate the last sample's languages for a small breakdown table.
+function latestLanguages(samples) {
+  if (!samples.length) return [];
+  const last = samples[samples.length - 1];
+  return Object.entries(last.byLanguage)
+    .map(([lang, v]) => ({ lang, ...v }))
+    .sort((a, b) => b.code - a.code)
+    .slice(0, 12);
+}
+
+function renderHtml(meta, samples) {
+  const chart = renderChart(samples);
+  const langs = latestLanguages(samples);
+  const first = samples[0];
+  const last = samples[samples.length - 1];
+  const delta = last.totals.code - first.totals.code;
+  const langRows = langs
+    .map(
+      (l) => `<tr><td>${esc(l.lang)}</td><td class="num">${fmt(l.code)}</td>
+        <td class="num">${fmt(l.comment)}</td><td class="num">${fmt(l.nFiles)}</td></tr>`,
+    )
+    .join("\n");
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Code stats — ${esc(meta.repoName)}</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font: 15px/1.5 -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+    margin: 0; padding: 2rem; background: #0f1115; color: #e6e6e6; }
+  h1 { margin: 0 0 .25rem; font-size: 1.4rem; }
+  .sub { color: #9aa4b2; margin: 0 0 1.5rem; font-size: .9rem; }
+  .cards { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+  .card { background: #171a21; border: 1px solid #232833; border-radius: 8px;
+    padding: .8rem 1.1rem; min-width: 140px; }
+  .card .k { color: #9aa4b2; font-size: .78rem; text-transform: uppercase;
+    letter-spacing: .04em; }
+  .card .v { font-size: 1.5rem; font-weight: 600; margin-top: .2rem; }
+  .pos { color: #4ade80; } .neg { color: #f87171; }
+  .panel { background: #171a21; border: 1px solid #232833; border-radius: 8px;
+    padding: 1rem; margin-bottom: 1.5rem; }
+  .chart { width: 100%; height: auto; display: block; }
+  .area { fill: rgba(96,165,250,.14); }
+  .line { fill: none; stroke: #60a5fa; stroke-width: 2; }
+  .dot { fill: #60a5fa; stroke: #0f1115; stroke-width: 1; cursor: pointer; }
+  .dot:hover { r: 5; fill: #93c5fd; }
+  .axis { stroke: #3a414f; stroke-width: 1; }
+  .grid { stroke: #232833; stroke-width: 1; }
+  .ytick { fill: #9aa4b2; font-size: 11px; text-anchor: end; }
+  .xtick { fill: #9aa4b2; font-size: 11px; text-anchor: middle; }
+  .tipbg { fill: #000; opacity: .85; }
+  .tiptext { fill: #fff; font-size: 12px; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { text-align: left; padding: .35rem .6rem; border-bottom: 1px solid #232833; }
+  th { color: #9aa4b2; font-weight: 600; font-size: .8rem; text-transform: uppercase; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  footer { color: #6b7280; font-size: .8rem; margin-top: 2rem; }
+  code { background: #232833; padding: .1rem .35rem; border-radius: 4px; }
+</style>
+</head>
+<body>
+  <h1>Lines of code over time — ${esc(meta.repoName)}</h1>
+  <p class="sub">${esc(meta.repoPath)} · ref <code>${esc(meta.ref)}</code>
+    (${esc(meta.headSha.slice(0, 8))}) · ${esc(meta.interval)} buckets ·
+    generated ${esc(meta.generatedAt)}</p>
+
+  <div class="cards">
+    <div class="card"><div class="k">Latest LOC</div>
+      <div class="v">${fmt(last.totals.code)}</div></div>
+    <div class="card"><div class="k">Change over range</div>
+      <div class="v ${delta >= 0 ? "pos" : "neg"}">${delta >= 0 ? "+" : ""}${fmt(delta)}</div></div>
+    <div class="card"><div class="k">Samples</div>
+      <div class="v">${samples.length}</div></div>
+    <div class="card"><div class="k">Files (latest)</div>
+      <div class="v">${fmt(last.totals.nFiles)}</div></div>
+    <div class="card"><div class="k">Range</div>
+      <div class="v" style="font-size:1rem">${esc(first.bucket)} → ${esc(last.bucket)}</div></div>
+  </div>
+
+  <div class="panel">${chart}</div>
+
+  <div class="panel">
+    <h2 style="margin:.2rem 0 1rem;font-size:1rem">Top languages (latest sample)</h2>
+    <table>
+      <thead><tr><th>Language</th><th class="num">Code</th>
+        <th class="num">Comment</th><th class="num">Files</th></tr></thead>
+      <tbody>${langRows}</tbody>
+    </table>
+  </div>
+
+  <footer>Generated by <code>get-code-stats</code>. Metric: cloc "code" lines
+    of the last commit in each ${esc(meta.interval)} bucket.</footer>
+
+<script>
+(function () {
+  var svg = document.querySelector(".chart");
+  var tip = document.getElementById("tip");
+  var bg = document.getElementById("tipbg");
+  var txt = document.getElementById("tiptext");
+  svg.querySelectorAll(".dot").forEach(function (dot) {
+    dot.addEventListener("mouseenter", function () {
+      var label = dot.getAttribute("data-label");
+      var x = parseFloat(dot.getAttribute("data-x"));
+      var y = parseFloat(dot.getAttribute("data-y"));
+      txt.textContent = label;
+      tip.style.display = "block";
+      var w = txt.getComputedTextLength() + 16;
+      var tx = Math.min(Math.max(x - w / 2, 4), 960 - w - 4);
+      var ty = y - 30 < 4 ? y + 14 : y - 30;
+      bg.setAttribute("x", tx); bg.setAttribute("y", ty);
+      bg.setAttribute("width", w); bg.setAttribute("height", 22);
+      txt.setAttribute("x", tx + 8); txt.setAttribute("y", ty + 15);
+    });
+    dot.addEventListener("mouseleave", function () {
+      tip.style.display = "none";
+    });
+  });
+})();
+</script>
+</body>
+</html>
+`;
+}
+
+// ---------------------------------------------------------------------------
+// Main
+// ---------------------------------------------------------------------------
+
+async function main() {
+  const opts = parseArgs(process.argv.slice(2));
+  requireTool("git");
+  requireTool("cloc");
+
+  const repo = resolveRepo(opts.repoPath);
+  const repoName = basename(repo);
+
+  let headSha;
+  try {
+    headSha = git(repo, ["rev-parse", opts.branch]);
+  } catch {
+    fail(`Cannot resolve ref: ${opts.branch}`);
+  }
+  process.stderr.write(
+    `repo:     ${repo}\n` +
+    `ref:      ${opts.branch} -> ${headSha}\n` +
+    `interval: ${opts.interval}\n`,
+  );
+
+  const buckets = selectBuckets(repo, opts.branch, opts.interval);
+  if (!buckets.length) fail("No commits found for the given ref.");
+  process.stderr.write(`buckets:  ${buckets.length}\n`);
+
+  const concurrency = Math.max(2, cpus().length || 4);
+  const models = await mapPool(buckets, concurrency, (b) =>
+    clocForCommit(repo, b.sha, opts.cache),
+  );
+
+  const samples = buckets.map((b, i) => ({
+    sha: b.sha,
+    iso: b.iso,
+    date: b.date,
+    bucket: b.bucket,
+    totals: models[i].totals,
+    byLanguage: models[i].byLanguage,
+  }));
+
+  const meta = {
+    repoName,
+    repoPath: repo,
+    ref: opts.branch,
+    headSha,
+    interval: opts.interval,
+    generatedAt: new Date().toISOString().replace("T", " ").slice(0, 19),
+  };
+
+  const html = renderHtml(meta, samples);
+
+  const outPath = opts.out
+    ? resolve(opts.out)
+    : resolve(process.cwd(), `code-stats-${repoName}-${timestamp()}.html`);
+  writeFileSync(outPath, html);
+  process.stdout.write(`${outPath}\n`);
+
+  if (opts.open) openInBrowser(outPath);
+}
+
+function timestamp() {
+  const d = new Date();
+  const p = (n) => String(n).padStart(2, "0");
+  return (
+    `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-` +
+    `${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`
+  );
+}
+
+function openInBrowser(path) {
+  const cmd =
+    process.platform === "darwin"
+      ? "open"
+      : process.platform === "win32"
+        ? "start"
+        : "xdg-open";
+  try {
+    execFile(cmd, [path]);
+  } catch {
+    /* non-fatal */
+  }
+}
+
+main().catch((err) => {
+  process.stderr.write(`\n${err?.stack || err}\n`);
+  process.exit(1);
+});
