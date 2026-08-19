@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Xrandr changes the root window size. Recreate the wallpaper pixmap for that size.
+feh --no-fehbg --bg-scale "$HOME/dotfiles/assets/images/bg.png"
