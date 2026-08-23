@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if pgrep -a openvpn$ &>/dev/null; then
+if vpn status --quiet; then
   echo "Infra VPN"
 else
   echo ""

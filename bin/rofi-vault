@@ -3,30 +3,11 @@
 # exit at first error
 set -euo pipefail
 
-function probe () {
-  i=0
-  echo "probing"
-  notify-send -r 420 "$2" "$3" -h int:value:0 -i "$HOME/dotfiles/assets/icons/512x512/cog.png"
-  while [[ "$(timeout 0.5 curl -k -s -o /dev/null -w "%{http_code}" "$1")" != "200" ]]; do
-    if [[ $i -lt 100 ]]; then
-      notify-send -r 420 "$2" "$3" -h int:value:$i -i "$HOME/dotfiles/assets/icons/512x512/cog.png"
-      sleep 0.5
-      ((i=i+4))
-    else
-      notify-send -r 420 -u critical "$2" "$3" -h int:value:100 -i "$HOME/dotfiles/assets/icons/512x512/cog.png"
-      break
-    fi
-    if ! pgrep openvpn &>/dev/null; then
-      notify-send -r 420 "$2" "$3" -h int:value:0 -i "$HOME/dotfiles/assets/icons/512x512/cog.png"
-      return 1;
-    fi
-  done
-  notify-send -r 420 "$2" "$3" -h int:value:100 -i "$HOME/dotfiles/assets/icons/512x512/cog.png"
-}
-
-
-VPN_ENABLED=$(pgrep -a 'openvpn$' &>/dev/null && echo "1" || echo "0")
-VPN_VERB=$([[ "$VPN_ENABLED" = "1" ]] && echo "Stop" || echo "Start")
+if vpn status --quiet; then
+  VPN_VERB="Stop"
+else
+  VPN_VERB="Start"
+fi
 
 # kubeContext=$(kubectl config current-context | cut -d '/' -f 2)
 
@@ -51,22 +32,12 @@ $STOP_ONBOARDING_COMMAND
 # Start VPN
 # =========
 if [[ "$choice" = "Start VPN" ]]; then
-  kitty --class openvpn-terminal openvpn --daemon --config /home/meri/infra.ovpn --auth-user-pass /home/meri/infra-vpn-username.txt
-
-  echo "before probing"
-  if probe https://remote.minivault.ledger-sbx.com "VPN starting..." "Chill out, it usually takes ~30s" ; then
-    notify-send -r 420 "VPN started" -u low -i "$HOME/dotfiles/assets/icons/512x512/guitar.png"
-  else
-    notify-send -r 420 "VPN failed to start" "No idea for the reason, though" -u critical -i "$HOME/dotfiles/assets/icons/512x512/notification.png"
-  fi
+  kitty --class openvpn-terminal vpn start
 
 # Stop VPN
 # ========
 elif [[ "$choice" = "Stop VPN" ]]; then
-  killall --signal 9 openvpn
-  notify-send -r 420 \
-    "VPN Stopped" \
-    -i "$HOME/dotfiles/assets/icons/512x512/guitar.png"
+  kitty --class openvpn-terminal vpn stop
 
 # Start local onboarding
 # ======================

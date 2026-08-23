@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+"""Repository entry point for the work VPN command."""
+
+import sys
+from pathlib import Path
+
+repository_root = Path(__file__).resolve().parent.parent
+if str(repository_root) not in sys.path:
+    sys.path.insert(0, str(repository_root))
+
+from lib.work_vpn import main  # noqa: E402
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -18,3 +18,5 @@
 /assets/fonts/berkeley-mono/
 .uuid
 .claude
+__pycache__/
+*.pyc

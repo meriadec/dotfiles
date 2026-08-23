@@ -1,6 +1,9 @@
 install: build
 	@./scripts/install.sh
 
+test:
+	@python3 -m unittest discover -s tests -v
+
 # Parse the theme.sh variables and replace them in *.template files
 build: compile
 
