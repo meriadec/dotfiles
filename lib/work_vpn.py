@@ -136,6 +136,7 @@ class OpenVPNManagement:
             management_socket.connect(os.fspath(self.socket_path))
             with management_socket.makefile("rwb", buffering=0) as stream:
                 self._send(stream, "state on")
+                self._send(stream, "hold off")
                 self._send(stream, "hold release")
 
                 while time.monotonic() < deadline:
@@ -225,6 +226,32 @@ def management_socket_path(username: str | None = None) -> Path:
     return Path("/run") / f"work-vpn-{username or current_username()}" / "management.sock"
 
 
+def management_state(path: Path | None = None, timeout: float = 1.0) -> str | None:
+    """Return OpenVPN's current state, or None if it cannot be read."""
+
+    management_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    management_socket.settimeout(timeout)
+    try:
+        management_socket.connect(os.fspath(path or management_socket_path()))
+        with management_socket.makefile("rwb", buffering=0) as stream:
+            stream.write(b"state\n")
+            while True:
+                raw_line = stream.readline()
+                if not raw_line:
+                    return None
+                line = raw_line.decode("utf-8", errors="replace").rstrip("\r\n")
+                if line == "END":
+                    return None
+                if line.startswith(">") or not line[:1].isdigit():
+                    continue
+                fields = line.split(",")
+                return fields[1] if len(fields) > 1 else None
+    except (OSError, socket.timeout):
+        return None
+    finally:
+        management_socket.close()
+
+
 def run_command(
     command: Sequence[str], *, capture: bool = False, check: bool = True
 ) -> subprocess.CompletedProcess[str]:
@@ -298,10 +325,10 @@ def stop_service(*, quiet: bool = False) -> None:
 
 def start_service(config_path: Path, timeout: float) -> None:
     state = service_state()
-    if state == "active":
+    if state == "active" and management_state() == "CONNECTED":
         print("VPN already connected")
         return
-    resume_start = state == "activating"
+    resume_start = state in {"active", "activating"}
 
     config = load_config(config_path)
     if not config.profile.is_file():
@@ -319,7 +346,7 @@ def start_service(config_path: Path, timeout: float) -> None:
 
     deadline = time.monotonic() + timeout
     if resume_start:
-        print("VPN is already starting; completing authentication...", flush=True)
+        print("VPN is reconnecting; completing authentication...", flush=True)
     else:
         print("Starting VPN...", flush=True)
         run_command(
@@ -454,18 +481,23 @@ def install(args: argparse.Namespace) -> None:
 
 
 def print_status(quiet: bool) -> int:
-    state = service_state()
-    if quiet:
-        return 0 if state == "active" else 1
+    service = service_state()
+    if service in {"active", "activating"}:
+        connection = management_state()
+        connected = connection == "CONNECTED"
+        if connected:
+            message = "VPN connected"
+        elif service == "activating":
+            message = "VPN starting"
+        else:
+            message = "VPN reconnecting"
+    else:
+        connected = False
+        message = "VPN failed" if service == "failed" else "VPN stopped"
 
-    messages = {
-        "active": "VPN connected",
-        "activating": "VPN starting",
-        "failed": "VPN failed",
-        "stopped": "VPN stopped",
-    }
-    print(messages[state])
-    return 0 if state in {"active", "activating"} else 1
+    if not quiet:
+        print(message)
+    return 0 if connected else 1
 
 
 def show_logs(follow: bool) -> int:

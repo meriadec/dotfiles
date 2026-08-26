@@ -70,6 +70,7 @@ class CommandBehaviorTests(unittest.TestCase):
         output = io.StringIO()
         with (
             mock.patch.object(work_vpn, "service_state", return_value="active"),
+            mock.patch.object(work_vpn, "management_state", return_value="CONNECTED"),
             mock.patch.object(work_vpn, "load_config") as load_config,
             contextlib.redirect_stdout(output),
         ):
@@ -92,7 +93,10 @@ class CommandBehaviorTests(unittest.TestCase):
             )
             management = mock.Mock()
             with (
-                mock.patch.object(work_vpn, "service_state", return_value="activating"),
+                mock.patch.object(work_vpn, "service_state", return_value="active"),
+                mock.patch.object(
+                    work_vpn, "management_state", return_value="RECONNECTING"
+                ),
                 mock.patch.object(work_vpn, "load_config", return_value=config),
                 mock.patch.object(work_vpn, "require_program"),
                 mock.patch.object(
@@ -112,6 +116,20 @@ class CommandBehaviorTests(unittest.TestCase):
         commands = [call.args[0] for call in run_command.call_args_list]
         self.assertEqual(commands, [["sudo", "-v"]])
         management.connect.assert_called_once_with("user", "password", "123456")
+
+    def test_status_reports_reconnecting_process_as_disconnected(self):
+        output = io.StringIO()
+        with (
+            mock.patch.object(work_vpn, "service_state", return_value="active"),
+            mock.patch.object(
+                work_vpn, "management_state", return_value="RECONNECTING"
+            ),
+            contextlib.redirect_stdout(output),
+        ):
+            result = work_vpn.main(["status"])
+
+        self.assertEqual(result, 1)
+        self.assertEqual(output.getvalue(), "VPN reconnecting\n")
 
     def test_stop_is_idempotent_when_stopped(self):
         output = io.StringIO()
@@ -170,11 +188,30 @@ class ManagementProtocolTests(unittest.TestCase):
         thread.start()
         return thread
 
+    def test_reads_the_current_openvpn_state(self):
+        def exchange(stream):
+            stream.write(
+                b">INFO:OpenVPN Management Interface Version 5\n"
+                b">HOLD:Waiting for hold release:10\n"
+            )
+            self.assertEqual(stream.readline().decode().strip(), "state")
+            stream.write(
+                b"1,RECONNECTING,server-pushed-connection-reset,,,,,\nEND\n"
+            )
+
+        thread = self.run_server(exchange)
+
+        state = work_vpn.management_state(self.socket_path)
+        thread.join(timeout=2)
+
+        self.assertEqual(state, "RECONNECTING")
+
     def test_answers_static_challenge_and_waits_for_connected_state(self):
         received = []
 
         def exchange(stream):
             stream.write(b">INFO:OpenVPN Management Interface Version 5\n")
+            received.append(stream.readline().decode().strip())
             received.append(stream.readline().decode().strip())
             received.append(stream.readline().decode().strip())
             stream.write(
@@ -191,10 +228,12 @@ class ManagementProtocolTests(unittest.TestCase):
         management.connect("user@example.com", "password", "123456")
         thread.join(timeout=2)
 
-        self.assertEqual(received[0:2], ["state on", "hold release"])
-        self.assertEqual(received[2], 'username "Auth" "user@example.com"')
         self.assertEqual(
-            received[3],
+            received[0:3], ["state on", "hold off", "hold release"]
+        )
+        self.assertEqual(received[3], 'username "Auth" "user@example.com"')
+        self.assertEqual(
+            received[4],
             'password "Auth" "SCRV1:cGFzc3dvcmQ=:MTIzNDU2"',
         )
 
