@@ -4,6 +4,7 @@ import stat
 import base64
 import os
 import socket
+import subprocess
 import tempfile
 import threading
 import unittest
@@ -63,6 +64,64 @@ class ConfigTests(unittest.TestCase):
                     "otp_ref": "op://Work/VPN/one-time password",
                 }
             )
+
+
+class OnePasswordTests(unittest.TestCase):
+    def test_starts_desktop_app_and_retries_when_it_is_not_running(self):
+        unavailable = subprocess.CalledProcessError(
+            1,
+            ["op", "read", "op://Work/VPN/username"],
+            stderr=(
+                "error initializing client: connecting to desktop app: "
+                "cannot connect to 1Password app, make sure it is running"
+            ),
+        )
+        credential = subprocess.CompletedProcess(
+            ["op", "read", "op://Work/VPN/username"],
+            0,
+            stdout="user@example.com\n",
+            stderr="",
+        )
+
+        with (
+            mock.patch.object(
+                work_vpn, "run_command", side_effect=[unavailable, credential]
+            ) as run_command,
+            mock.patch.object(
+                work_vpn.shutil, "which", return_value="/opt/1Password/1password"
+            ),
+            mock.patch.object(work_vpn.subprocess, "Popen") as popen,
+            mock.patch.object(work_vpn.time, "sleep"),
+            contextlib.redirect_stdout(io.StringIO()) as output,
+        ):
+            value = work_vpn.read_op_reference("op://Work/VPN/username")
+
+        self.assertEqual(value, "user@example.com")
+        self.assertEqual(run_command.call_count, 2)
+        popen.assert_called_once_with(
+            ["/opt/1Password/1password"],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
+        self.assertEqual(output.getvalue(), "Starting 1Password...\n")
+
+    def test_does_not_start_desktop_app_for_an_unrelated_cli_error(self):
+        failure = subprocess.CalledProcessError(
+            1,
+            ["op", "read", "op://Work/VPN/username"],
+            stderr="[ERROR] item not found",
+        )
+
+        with (
+            mock.patch.object(work_vpn, "run_command", side_effect=failure),
+            mock.patch.object(work_vpn.subprocess, "Popen") as popen,
+            self.assertRaisesRegex(work_vpn.VpnError, "item not found"),
+        ):
+            work_vpn.read_op_reference("op://Work/VPN/username")
+
+        popen.assert_not_called()
 
 
 class CommandBehaviorTests(unittest.TestCase):

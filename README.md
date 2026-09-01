@@ -39,8 +39,9 @@ vpn logs
 vpn logs --follow
 ```
 
-`vpn start` asks for sudo once, requests one 1Password authorization, and waits
-for OpenVPN to confirm the connection. Run the tests with `make test`.
+`vpn start` asks for sudo once. If necessary, it starts the 1Password app,
+requests one authorization, and waits for OpenVPN to confirm the connection. Run
+the tests with `make test`.
 
 ## Structure
 

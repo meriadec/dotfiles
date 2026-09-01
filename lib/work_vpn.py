@@ -22,6 +22,8 @@ from typing import Mapping, Sequence
 SERVICE_NAME = "work-vpn"
 DEFAULT_CONFIG_PATH = Path.home() / ".config" / "vpn" / "config.json"
 DEFAULT_START_TIMEOUT = 60.0
+ONEPASSWORD_START_TIMEOUT = 30.0
+ONEPASSWORD_RETRY_INTERVAL = 0.25
 
 SYSTEMD_UNIT = """\
 [Unit]
@@ -276,15 +278,55 @@ def service_state(username: str | None = None) -> str:
     return state if state in {"active", "activating", "failed"} else "stopped"
 
 
-def read_op_reference(reference: str) -> str:
+def onepassword_desktop_unavailable(error: subprocess.CalledProcessError) -> bool:
+    message = (error.stderr or "").lower()
+    return (
+        "connecting to desktop app" in message
+        and "cannot connect to 1password app" in message
+    )
+
+
+def start_onepassword_app() -> None:
+    executable = shutil.which("1password")
+    if executable is None:
+        raise VpnError("1Password desktop app is not installed or is not in PATH")
+
+    print("Starting 1Password...", flush=True)
     try:
-        result = run_command(["op", "read", reference], capture=True)
-    except FileNotFoundError as error:
-        raise VpnError("1Password CLI ('op') is not installed") from error
-    except subprocess.CalledProcessError as error:
-        message = (error.stderr or "").strip()
-        suffix = f": {message}" if message else ""
-        raise VpnError(f"1Password could not read a configured item{suffix}") from error
+        subprocess.Popen(
+            [executable],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            start_new_session=True,
+        )
+    except OSError as error:
+        raise VpnError(f"could not start 1Password: {error}") from error
+
+
+def read_op_reference(reference: str) -> str:
+    app_started = False
+    start_deadline = 0.0
+
+    while True:
+        try:
+            result = run_command(["op", "read", reference], capture=True)
+            break
+        except FileNotFoundError as error:
+            raise VpnError("1Password CLI ('op') is not installed") from error
+        except subprocess.CalledProcessError as error:
+            if onepassword_desktop_unavailable(error):
+                if not app_started:
+                    start_onepassword_app()
+                    app_started = True
+                    start_deadline = time.monotonic() + ONEPASSWORD_START_TIMEOUT
+                if time.monotonic() < start_deadline:
+                    time.sleep(ONEPASSWORD_RETRY_INTERVAL)
+                    continue
+
+            message = (error.stderr or "").strip()
+            suffix = f": {message}" if message else ""
+            raise VpnError(f"1Password could not read a configured item{suffix}") from error
 
     value = result.stdout.rstrip("\r\n")
     if not value:
