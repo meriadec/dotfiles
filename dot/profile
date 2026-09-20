@@ -3,6 +3,7 @@
 export GTK_THEME=Adwaita-dark
 
 export KUBECONFIG=$HOME/.kube/config
+export PI_AGENT_GIT_CONFIG_GLOBAL="$HOME/.gitconfig-agent"
 
 alias s='wt switch'
 
