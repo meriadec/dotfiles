@@ -203,7 +203,6 @@ class X11Backend:
             [
                 "xdotool",
                 "mousemove",
-                "--sync",
                 str(point.x),
                 str(point.y),
                 "click",

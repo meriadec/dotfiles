@@ -1,12 +1,14 @@
 import argparse
 import io
 import unittest
+from unittest import mock
 
 from lib.repeat_click import (
     CONTROL_MASK,
     Point,
     Rectangle,
     RepeatClickError,
+    X11Backend,
     XInputEvent,
     build_parser,
     is_stop_event,
@@ -145,6 +147,18 @@ class RepeatModeTests(unittest.TestCase):
             )
 
         self.assertEqual(backend.clicks, [])
+
+
+class BackendCommandTests(unittest.TestCase):
+    def test_click_does_not_wait_for_pointer_motion(self):
+        backend = X11Backend.__new__(X11Backend)
+
+        with mock.patch.object(backend, "_output") as output:
+            backend.click(Point(100, 200))
+
+        output.assert_called_once_with(
+            ["xdotool", "mousemove", "100", "200", "click", "1"]
+        )
 
 
 class ScreenGeometryTests(unittest.TestCase):
