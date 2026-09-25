@@ -8,6 +8,21 @@
 make install
 ```
 
+### Repeat Click
+
+`repeat-click` selects one screen coordinate and left-clicks it at a fixed
+interval. It supports Linux X11 sessions and requires `xinput`, `xdotool`,
+`xrandr`, and `xmodmap`.
+
+```bash
+repeat-click                              # click every 5 seconds
+repeat-click --frequency-seconds 1.5      # custom interval
+```
+
+Left-click the target coordinate when prompted. Press `Ctrl+C` from any focused
+application to stop. The compatible `--frequencySeconds` spelling is also
+accepted.
+
 ### Work VPN
 
 The `vpn` command manages OpenVPN through systemd and reads its credentials from
