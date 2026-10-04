@@ -1,4 +1,6 @@
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+# Preload a hidden kitty instance so $mod+Return opens terminals instantly.
+exec --no-startup-id kitty --single-instance --instance-group i3 --start-as=hidden
 
 set $nord0  #2E3440
 set $nord1  #3B4252
