@@ -67,8 +67,10 @@ bindsym $mod+Shift+t              move down
 bindsym $mod+Shift+n              move up
 bindsym $mod+Shift+s              move right
 # bindsym $mod+m                    move workspace to output down
-bindsym $mod+Shift+o move scratchpad
-bindsym $mod+o scratchpad show
+# Scratchpad: Shift+o = send, o = show/hide, Ctrl+o = remove (tile the shown scratchpad window)
+bindsym $mod+Shift+o              move scratchpad
+bindsym $mod+o                    scratchpad show
+bindsym $mod+Control+o            floating disable
 
 bindsym $mod+v                    split h
 bindsym $mod+d                    split v
