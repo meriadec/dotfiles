@@ -1,0 +1,13 @@
+#!/bin/sh
+# Set Xft.dpi from the active outputs:
+#   144 (150%) when an external monitor is active, 96 on the laptop panel alone.
+# Running apps keep their old value; restart them to pick up the change.
+# An active output has a geometry such as 3840x2160+1920+0 in its xrandr line.
+if xrandr --query | awk '
+  $2 == "connected" && $1 !~ /^(eDP|LVDS|DSI)/ && ($3 ~ /^[0-9]+x[0-9]+\+/ || $4 ~ /^[0-9]+x[0-9]+\+/) { found = 1 }
+  END { exit !found }'; then
+  DPI=144
+else
+  DPI=96
+fi
+echo "Xft.dpi: $DPI" | xrdb -merge

@@ -2,3 +2,6 @@
 
 # Xrandr changes the root window size. Recreate the wallpaper pixmap for that size.
 feh --no-fehbg --bg-scale "$HOME/dotfiles/assets/images/bg.png"
+
+# Pick UI scale for the current monitor setup (apps read it at start).
+"$HOME/bin/auto-dpi"

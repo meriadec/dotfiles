@@ -30,6 +30,7 @@ xset -b
 xbindkeys
 
 xrdb merge ~/.Xresources
+"$HOME/bin/auto-dpi"
 # eval "$(ssh-agent)"
 
 feh --bg-scale ~/dotfiles/assets/images/bg.png
