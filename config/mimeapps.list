@@ -17,3 +17,4 @@ application/x-extension-xht=google-chrome-beta.desktop
 x-scheme-handler/slack=slack.desktop
 x-scheme-handler/about=google-chrome-beta.desktop
 x-scheme-handler/unknown=google-chrome-beta.desktop
+x-scheme-handler/t3code=com.t3tools.T3Code.desktop
