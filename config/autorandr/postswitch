@@ -5,3 +5,6 @@ feh --no-fehbg --bg-scale "$HOME/dotfiles/assets/images/bg.png"
 
 # Pick UI scale for the current monitor setup (apps read it at start).
 "$HOME/bin/auto-dpi"
+
+# Restart polybar with sizes for the new DPI.
+"$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &

@@ -11,26 +11,26 @@ alert = #bf616a
 [bar/default]
 enable-ipc = true
 width = 100%
-height = 32
+height = ${env:POLYBAR_HEIGHT:32}
 bottom = false
 fixed-center = true
 background = ${colors.background}
 foreground = ${colors.foreground}
 border-color = ${colors.secondary}
-border-bottom-size = 5
+border-bottom-size = ${env:POLYBAR_BORDER:5}
 radius = 0
 line-size = 0
 
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = Berkeley Mono:pixelsize=9;4
+font-0 = Berkeley Mono:pixelsize=@FONT_9@;4
 ; font-0 = Fira Code:pixelsize=12;4
-font-1 = Hurmit Nerd Font Mono:pixelsize=15;6
+font-1 = Hurmit Nerd Font Mono:pixelsize=@FONT_15@;6
 ; font-2 = Fira Code:pixelsize=10;4
-font-2 = Berkeley Mono:pixelsize=9;4
-font-3 = meri:pixelsize=12;4
-font-4 = Symbol Nerd Font:pixelsize=18;6
+font-2 = Berkeley Mono:pixelsize=@FONT_9@;4
+font-3 = meri:pixelsize=@FONT_12@;4
+font-4 = Symbol Nerd Font:pixelsize=@FONT_18@;6
 
 modules-left = i3
 modules-center = vpn-openvpn-status kube-context
