@@ -7,4 +7,4 @@ feh --no-fehbg --bg-scale "$HOME/dotfiles/assets/images/bg.png"
 "$HOME/bin/auto-dpi"
 
 # Restart polybar with sizes for the new DPI.
-"$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 &
+"$HOME/.config/polybar/launch.sh" >/dev/null 2>&1 </dev/null &
