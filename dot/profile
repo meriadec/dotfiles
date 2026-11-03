@@ -11,7 +11,7 @@ alias s='wt switch'
 alias sprof='source ~/.profile'
 alias prof='vim ~/.profile && sprof'
 
-alias tree='tree --gitignore'
+#alias tree='tree --gitignore'
 
 alias rg='rg --hidden -g "!**/.git/**"'
 alias curl='curl -s'
