@@ -1,0 +1,6 @@
+#!/bin/sh
+# Apply keyboard settings. Run at login and on every keyboard hotplug.
+setxkbmap -layout us -variant dvp
+setxkbmap -option compose:ralt
+xset r rate 150 200
+xset -b

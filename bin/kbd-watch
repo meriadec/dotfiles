@@ -1,0 +1,12 @@
+#!/bin/sh
+# Re-apply keyboard settings when an input device appears (USB hub replug).
+# xinput reports a hierarchy change on each hotplug; debounce the burst.
+"$HOME/bin/kbd-setup"
+xinput test-xi2 --root 2>/dev/null | while read -r line; do
+  case "$line" in
+    *HierarchyChanged*)
+      sleep 1
+      "$HOME/bin/kbd-setup"
+      ;;
+  esac
+done
