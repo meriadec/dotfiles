@@ -6,8 +6,8 @@ configuration {
 /*	modi: "window,run,ssh";*/
  font: "Berkeley Mono 16";
   location: 2;
-  yoffset: 32;
-  xoffset: 32;
+  yoffset: 37;
+  xoffset: 0;
   fixed-num-lines: false;
   show-icons: true;
   terminal: "/usr/bin/kitty";

@@ -1,0 +1,6 @@
+#!/bin/sh
+# Run rofi just under polybar (37px tall at 96 DPI: height 32 + border 5), overlapping
+# it by 5px at 144 DPI. Rofi offsets are raw pixels, so scale them with Xft.dpi.
+DPI=$(xrdb -query | awk '/^Xft.dpi:/ {print $2}')
+DPI=${DPI:-96}
+exec rofi -yoffset $((100 * DPI / 288)) -theme-str "window { width: $((600 * DPI / 96))px; }" "$@"
