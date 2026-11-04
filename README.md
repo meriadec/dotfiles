@@ -82,3 +82,10 @@ the tests with `make test`.
     ├── zshrc
     └── ...etc.
 ```
+
+### Mouse buttons (Logitech MX Vertical)
+
+Find button numbers with `xinput test <id>` (`xinput list` shows the id).
+Thumb "Back" is button 8, "Forward" is button 9. i3 binds button 8 to
+`~/bin/screenshot` with `bindsym --whole-window`; i3 consumes the click, so
+apps no longer get "Back" from it.

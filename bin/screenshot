@@ -1,3 +1,9 @@
-#!/bin/env bash
+#!/usr/bin/env bash
+# Select an area and save it as ~/<timestamp>.png.
+# When a 4K (width >= 3840) monitor is active, downscale to 75% to keep files small.
+out="$HOME/$(date +%s).png"
+maim -d 0.5 -s "$out" || exit 1
 
-maim -d 0.5 -s "$HOME/$(date +%s).png"
+if xrandr --listactivemonitors | awk 'NR>1 { split($3, a, "/"); if (a[1] >= 3840) f=1 } END { exit !f }'; then
+  convert "$out" -filter Lanczos -resize 75% -define png:compression-level=9 "$out"
+fi
