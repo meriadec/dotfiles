@@ -97,7 +97,7 @@ return {
     end
 
     local servers = {
-      tsgo = {
+      tsc = {
         -- Keep TypeScript navigation/completion/code actions, but let oxlint own diagnostics.
         handlers = {
           ['textDocument/publishDiagnostics'] = function() end,
@@ -155,6 +155,7 @@ return {
     require('mason-lspconfig').setup {
       ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
       automatic_installation = false,
+      automatic_enable = { exclude = { 'tsgo' } }, -- deprecated alias of tsc; avoid a duplicate client
     }
 
     -- 3) Configure + enable each server
