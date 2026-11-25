@@ -35,6 +35,7 @@ LINKS=(
   "dot/gitconfig               .gitconfig"
   "dot/gitignore_global        .gitignore_global"
   "dot/path                    .path"
+  "dot/profile                 .profile"
   "dot/prompt                  .prompt"
   "dot/tigrc                   .tigrc"
   "dot/xinitrc                 .xinitrc"
