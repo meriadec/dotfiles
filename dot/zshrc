@@ -174,7 +174,6 @@ source "$HOME/.profile"
 export PNPM_HOME="$HOME/.local/share/pnpm"
 
 source "$HOME/.path"
-source "$HOME/.gitprompt"
 source "$HOME/.prompt"
 source "$HOME/.private"
 source "$HOME/.env"

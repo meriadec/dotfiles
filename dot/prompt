@@ -1,24 +1,43 @@
-#!/bin/bash
-# shellcheck disable=SC2155
+#!/bin/zsh
+# Left-only prompt:  [user host] <exit code> <dir> [<branch> <git state>] $
+#
+# Speed notes: no command substitution in PS1 (the exit code uses native %?),
+# and git is queried once per prompt, in precmd, with a single `git status`.
 
-cRed=$'%{\e[0;31m%}'
-cYellow=$'%{\e[0;33m%}'
-cBlue=$'%{\e[1;34m%}'
-cNice=$'%{\e[0;36m%}'
-cNop=$'%{\e[0;0m%}'
+setopt prompt_subst
+autoload -Uz add-zsh-hook
 
-function lastExitCode() {
-  local LAST_EXIT_CODE=$?
-  if [[ $LAST_EXIT_CODE -ne 0 ]]; then
-    echo "$cRed$LAST_EXIT_CODE$cNop"
-  else
-    echo $LAST_EXIT_CODE
-  fi
+# Fills $_prompt_git with " <branch>[ ↑ahead][ ↓behind][ !][ .untracked][ .modified][ .staged]"
+# (empty outside a repo). Colours: dots are red=untracked, yellow=modified, green=staged.
+_prompt_git_update() {
+  _prompt_git=
+  local out
+  out=$(git status --porcelain=v2 --branch --untracked-files=normal 2>/dev/null) || return
+
+  local -a lines=(${(f)out})
+  local line head oid ahead=0 behind=0
+  for line in ${(M)lines:#\# branch.*}; do
+    case $line in
+      '# branch.oid '*)  oid=${line#\# branch.oid } ;;
+      '# branch.head '*) head=${line#\# branch.head } ;;
+      '# branch.ab '*)   ahead=${${line#\# branch.ab }%% *}; ahead=${ahead#+}
+                         behind=${line##* }; behind=${behind#-} ;;
+    esac
+  done
+  [[ $head == '(detached)' ]] && head=${oid[1,7]}
+
+  _prompt_git=" %F{yellow}$head%f"
+  (( ahead ))  && _prompt_git+=" %F{red}↑$ahead%f"
+  (( behind )) && _prompt_git+=" %F{cyan}↓$behind%f"
+  [[ -n ${(M)lines:#u *} ]]              && _prompt_git+=" %B%F{red}!%f%b"
+  [[ -n ${(M)lines:#\?*} ]]              && _prompt_git+=" %B%F{red}.%f%b"
+  [[ -n ${(M)lines:#[12] ?[^.]*} ]]      && _prompt_git+=" %B%F{yellow}.%f%b"
+  [[ -n ${(M)lines:#[12] [^.]*} ]]       && _prompt_git+=" %B%F{green}.%f%b"
 }
+add-zsh-hook precmd _prompt_git_update
 
-if [[ $SSH_CLIENT != "" ]]; then
-  export PS1='${cRed}%n${cNop} ${cNice}%m${cNop} $(lastExitCode) ${cYellow}%1~${cNop} ${cBlue}\$${cNop} '
-else
-  export PS1='$(lastExitCode) ${cYellow}%1~${cNop} ${cBlue}\$${cNop} '
-fi
-# export PS1="${hostName}$(lastExitCode) ${cYellow}%1~${cNop} ${cBlue}\$${cNop} "
+_prompt_git=
+_prompt_ssh=
+[[ -n $SSH_CLIENT ]] && _prompt_ssh='%F{red}%n%f %F{cyan}%m%f '
+
+PS1='${_prompt_ssh}%(?.0.%F{red}%?%f) %F{yellow}%1~%f${_prompt_git} %B%F{blue}\$%f%b '
