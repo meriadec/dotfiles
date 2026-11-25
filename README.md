@@ -3,8 +3,13 @@
 ## Install
 
 ```bash
-make install
+make install                        # symlink everything into $HOME
+scripts/install.sh --dry-run        # show what would change
+scripts/install.sh --force          # back up conflicting files as <name>.bak
 ```
+
+The list of links is at the top of `scripts/install.sh`. The script is safe to
+run again, and warns about files in `dot/` or `config/` that it does not install.
 
 ### Repeat Click
 
