@@ -49,17 +49,69 @@ export PROTO_HOME="$HOME/.proto";
 export PATH="$PROTO_HOME/shims:$PROTO_HOME/bin:$PATH";
 
 #    --------------------------------------------------------------------------#
-# => oh-my-zsh                                                                 #
+# => zsh core (replaces oh-my-zsh, which only provided the below)              #
 #    --------------------------------------------------------------------------#
 
-export ZSH=$HOME/.oh-my-zsh
-# Skip the compaudit/compfix security scan on every startup (faster compinit).
-export ZSH_DISABLE_COMPFIX="true"
-# shellcheck disable=SC2034
-CASE_SENSITIVE="true"
-# shellcheck disable=SC2034
-plugins=()
-source "$ZSH/oh-my-zsh.sh"
+# options
+setopt auto_cd auto_pushd pushd_ignore_dups pushd_minus
+setopt always_to_end complete_in_word interactive_comments long_list_jobs no_flow_control
+setopt extended_history hist_expire_dups_first hist_ignore_dups hist_ignore_space hist_verify share_history
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=50000
+SAVEHIST=10000
+WORDCHARS=''
+
+# aliases
+alias ls='ls --color=auto' l='ls -lah' la='ls -lAh' ll='ls -lh'
+alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox,.venv,venv}'
+alias history='fc -l 1'
+alias md='mkdir -p' rd=rmdir
+alias -- -='cd -'
+alias ...='cd ../..' ....='cd ../../..' .....='cd ../../../..'
+
+# key bindings (emacs; zsh would pick vi because $EDITOR is vim)
+bindkey -e
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search edit-command-line
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+zle -N edit-command-line
+bindkey '^[[A' up-line-or-beginning-search   '^[OA' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search '^[OB' down-line-or-beginning-search
+bindkey '^[[H' beginning-of-line '^[[1~' beginning-of-line
+bindkey '^[[F' end-of-line       '^[[4~' end-of-line
+bindkey '^[[3~' delete-char      '^[[3;5~' kill-word
+bindkey '^[[1;5C' forward-word   '^[[1;5D' backward-word
+bindkey '^[[Z' reverse-menu-complete
+bindkey '^X^E' edit-command-line
+bindkey ' ' magic-space
+
+# completion: cached dump, rebuilt (with the full check) at most once a day
+_zcd=$HOME/.cache/zsh/zcompdump
+zstyle ':completion:*' cache-path "$HOME/.cache/zsh/zcompcache"
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+zstyle '*' single-ignored show
+autoload -Uz compinit
+if [[ -n $_zcd(#qN.mh-24) ]]; then
+  compinit -C -d "$_zcd"
+else
+  compinit -d "$_zcd" && zcompile "$_zcd"
+fi
+unset _zcd
+
+# terminal title: "user@host:dir", or the running command
+_title() { print -Pn -- "\e]2;$1\a" }
+_title_idle() { _title '%n@%m:%~' }
+_title_cmd() { _title "${1[(w)1]}" }
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _title_idle
+add-zsh-hook preexec _title_cmd
 
 #    --------------------------------------------------------------------------#
 # => zsh-syntax-highlighting                                                   #
