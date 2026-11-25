@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-set -euo pipefail
-
-saml2aws login --cache-saml --skip-prompt -a "ledger$1"
