@@ -19,7 +19,7 @@ while true ; do
 
   echo "$JOB_STATUS"
   if [[ "$JOB_STATUS" == "completed" ]]; then
-    notify-send --hint string:image-path:/home/meri/dotfiles/assets/rick-square.png -u critical -t 9999999 "Finished job: $JOB_NAME"
+    notify-send -u critical -t 9999999 "Finished job: $JOB_NAME"
     exit 0;
   fi
 
