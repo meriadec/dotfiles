@@ -1,3 +1,5 @@
+.PHONY: install test
+
 install:
 	@./install
 
