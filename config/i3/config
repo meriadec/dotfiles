@@ -49,9 +49,9 @@ bindsym $mod+b                    exec polybar-msg cmd toggle
 bindsym $mod+Shift+c              kill
 
 bindsym $mod+Shift+Control+s      exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+minus                exec --no-startup-id ~/bin/screenshot
+bindsym $mod+minus                exec --no-startup-id felt --capture
 # Mouse thumb button (8, "Back"): i3 swallows the click, so apps do not see it
-bindsym --whole-window button8    exec --no-startup-id ~/bin/screenshot
+bindsym --whole-window button8    exec --no-startup-id felt --capture
 
 # Media keys (Spotify)
 bindsym XF86AudioPlay exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
@@ -60,7 +60,7 @@ bindsym XF86AudioPrev exec --no-startup-id dbus-send --print-reply --dest=org.mp
 bindsym XF86AudioStop exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Stop
 bindsym $mod+Return               exec --no-startup-id kitty --single-instance --instance-group i3
 bindsym $mod+c                    exec google-chrome-beta
-bindsym $mod+e                    exec "ksnip -e $(/bin/ls /home/mpillet -1th | head -n ${1-1})"
+bindsym $mod+e                    exec felt -e "$(/bin/ls -1td /home/mpillet/* | head -n 1)"
 bindsym $mod+BackSpace            exec ~/bin/pick-address
 bindsym $mod+w                    exec ~/bin/rofi-vault
 bindsym $mod+l                    exec ~/bin/rofi-dpi -modi emoji -show emoji
@@ -169,8 +169,6 @@ mode "$mode_gaps_inner" {
 }
 
 
-for_window [class="ksnip"] floating enable, fullscreen enable
-for_window [class="ksnip" title="^Warning - ksnip$"] fullscreen disable, floating enable, move position center
 for_window [class="Com.github.phase1geo.annotator"] floating enable
 for_window [class="SimpleScreenRecorder"] floating enable
 for_window [class="kronometer"] floating enable
