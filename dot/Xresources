@@ -1,6 +1,6 @@
 ! COLORS
 
-Xft.dpi:       $[DPI]
+Xft.dpi:       96
 
 Xft.hintstyle: hintslight
 Xft.antialias: true

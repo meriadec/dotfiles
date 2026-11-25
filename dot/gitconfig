@@ -1,7 +1,7 @@
 [user]
   name = Meriadec Pillet
   email = meriadec.pillet@gmail.com
-  signingkey = $[SIGNING_KEY]
+  signingkey = A4B40783209C889D
 
 [commit]
   gpgsign = true

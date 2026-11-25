@@ -1,9 +1,6 @@
 /.tmp
 /mock
-/custom.sh
 
-/dot/Xresources
-/dot/gitconfig
 /config/k9s/config.yml
 /config/nvim/lua/.luarc.json
 
