@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Install the dotfiles: symlink them into $HOME. Safe to run any number of times.
 #
-#   scripts/install.sh [--dry-run] [--force] [--target DIR]
+#   ./install [--dry-run] [--force] [--target DIR]
 #
 #   --dry-run    print what would change, change nothing
 #   --force      replace a conflicting file by moving it to <name>.bak
@@ -9,7 +9,7 @@
 
 set -euo pipefail
 
-REPO=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+REPO=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 TARGET=$HOME
 DRY=0
 FORCE=0
@@ -31,15 +31,15 @@ LINKS=(
   "bin                         bin"
   "assets/fonts                .local/share/fonts"
 
-  "dot/Xresources              .Xresources"
-  "dot/gitconfig               .gitconfig"
-  "dot/gitignore_global        .gitignore_global"
-  "dot/path                    .path"
-  "dot/profile                 .profile"
-  "dot/prompt                  .prompt"
-  "dot/tigrc                   .tigrc"
-  "dot/xinitrc                 .xinitrc"
-  "dot/zshrc                   .zshrc"
+  "home/Xresources              .Xresources"
+  "home/gitconfig               .gitconfig"
+  "home/gitignore_global        .gitignore_global"
+  "home/path                    .path"
+  "home/profile                 .profile"
+  "home/prompt                  .prompt"
+  "home/tigrc                   .tigrc"
+  "home/xinitrc                 .xinitrc"
+  "home/zshrc                   .zshrc"
 
   "config/autorandr            .config/autorandr"
   "config/dunst                .config/dunst"
@@ -106,8 +106,8 @@ for entry in "${LINKS[@]}"; do
   link $entry
 done
 
-# Warn about files in dot/ and config/ that no entry in LINKS installs.
-for f in dot/* config/*; do
+# Warn about files in home/ and config/ that no entry in LINKS installs.
+for f in home/* config/*; do
   [[ " ${LINKS[*]} " == *" $f "* ]] || say unlisted "$f (not in LINKS)"
 done
 

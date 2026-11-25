@@ -1,5 +1,5 @@
 install:
-	@./scripts/install.sh
+	@./install
 
 test:
 	@python3 -m unittest discover -s tests -v

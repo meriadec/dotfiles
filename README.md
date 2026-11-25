@@ -4,12 +4,12 @@
 
 ```bash
 make install                        # symlink everything into $HOME
-scripts/install.sh --dry-run        # show what would change
-scripts/install.sh --force          # back up conflicting files as <name>.bak
+./install --dry-run        # show what would change
+./install --force          # back up conflicting files as <name>.bak
 ```
 
-The list of links is at the top of `scripts/install.sh`. The script is safe to
-run again, and warns about files in `dot/` or `config/` that it does not install.
+The list of links is at the top of `./install`. The script is safe to
+run again, and warns about files in `home/` or `config/` that it does not install.
 
 ### Repeat Click
 
@@ -65,25 +65,14 @@ the tests with `make test`.
 
 ```
 .
-├── assets            # static assets
-│   ├── fonts
-│   └── images
-│
-├── bin               # user-defined commands (the folder
-│                     # is added to $PATH)
-│
-├── colors            # theme colors
-│
-├── config            # bunch of configs, including awesome wm config
-│   ├── awesome
-│   └── ...etc.
-│
-└── dot               # actually dotfiles.
-    ├── gitconfig
-    ├── profile
-    ├── vimrc
-    ├── zshrc
-    └── ...etc.
+├── install    # symlinks everything into $HOME (see "Install")
+├── home/      # dotfiles: home/zshrc is linked to ~/.zshrc, etc.
+├── config/    # ~/.config/<name>: i3, polybar, nvim, kitty, ...
+├── bin/       # personal commands, linked to ~/bin
+├── lib/       # Python code behind some commands in bin/ (vpn, repeat-click)
+├── tests/     # tests for lib/ (make test)
+├── docs/      # notes
+└── assets/    # images and icons used by the configs
 ```
 
 ### Mouse buttons (Logitech MX Vertical)
