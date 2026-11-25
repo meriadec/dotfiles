@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-mpv --volume=40 ~/Documents/success.mp3 &>/dev/null &
